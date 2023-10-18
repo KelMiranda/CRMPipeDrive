@@ -17,6 +17,8 @@ if __name__ == '__main__':
     token = os.getenv('TOKEN_CRM')
     pipe = PipedriveAPI(token)
     print(pipe.get_deals(6311))
+    print((pipe.get_stages(6)))
+    print(pipe.get_pipeline(2))
 
 
 
