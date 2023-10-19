@@ -7,13 +7,13 @@ class PipedriveAPI:
         self.api_token = api_token
         self.base_url = "https://api.pipedrive.com/v1"
 
-    def get_deals(self, id_deal):
+    def make_request(self, endpoint):
         try:
             response = requests.get(
-                f"{self.base_url}/deals/{id_deal}",
+                f"{self.base_url}/{endpoint}",
                 params={"api_token": self.api_token}
             )
-            #print(response.raise_for_status())
+            response.raise_for_status()
 
             if response.status_code == 200:
                 return response.json()
@@ -22,37 +22,12 @@ class PipedriveAPI:
         except requests.exceptions.RequestException as e:
             print(f"Request Error: {e}")
             return []
+
+    def get_deals(self, id_deal):
+        return self.make_request(f"deals/{id_deal}")
 
     def get_stages(self, id_stages):
-
-        try:
-            response = requests.get(
-                f"{self.base_url}/stages/{id_stages}",
-                params={"api_token": self.api_token}
-            )
-            #print(response.raise_for_status())
-
-            if response.status_code == 200:
-                return response.json()
-            else:
-                return []
-        except requests.exceptions.RequestException as e:
-            print(f"Request Error: {e}")
-            return []
+        return self.make_request(f"stages/{id_stages}")
 
     def get_pipeline(self, id_pipeline):
-
-        try:
-            response = requests.get(
-                f"{self.base_url}/pipelines/{id_pipeline}",
-                params={"api_token": self.api_token}
-            )
-            #print(response.raise_for_status())
-
-            if response.status_code == 200:
-                return response.json()
-            else:
-                return []
-        except requests.exceptions.RequestException as e:
-            print(f"Request Error: {e}")
-            return []
+        return self.make_request(f"pipelines/{id_pipeline}")
