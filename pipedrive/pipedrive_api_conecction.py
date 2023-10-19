@@ -31,3 +31,10 @@ class PipedriveAPI:
 
     def get_pipeline(self, id_pipeline):
         return self.make_request(f"pipelines/{id_pipeline}")
+
+    def get_all_pipelines(self):
+        return self.make_request("pipelines")
+
+    def get_all_stages(self, id_pipeline):
+
+        return self.make_request(f"stages?pipeline_id={id_pipeline}")
