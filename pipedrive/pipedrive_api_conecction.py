@@ -1,10 +1,11 @@
 import requests
+import os
 from urllib.parse import urljoin
 
 
 class PipedriveAPI:
     def __init__(self, api_token):
-        self.api_token = api_token
+        self.api_token = os.getenv(api_token)
         self.base_url = "https://api.pipedrive.com/v1"
 
     def make_request(self, endpoint):
@@ -18,10 +19,10 @@ class PipedriveAPI:
             if response.status_code == 200:
                 return response.json()
             else:
-                return []
+                return None
         except requests.exceptions.RequestException as e:
-            print(f"Request Error: {e}")
-            return []
+            # print(f"Request Error: {e}")
+            return None
 
     def get_deals(self, id_deal):
         return self.make_request(f"deals/{id_deal}")
@@ -38,3 +39,33 @@ class PipedriveAPI:
     def get_all_stages(self, id_pipeline):
 
         return self.make_request(f"stages?pipeline_id={id_pipeline}")
+
+    def get_records(self, object_type, params):
+        company_domain = params["company_domain"]
+        del params["company_domain"]
+
+        data = {
+            "api_token": self.api_token
+        }
+
+        params.update(data)
+
+        print(params, company_domain, object_type)
+
+        url = f"https://{company_domain}.pipedrive.com/api/v1/{object_type}"
+        response = requests.get(url, params=params)
+        result = response.json()
+
+        records = []
+
+        if "data" in result and result["data"]:
+            records.extend(result["data"])
+
+        if "additional_data" in result and "pagination" in result["additional_data"]:
+            pagination = result["additional_data"]["pagination"]
+            if pagination["more_items_in_collection"]:
+                params["company_domain"] = company_domain
+                params["start"] = pagination["next_start"]
+                records.extend(self.get_records(object_type, params))
+
+        return records
