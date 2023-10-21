@@ -1,12 +1,14 @@
+import os
+
 import pyodbc
 
 
 class SQLServerDatabase:
     def __init__(self, server, database, username, password):
-        self.server = server
-        self.database = database
-        self.username = username
-        self.password = password
+        self.server = os.getenv(server)
+        self.database = os.getenv(database)
+        self.username = os.getenv(username)
+        self.password = os.getenv(password)
         self.connection = None
 
     def connect(self):
@@ -15,6 +17,7 @@ class SQLServerDatabase:
             self.connection = pyodbc.connect(connection_string)
             print("Connected to SQL Server.")
         except pyodbc.Error as e:
+            print(connection_string)
             print(f"Error connecting to SQL Server: {e}")
 
     def execute_query(self, query, params=None):
@@ -31,10 +34,24 @@ class SQLServerDatabase:
         else:
             print("No database connection.")
 
+    def insert_query(self, query, params=None):
+        if self.connection:
+            try:
+                cursor = self.connection.cursor()
+                if params:
+                    cursor.execute(query, params)
+                else:
+                    cursor.execute(query)
+                    print(f"row affected: {cursor.rowcount}")
+                return None
+            except pyodbc.Error as e:
+                print(f"Error executing query: {e}")
+        else:
+            print("No database connection.")
+
     def close_connection(self):
         if self.connection:
             self.connection.close()
             print("Database connection closed.")
         else:
             print("No connection to close.")
-
