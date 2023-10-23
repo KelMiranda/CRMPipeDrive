@@ -36,9 +36,9 @@ class PipedriveAPI:
     def get_all_pipelines(self):
         return self.make_request("pipelines")
 
-    def get_all_stages(self, id_pipeline):
+    def get_all_stages(self):
 
-        return self.make_request(f"stages?pipeline_id={id_pipeline}")
+        return self.make_request(f"stages")
 
     def get_records(self, object_type, params):
         company_domain = params["company_domain"]

@@ -9,7 +9,6 @@ class SQLServerDatabase:
         self.database = os.getenv(database)
         self.username = os.getenv(username)
         self.password = os.getenv(password)
-        self.connection = None
 
     def connect(self):
         try:
@@ -17,40 +16,30 @@ class SQLServerDatabase:
             self.connection = pyodbc.connect(connection_string)
             print("Connected to SQL Server.")
         except pyodbc.Error as e:
-            print(connection_string)
             print(f"Error connecting to SQL Server: {e}")
 
-    def execute_query(self, query, params=None):
-        if self.connection:
-            try:
-                cursor = self.connection.cursor()
-                if params:
-                    cursor.execute(query, params)
-                else:
-                    cursor.execute(query)
-                return cursor.fetchall()
-            except pyodbc.Error as e:
-                print(f"Error executing query: {e}")
-        else:
-            print("No database connection.")
-
-    def insert_query(self, query, params=None):
-        if self.connection:
-            try:
-                cursor = self.connection.cursor()
-                if params:
-                    cursor.execute(query, params)
-                else:
-                    cursor.execute(query)
-                return cursor.rowcount
-            except pyodbc.Error as e:
-                print(f"Error executing query: {e}")
-        else:
-            print("No database connection.")
-
-    def close_connection(self):
+    def disconnect(self):
         if self.connection:
             self.connection.close()
-            print("Database connection closed.")
+            print("Disconnected from SQL Server.")
+            self.connection = None
         else:
-            print("No connection to close.")
+            print("No active connection to disconnect from.")
+
+    def execute_query(self, query, return_results=True):
+        try:
+            with self.connection as conn:
+                cursor = conn.cursor()
+                cursor.execute(query)
+
+                if return_results:
+                    results = cursor.fetchall()
+                    return results
+                else:
+                    print(f"Número de filas afectadas: {cursor.rowcount}")
+                    return None
+
+        except pyodbc.Error as ex:
+            print('Error connecting to database:', ex)
+            return None
+
