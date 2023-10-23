@@ -42,8 +42,7 @@ class SQLServerDatabase:
                     cursor.execute(query, params)
                 else:
                     cursor.execute(query)
-                    print(f"row affected: {cursor.rowcount}")
-                return None
+                return cursor.rowcount
             except pyodbc.Error as e:
                 print(f"Error executing query: {e}")
         else:
