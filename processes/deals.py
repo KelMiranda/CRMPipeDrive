@@ -46,23 +46,25 @@ def dictionary_invert(my_dictionary, valor):
 
     dictionary_invert_v = {v: k for k, v in my_dictionary.items()}
     valor_buscado = valor
-    print(my_dictionary, dictionary_invert_v)
+    #print(my_dictionary, dictionary_invert_v)
 
     if valor_buscado in dictionary_invert_v:
         clave_correspondiente = dictionary_invert_v[valor_buscado]
-        print(clave_correspondiente)
+        return clave_correspondiente
     else:
         print("El valor no existe en el diccionario")
 
 
 def get_all_option_for_fields_in_deals(id_field_deal):
-    my_dictionary = PipedriveAPI('TOKEN_CRM').get_deal_field_id(id_field_deal)
-    pass
-
-
+    my_dictionary = {}
+    for row in id_field_deal:
+        my_dictionary[f"{row}"] = PipedriveAPI('TOKEN_CRM').get_deal_field_id(row)
+    return my_dictionary
 
 
 def make_all_deals():
+    id_fields_deals =[12527, 12546, 12521, 12523]
+    values = get_all_option_for_fields_in_deals(id_fields_deals)
     data = {
         "company_domain": "grupopelsa",
         "start": 0,
@@ -70,7 +72,9 @@ def make_all_deals():
     }
     result = PipedriveAPI('TOKEN_CRM').get_records('deals', data)
     deals = {}
+
     for row in result:
+        print(int(row.get('6fe64586c7f0e32e9caabde4b5c1d7a2ea697748')))
         deals[f"{row.get('id')}"] = {
             'stage_id': row.get('stage_id'),
             'title': row.get('title'),
@@ -85,7 +89,9 @@ def make_all_deals():
             'pipeline_id': row.get('pipeline_id'),
             'won_time': row.get('won_time'),
             'org_name': row.get('org_name'),
-            'CardCode': row.get('060d979042413ee06230b755710f42901b6b0a92')
+            'CardCode': row.get('060d979042413ee06230b755710f42901b6b0a92'),
+            'DocStatus': dictionary_invert(values.get('12527'), row.get('6fe64586c7f0e32e9caabde4b5c1d7a2ea697748'))
+
         }
         if row.get('6aba016cdd852ee60aa6ae2ced2af84b9105d78c') == '187':
             pais = {
