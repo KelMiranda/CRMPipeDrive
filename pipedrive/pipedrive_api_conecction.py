@@ -69,3 +69,12 @@ class PipedriveAPI:
                 records.extend(self.get_records(object_type, params))
 
         return records
+
+    def get_deal_field_id(self, id_deal_field):
+        vendedores = {}
+        response = self.make_request(f"dealFields/{id_deal_field}")
+        if response:
+            vendedores = {row['label']: row['id'] for row in response['data']['options']}
+        else:
+            print("No tiene opciones")
+        return vendedores
