@@ -43,16 +43,21 @@ def save_json(data, variable):
 
 
 def dictionary_invert(my_dictionary, valor):
-
-    dictionary_invert_v = {v: k for k, v in my_dictionary.items()}
-    valor_buscado = valor
-    #print(my_dictionary, dictionary_invert_v)
-
-    if valor_buscado in dictionary_invert_v:
-        clave_correspondiente = dictionary_invert_v[valor_buscado]
+    if valor is None:
+        clave_correspondiente = 'None'
         return clave_correspondiente
     else:
-        print("El valor no existe en el diccionario")
+        valor = int(valor)
+        dictionary_invert_v = {v: k for k, v in my_dictionary.items()}
+        valor_buscado = valor
+        # print(my_dictionary, dictionary_invert_v)
+
+        if valor_buscado in dictionary_invert_v:
+            clave_correspondiente = dictionary_invert_v[valor_buscado]
+            return clave_correspondiente
+        else:
+            clave_correspondiente = 'None'
+            return clave_correspondiente
 
 
 def get_all_option_for_fields_in_deals(id_field_deal):
@@ -74,7 +79,6 @@ def make_all_deals():
     deals = {}
 
     for row in result:
-        print(int(row.get('6fe64586c7f0e32e9caabde4b5c1d7a2ea697748')))
         deals[f"{row.get('id')}"] = {
             'stage_id': row.get('stage_id'),
             'title': row.get('title'),
@@ -90,7 +94,11 @@ def make_all_deals():
             'won_time': row.get('won_time'),
             'org_name': row.get('org_name'),
             'CardCode': row.get('060d979042413ee06230b755710f42901b6b0a92'),
-            'DocStatus': dictionary_invert(values.get('12527'), row.get('6fe64586c7f0e32e9caabde4b5c1d7a2ea697748'))
+            'DocStatus': dictionary_invert(values.get('12527'), row.get('6fe64586c7f0e32e9caabde4b5c1d7a2ea697748')),
+            'ProjectType': dictionary_invert(values.get('12546'), row.get('6840b183ea0a8dd8a55b4f7cd773a4d1f73e442a')),
+            'SlpName': dictionary_invert(values.get('12521'), row.get('bdc9870365278bf245effd816618a8a9bff8fad9')),
+            'U_Jefe': dictionary_invert(values.get('12523'), row.get('057ae06bd90a1bcecb68ebceb30b99fb8be94801'))
+
 
         }
         if row.get('6aba016cdd852ee60aa6ae2ced2af84b9105d78c') == '187':
