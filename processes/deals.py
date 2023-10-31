@@ -1,5 +1,6 @@
 import time
 from pipedrive.pipedrive_api_conecction import PipedriveAPI
+from database.sql_server_connection import  SQLServerDatabase
 from datetime import datetime
 import json
 import os
@@ -67,8 +68,8 @@ def get_all_option_for_fields_in_deals(id_field_deal):
     return my_dictionary
 
 
-def make_all_deals():
-    id_fields_deals =[12527, 12546, 12521, 12523]
+def get_all_deals():
+    id_fields_deals = [12527, 12546, 12521, 12523]
     values = get_all_option_for_fields_in_deals(id_fields_deals)
     data = {
         "company_domain": "grupopelsa",
@@ -116,7 +117,38 @@ def make_all_deals():
 
 
 class DealTable:
-    def __init__(self, table):
+    def __init__(self, table, country):
         self.table = table
-        pass
+        self.country = country
+
+    def get_all_the_deals_in_table(self):
+        query = f"Select * from {self.table} Where Pais = '{self.country}'"
+        db = SQLServerDatabase('SERVER', 'DATABASE','USERNAME_', 'PASSWORD')
+        db.connect()
+        result = db.execute_query(query)
+        db.disconnect()
+        return result
+
+    def order_by_doc_status(self):
+        result = self.get_all_the_deals_in_table()
+        open = {}
+        closed = {}
+        processed = {}
+        for row in result:
+            match row[4]:
+                case 'O':
+                    open[f'{row[15]}'] = row
+                case 'C':
+                    closed[f"{row[15]}"] = row
+                case 'P':
+                    processed[f"{row[15]}"] = row
+        print(len(open))
+        print(len(closed))
+        print(len(processed))
+        return [open, closed, processed]
+
+
+
+
+
 
