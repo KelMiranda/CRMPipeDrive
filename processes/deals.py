@@ -120,14 +120,37 @@ class DealTable:
     def __init__(self, table, country):
         self.table = table
         self.country = country
+        self.db = SQLServerDatabase('SERVER', 'DATABASE','USERNAME_', 'PASSWORD')
 
     def get_all_the_deals_in_table(self):
         query = f"Select * from {self.table} Where Pais = '{self.country}'"
-        db = SQLServerDatabase('SERVER', 'DATABASE','USERNAME_', 'PASSWORD')
-        db.connect()
-        result = db.execute_query(query)
-        db.disconnect()
+        self.db.connect()
+        result = self.db.execute_query(query)
+        self.db.disconnect()
         return result
+
+    def distinct(self):
+        array = {}
+        problem = {}
+        result = self.get_all_the_deals_in_table()
+        for row in result:
+            time.sleep(0.5)
+            query = f"Select top 1 * from [dbo].[VW_CRM_POS_{self.country}] Where DocNum = {row[1]} AND ORD = '{row[13]}' order by Serie desc"
+            self.db.connect()
+            result2 = self.db.execute_query(query)
+            print(result2)
+            self.db.disconnect()
+            print(row[0])
+            if result2 is not None and len(result2) > 0 and len(result2[0]) > 1:
+                if row[2] != result2[0][1]:
+                    array[f"{row[0]}"] = result2
+            else:
+                problem[f"{row[0]}"] = 'Dato erroneo en vista'
+
+        save_json(array, 'Arreglo_Diferentes')
+        save_json(problem, 'Registros_Problemas')
+
+        return array
 
     def order_by_doc_status(self):
         result = self.get_all_the_deals_in_table()
