@@ -133,22 +133,24 @@ class DealTable:
         array = {}
         problem = {}
         result = self.get_all_the_deals_in_table()
+        a = len(result)
+        cont = 0
         for row in result:
-            time.sleep(0.5)
+            cont = cont + 1
+            total = a - cont
             query = f"Select top 1 * from [dbo].[VW_CRM_POS_{self.country}] Where DocNum = {row[1]} AND ORD = '{row[13]}' order by Serie desc"
             self.db.connect()
             result2 = self.db.execute_query(query)
-            print(result2)
             self.db.disconnect()
-            print(row[0])
+            print(f"Los valores que faltan son : {total}")
             if result2 is not None and len(result2) > 0 and len(result2[0]) > 1:
                 if row[2] != result2[0][1]:
-                    array[f"{row[0]}"] = result2
+                    array[f"{row[0]}"] = 'Dato Diferente'
             else:
                 problem[f"{row[0]}"] = 'Dato erroneo en vista'
 
-        save_json(array, 'Arreglo_Diferentes')
-        save_json(problem, 'Registros_Problemas')
+        save_json(array, f'Arreglo_Diferentes_{self.country}')
+        save_json(problem, f'Registros_Problemas_{self.country}')
 
         return array
 
