@@ -1,6 +1,6 @@
 import time
 from pipedrive.pipedrive_api_conecction import PipedriveAPI
-from database.sql_server_connection import  SQLServerDatabase
+from database.sql_server_connection import SQLServerDatabase
 from datetime import datetime
 import json
 import os
@@ -100,7 +100,6 @@ def get_all_deals():
             'SlpName': dictionary_invert(values.get('12521'), row.get('bdc9870365278bf245effd816618a8a9bff8fad9')),
             'U_Jefe': dictionary_invert(values.get('12523'), row.get('057ae06bd90a1bcecb68ebceb30b99fb8be94801'))
 
-
         }
         if row.get('6aba016cdd852ee60aa6ae2ced2af84b9105d78c') == '187':
             pais = {
@@ -120,7 +119,7 @@ class DealTable:
     def __init__(self, table, country):
         self.table = table
         self.country = country
-        self.db = SQLServerDatabase('SERVER', 'DATABASE','USERNAME_', 'PASSWORD')
+        self.db = SQLServerDatabase('SERVER', 'DATABASE', 'USERNAME_', 'PASSWORD')
 
     def get_all_the_deals_in_table(self):
         query = f"Select * from {self.table} Where Pais = '{self.country}'"
@@ -154,6 +153,7 @@ class DealTable:
 
         return array
 
+    # get id_deal in the Json
     def order_by_doc_status(self):
         result = self.get_all_the_deals_in_table()
         open = {}
@@ -167,13 +167,8 @@ class DealTable:
                     closed[f"{row[15]}"] = row
                 case 'P':
                     processed[f"{row[15]}"] = row
-        print(len(open))
-        print(len(closed))
-        print(len(processed))
         return [open, closed, processed]
 
-
-
-
-
-
+    def update_deals(self):
+        query = f"Select * from {self.table} Where DocStatus in ('C', 'P') AND status_crm is null AND Pais = '{self.country}'"
+        result = self.db.execute_query(query)

@@ -7,6 +7,7 @@ from processes.organizations import get_all_organization
 
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     #PipelineTable('pipeline').validator()
     #StageTable('stages').validator()
     #get_all_deals()
@@ -15,5 +16,12 @@ if __name__ == '__main__':
     #DealTable('DatosProyectos_PipeDrive', 'GT').distinct()
     print(get_all_organization())
     print(len(get_all_organization()))
+=======
+
+    result = DealTable('DatosProyectos_PipeDrive', 'GT').order_by_doc_status()
+    print(result[0].get('583'))
+    for row in result[0]:
+        print(row)
+>>>>>>> 69f71921740a9802b098013de19a7a43285e82d9
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
