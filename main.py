@@ -7,9 +7,6 @@ from processes.deals import DealTable
 
 if __name__ == '__main__':
 
-    result = DealTable('DatosProyectos_PipeDrive', 'GT').order_by_doc_status()
-    print(result[0].get('583'))
-    for row in result[0]:
-        print(row)
+    get_all_deals()
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
