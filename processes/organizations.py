@@ -21,11 +21,4 @@ class OrganizationTable:
         self.database = SQLServerDatabase('SERVER', 'DATABASE','USERNAME_', 'PASSWORD')
 
     def client_validator(self):
-        pais = 'sv'
-        cardcode = 'C000000'
-        result_pipedrive = get_all_organization()
-        for row in result_pipedrive:
-            time.sleep(1)
-            print(row.get('bd4aa325c2375edc367c1d510faf509422f71a5b'))
-        #query = f"Select * from {self.table} Where Pais = '{pais}' AND CardCode = '{cardcode}'"
-        #self.database.execute_query(query)
+        pass
