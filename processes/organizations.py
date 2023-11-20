@@ -4,7 +4,6 @@ from database.sql_server_connection import SQLServerDatabase
 from processes.deals import get_all_option_for_fields_in_deals
 
 
-
 def get_all_organization():
     data = {
         "company_domain": "grupopelsa",
@@ -16,9 +15,20 @@ def get_all_organization():
 
 
 class OrganizationTable:
-    def __int__(self, table):
+    def __init__(self, table, country):
         self.table = table
-        self.database = SQLServerDatabase('SERVER', 'DATABASE','USERNAME_', 'PASSWORD')
+        self.country = country
+        self.db = SQLServerDatabase('SERVER', 'DATABASE', 'USERNAME_', 'PASSWORD')
 
-    def client_validator(self):
-        pass
+    def get_customers_from_a_table(self):
+        query = f"Select * from {self.table} Where Validador = 'I' AND Pais = '{self.country}' AND Vendedor_Asignado != 'SIN CARTERA ASIGNADA'"
+        print(query)
+        self.db.connect()
+        result = self.db.execute_query(query)
+        self.db.disconnect()
+        return result
+
+    def post_customers_in_crm(self):
+        for row in self.get_customers_from_a_table():
+            time.sleep(1)
+            print(row)
