@@ -9,4 +9,4 @@ from processes.deals import save_json
 import json
 
 if __name__ == '__main__':
-    DealTable('DatosProyectos_PipeDrive', 'SV').distinct()
+    pass

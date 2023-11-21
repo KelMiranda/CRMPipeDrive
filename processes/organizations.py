@@ -25,10 +25,4 @@ class OrganizationTable:
         print(query)
         self.db.connect()
         result = self.db.execute_query(query)
-        self.db.disconnect()
-        return result
-
-    def post_customers_in_crm(self):
-        for row in self.get_customers_from_a_table():
-            time.sleep(1)
-            print(row)
+        self.db.disconnect
