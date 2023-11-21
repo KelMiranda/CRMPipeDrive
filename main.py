@@ -9,5 +9,4 @@ from processes.deals import save_json
 import json
 
 if __name__ == '__main__':
-    OrganizationTable('DatosClientes', 'SV').post_customers_in_crm()
-
+    DealTable('DatosProyectos_PipeDrive', 'SV').distinct()
