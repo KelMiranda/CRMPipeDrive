@@ -114,11 +114,4 @@ class GetIdUser:
                     'id_user_pipedrive': all_sales_person.get(f'{self.name}'),
                     'name': self.name
                 }
-            else:
-                result = {
-                    'sector': row,
-                    'id_user_pipedrive': 12806795,
-                    'name': self.name,
-                    'Cuenta': 'Principal'
-                }
         return result
