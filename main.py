@@ -11,4 +11,7 @@ import json
 
 if __name__ == '__main__':
     OrganizationTable('DatosClientes','SV').assign_owner_in_the_crm()
+    result = PipedriveAPI('TOKEN_CRM').get_organization_id('3')['additional_data']['followers']
+    for row in result:
+        print(result[f'{row}'])
 

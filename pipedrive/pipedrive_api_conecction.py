@@ -119,3 +119,16 @@ class PipedriveAPI:
 
     def put_organization_id(self, id_organization, data):
         return self.put_request(f'organizations/{id_organization}', data)
+
+    def get_organization_id(self, id_organization):
+        return self.get_request(f'organizations/{id_organization}')
+
+    def get_organization_field_id(self, id_organization_field):
+        vendors = {}
+        response = self.get_request(f"organizationFields/{id_organization_field}")
+        if response:
+            vendors = {row['label']: row['id'] for row in response['data']['options']}
+        else:
+            print("this field don't have options")
+        return vendors
+

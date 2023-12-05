@@ -21,9 +21,10 @@ class OrganizationTable:
         self.table = table
         self.country = country
         self.db = SQLServerDatabase('SERVER', 'DATABASE', 'USERNAME_', 'PASSWORD')
+        self.pipe = PipedriveAPI('TOKEN_CRM')
 
     def get_customers_from_a_table(self):
-        query = f"Select * from {self.table} Where Pais = '{self.country}' AND Vendedor_Asignado != 'SIN CARTERA ASIGNADA' AND id_PipeDrive > 1899 order by id_PipeDrive"
+        query = f"Select top 2 * from {self.table} Where Pais = '{self.country}' AND Vendedor_Asignado != 'SIN CARTERA ASIGNADA' AND id_PipeDrive > 0 order by id_PipeDrive"
         print(query)
         self.db.connect()
         result = self.db.execute_query(query)
@@ -45,21 +46,25 @@ class OrganizationTable:
 
     def assign_owner_in_the_crm(self):
         result = self.get_customers_from_a_table()
+        pipe = self.pipe
         data = {}
         for row in result:
             time.sleep(1)
             result2 = GetIdUser(f'{row[15]}').get_user_id_and_sector()
+
             id_empresa = result2.get('id_user_pipedrive')
 
             if id_empresa is None:
                 data = {
-                    "owner_id": 12806795
+                    "owner_id": 12806795,
+                    "fd0f15b9338615a55ca56a3cada567919ec33306": 715
                 }
             else:
                 data = {
-                    "owner_id": id_empresa
+                    "owner_id": id_empresa,
+                    "fd0f15b9338615a55ca56a3cada567919ec33306": pipe.get_organization_field_id('4028').get(f'{row[15]}')
                 }
-            request = PipedriveAPI('TOKEN_CRM').put_organization_id(row[8], data)
+            request = pipe.put_organization_id(row[8], data)
 
             if request.get('success'):
                 print(f'El Cliente {row[2]}, con un id: {row[8]} fue modificado')

@@ -57,7 +57,7 @@ def get_id_pipedrive():
         },
 
         # User for ING
-        'ING':{
+        'ING': {
             'CARLOS HERNANDEZ': 13545610,
             'HUGO CERRITOS': 13545610,
             'WILLIAM MOLINA': 13814725,
@@ -91,8 +91,9 @@ def get_id_pipedrive():
 
 
 class GetIdUser:
-    def __init__(self, name):
+    def __init__(self, name=None, id_user_pipedrive=None):
         self.name = name
+        self.id_user_PipeDrive = id_user_pipedrive
 
     def get_user_id_and_sector(self):
         result = {}
