@@ -17,7 +17,7 @@ def get_all_organization():
 
 
 class OrganizationTable:
-    def __init__(self, table, country):
+    def __init__(self, table=None, country=None):
         self.table = table
         self.country = country
         self.db = SQLServerDatabase('SERVER', 'DATABASE', 'USERNAME_', 'PASSWORD')
@@ -70,5 +70,21 @@ class OrganizationTable:
                 print(f'El Cliente {row[2]}, con un id: {row[8]} fue modificado')
             else:
                 print(f'presento un problema el id: {row[8]}, el problema es: {request}')
+
+    def remove_followers(self, id_organization):
+        result = self.pipe.get_organization_id(id_organization)
+        followers_result = result['additional_data']['followers']
+        value_customer = result['data']['fd0f15b9338615a55ca56a3cada567919ec33306']
+        customer = self.pipe.get_organization_field_id('4028')
+        customer_name = dictionary_invert(customer, value_customer)
+        id_customer = str(GetIdUser(f'{customer_name}').get_user_id_and_sector()['id_user_pipedrive'])
+        for row in followers_result:
+            result2 = followers_result.get(f'{row}')
+            id_follower = result2.get('id')
+            if row == id_customer:
+                print(f'el dueño es: {row}')
+            else:
+                print(f'el vendedor:{row}, deja de seguir a este cliente')
+                print(self.pipe.delete_followers_in_organization(id_organization, id_follower))
 
 

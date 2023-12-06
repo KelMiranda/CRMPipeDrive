@@ -132,3 +132,5 @@ class PipedriveAPI:
             print("this field don't have options")
         return vendors
 
+    def delete_followers_in_organization(self, id_organization, id_user_pipedrive):
+        return self.get_request(f'organizations/{int(id_organization)}/followers/{int(id_user_pipedrive)}')
