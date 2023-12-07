@@ -84,8 +84,12 @@ def get_id_pipedrive():
         # User for Utili
         'UTIL': {
             'JOSE ORTEGA': 14065624
-        }
+        },
 
+        # User for Admin
+        'ADMIN': {
+            'GRUPO PELSA': 12806795
+        }
     }
     return user_ids
 
@@ -105,7 +109,8 @@ class GetIdUser:
             'RETAIL - AV',
             'RETAIL - FB',
             'RETAIL- SM',
-            'UTIL'
+            'UTIL',
+            'ADMIN'
         }
         for row in sector:
             all_sales_person = get_id_pipedrive().get(f'{row}')

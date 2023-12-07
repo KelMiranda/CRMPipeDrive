@@ -61,6 +61,31 @@ class PipedriveAPI:
             print(f"Request Error: {e}")
             return None
 
+    def delete_request(self, endpoint):
+        """
+        Elimina datos en la API de Pipedrive utilizando el método DELETE.
+
+        Args:
+        - endpoint (str): El endpoint de la API.
+
+        Returns:
+        - dict or None: Los datos de la respuesta JSON o None si hay un error.
+        """
+        try:
+            url = f"{self.BASE_URL}/{endpoint}"
+            params = {"Content-Type": "application/json", "api_token": self.api_token}
+            response = requests.delete(url, params=params)
+            response.raise_for_status()
+
+            if response.status_code == 200:
+                return response.json()
+            else:
+                return None
+        except requests.exceptions.RequestException as e:
+            # Puedes imprimir o registrar el error para facilitar la depuración
+            print(f"Request Error: {e}")
+            return None
+
     def get_deals(self, id_deal):
         print(self.api_token)
         return self.get_request(f"deals/{id_deal}")
@@ -133,4 +158,4 @@ class PipedriveAPI:
         return vendors
 
     def delete_followers_in_organization(self, id_organization, id_user_pipedrive):
-        return self.get_request(f'organizations/{int(id_organization)}/followers/{int(id_user_pipedrive)}')
+        return self.delete_request(f'organizations/{int(id_organization)}/followers/{int(id_user_pipedrive)}')

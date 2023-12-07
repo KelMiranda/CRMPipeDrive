@@ -10,6 +10,6 @@ from pipedrive.users_pipedrive import GetIdUser
 import json
 
 if __name__ == '__main__':
-    #OrganizationTable('DatosClientes', 'SV').assign_owner_in_the_crm()
-    OrganizationTable().remove_followers('3')
+    OrganizationTable('DatosClientes', 'SV').assign_owner_in_the_crm()
+    #print(PipedriveAPI('TOKEN_CRM').delete_followers_in_organization(3, 7016))
 
