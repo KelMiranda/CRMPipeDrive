@@ -5,12 +5,12 @@
         .container {
             max-width: 50%;
             margin: 0 auto;
-            background-color: #f7f7f7;
+            background-color: white;
             padding: 50px;
             text-align: center;
         }
         .header {
-            background-color: #e9eee914;
+            background-color: white;
             color: white;
             padding: 10px;
         }
@@ -21,25 +21,40 @@
         .body {
             margin: 10px 0;
             text-align: left;
-        }
-        table {
             width: 100%;
+        }
+
+        .body h1{
+            text-align: center;
+        }
+
+        table {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            align-content: center;
+            width: 50%;
             border-collapse: collapse;
         }
+
+        table tr th{
+            background-color: rgb(255, 246, 127);
+        }
+
         th, td {
             border: 1px solid black;
             padding: 8px;
-            text-align: left;
+            text-align: center;
         }
         th {
-            background-color: #ddd;
+            background-color: white;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <img src="./images/Logo_GrupoPelsa.png" alt="Logotipo GrupoPelsa">
+            <img src="https://sv.grupopelsa.com/wp-content/uploads/2022/06/LOGO-PELSA.png" alt="Logotipo GrupoPelsa">
         </div>
         <div class="body">
             <h1>Notificación de cotizaciones</h1>
@@ -52,13 +67,17 @@
                     <th>Cliente</th>
                     <th>Numero de cotizaciones abiertas</th>
                     <th># de documentos</th>
+                    <th>prueba</th>
                 </tr>
                 <!-- Aquí puedes insertar filas de productos dinámicamente -->
-                <tr>
-                    <td>{{producto1_nombre}}</td>
-                    <td>{{producto1_cantidad}}</td>
-                    <td>{{producto1_precio}}</td>
-                </tr>
+                {% for id, producto in productos.items() %}
+                    <tr>
+                        <td>{{ id }}</td>
+                        <td>{{ producto.nombre }}</td>
+                        <td>{{ producto.precio }}</td>
+                        <td>{{ producto.descripción }}</td>
+                    </tr>
+                {% endfor %}
                 <!-- Repite las filas según sea necesario -->
             </table>
             
