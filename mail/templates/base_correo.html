@@ -52,13 +52,17 @@
                     <th>Cliente</th>
                     <th>Numero de cotizaciones abiertas</th>
                     <th># de documentos</th>
+                    <th>prueba</th>
                 </tr>
                 <!-- Aquí puedes insertar filas de productos dinámicamente -->
-                <tr>
-                    <td>{{producto1_nombre}}</td>
-                    <td>{{producto1_cantidad}}</td>
-                    <td>{{producto1_precio}}</td>
-                </tr>
+                {% for id, producto in productos.items() %}
+                    <tr>
+                        <td>{{ id }}</td>
+                        <td>{{ producto.nombre }}</td>
+                        <td>{{ producto.precio }}</td>
+                        <td>{{ producto.descripción }}</td>
+                    </tr>
+                {% endfor %}
                 <!-- Repite las filas según sea necesario -->
             </table>
             
