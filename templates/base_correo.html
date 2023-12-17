@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .container {
+            max-width: 50%;
+            margin: 0 auto;
+            background-color: white;
+            padding: 50px;
+            text-align: center;
+        }
+        .header {
+            background-color: white;
+            color: white;
+            padding: 10px;
+        }
+        .header img {
+            width: 50%;
+            height: auto;
+        }
+        .body {
+            margin: 10px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .body h1{
+            text-align: center;
+        }
+
+        table {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            align-content: center;
+            width: 50%;
+            border-collapse: collapse;
+        }
+
+        table tr th{
+            background-color: rgb(255, 246, 127);
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://sv.grupopelsa.com/wp-content/uploads/2022/06/LOGO-PELSA.png" alt="Logotipo GrupoPelsa">
+        </div>
+        <div class="body">
+            <h1>Notificación de cotizaciones</h1>
+            <p>Hola, {{nombre_vendedor}}!</p>
+            <p>Se presenta a continuación una tabla detallada de todas sus cotizaciones abiertas correspondientes al año 2023. Le solicitamos revisarlas y proceder con las acciones necesarias para su cierre.</p>
+
+            <!-- Agregando una tabla -->
+            <table>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Numero de cotizaciones abiertas</th>
+                    <th># de documentos</th>
+                    <th>prueba</th>
+                </tr>
+                <!-- Aquí puedes insertar filas de productos dinámicamente -->
+                {% for id, producto in productos.items() %}
+                    <tr>
+                        <td>{{ id }}</td>
+                        <td>{{ producto.nombre }}</td>
+                        <td>{{ producto.precio }}</td>
+                        <td>{{ producto.descripción }}</td>
+                    </tr>
+                {% endfor %}
+                <!-- Repite las filas según sea necesario -->
+            </table>
+            
+            <div class="espacio">
+                <p>Si tiene alguna duda o consulta sobre cómo proceder, no dude en contactarme. A continuación, le proporciono mis datos de contacto para facilitar nuestra comunicación:</p>
+            </div>
+
+            <table>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Extensión</th>
+                    <th>Correo Electrónico</th>
+                </tr>
+                <tr>
+                    <td>Kelvin Miranda</td>
+                    <td>6705</td>
+                    <td>kelvin.miranda@grupopelsa.com</td>
+                </tr>
+            </table>
+            
+        </div>
+    </div>
+</body>
+</html>

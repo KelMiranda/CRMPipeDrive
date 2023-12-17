@@ -1,20 +1,18 @@
+from jinja2 import Environment, FileSystemLoader, TemplateNotFound
 
-from jinja2 import Environment, FileSystemLoader
+class JinjaTemplateManager:
+    def __init__(self, template_dir='./templates', default_template='base_correo.html'):
+        self.env = Environment(loader=FileSystemLoader(template_dir))
+        self.default_template = default_template
 
-
-if __name__=='__main__':
-    # Carga el entorno y la plantilla
-    env = Environment(loader=FileSystemLoader('./templates'))
-    template = env.get_template('base_correo.html')
-
-    # Producto en un diccionario.
-    productos = {
-    1: {'nombre': 'Manzana', 'precio': 0.50, 'descripción': 'Roja y jugosa'},
-    2: {'nombre': 'Banana', 'precio': 0.30, 'descripción': 'Madura y dulce'},
-    3: {'nombre': 'Cereza', 'precio': 2.00, 'descripción': 'Fresca y deliciosa'}
-}
-
-    # Renderiza la plantilla con datos
-    html = template.render(nombre_vendedor="Nombre Vendedor", productos=productos)
-
-    print(html)
+    def render_template(self, template_name=None, **kwargs):
+        # Usa la plantilla por defecto si no se proporciona una
+        template_name = template_name or self.default_template
+        try:
+            # Carga la plantilla
+            template = self.env.get_template(template_name)
+            # Renderiza la plantilla con los datos proporcionados
+            return template.render(**kwargs)
+        except TemplateNotFound:
+            # Retorna un mensaje de error si la plantilla no se encuentra
+            return f"Error: La plantilla '{template_name}' no se encuentra en el directorio."
