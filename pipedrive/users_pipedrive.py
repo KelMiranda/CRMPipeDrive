@@ -2,40 +2,40 @@ def get_id_pipedrive():
     user_ids = {
         # User for IGO
         'IGO': {
-            'SANDRA DOÑAN': 13581921,
-            'ALVARO AVILES': 13581921,
-            'CARLOS AVILES': 13581921,
-            'WILLIAM RAMIREZ': 13581932,
-            'ALEX ORELLANA': 13581932,
-            'JOSE ESTRADA': 13581943,
-            'JOSE MENA.': 13581943,
-            'JOSE PEREZ': 13581943,
-            'PABLO FLORES': 13045165,
-            'GERENCIA AV': 13045165,
-            'WILFREDO DIAZ': 13045165
+            'SANDRA DOÑAN': [13581921, 'sandra.donan@grupopelsa.com'],
+            'ALVARO AVILES': [13581921, 'alvaro.aviles@grupopelsa.com'],
+            'CARLOS AVILES': [13581921, 'carlos.aviles@grupopelsa.com'],
+            'WILLIAM RAMIREZ': [13581932, 'william.ramirez@grupopelsa.com'],
+            'ALEX ORELLANA': [13581932, 'alex.orellana@grupopelsa.com'],
+            'JOSE ESTRADA': [13581943, 'vendedor.industria2@grupopelsa.com'], 
+            'JOSE MENA.': [13581943, 'vendedor.industria1@grupopelsa.com'],
+            'JOSE PEREZ': [13581943, 'grandesclientes.pelsa@grupopelsa.com'],
+            'PABLO FLORES': [13045165, 'nilson.doradea@grupopelsa.com'],
+            'GERENCIA AV': [13045165, 'nilson.doradea@grupopelsa.com'],
+            'WILFREDO DIAZ': [13045165, 'nilson.doradea@grupopelsa.com']
         },
 
         # User for Contra
         'CONTRA': {
-            'VICTOR ESCOBAR': 13582075,
-            'MARLON VIDES': 13582075,
-            'MARY LANDAVERDE': 13582086,
-            'GERMAN CATIVO': 13582086,
-            'MERCEDES CRUZ': 13582097,
-            'EDUARDO MARTINEZ': 13582097,
-            'ESTHER GUERRERO': 13582097,
-            'GERENCIA FB': 13042899
+            'VICTOR ESCOBAR': [13582075, 'victor.escobar@grupopelsa.com'],
+            'MARLON VIDES': [13582075, 'marlon.vides@grupopelsa.com'],
+            'MARY LANDAVERDE': [13582086, 'maria.landaverde@grupopelsa.com'],
+            'GERMAN CATIVO': [13582086, 'german.cativo@grupopelsa.com'],
+            'MERCEDES CRUZ': [13582097, 'mercedes.cruz@grupopelsa.com'],
+            'EDUARDO MARTINEZ': [13582097, 'eduardo.martinez@grupopelsa.com'],
+            'ESTHER GUERRERO': [13582097, 'esther.guerrero@grupopelsa.com'],
+            'GERENCIA FB': [13042899, 'esau.osegueda@grupopelsa.com']
         },
 
         # User for Retail-FB
         'RETAIL - FB': {
-            'ERIKA ESTHEFANY JOVEL ARCE (FLOR BLANCA)': 13738649,
-            'ROBERTO GONZALES CARTERA': 13738649,
-            'ROBERTO GONZALEZ': 13738649,
-            'CESAR NAVIDAD': 13738660,
-            'CESAR NAVIDAD CARTERA': 13738660,
-            'EDUARDO ACEVEDO': 13738660,
-            'EDWIN BARAHONA': 13738660
+            'ERIKA ESTHEFANY JOVEL ARCE (FLOR BLANCA)': [13738649, 'erika.jovel@grupopelsa.com'],
+            'ROBERTO GONZALES CARTERA': [13738649, 'roberto.gonzalez@grupopelsa.com'],
+            'ROBERTO GONZALEZ': [13738649, 'roberto.gonzalez@grupopelsa.com'],
+            'CESAR NAVIDAD': [13738660, 'cesar.navidad@grupopelsa.com'],
+            'CESAR NAVIDAD CARTERA': [13738660, 'cesar.navidad@grupopelsa.com'],
+            'EDUARDO ACEVEDO': [13738660, 'eduardo.acevedo@grupopelsa.com'],
+            'EDWIN BARAHONA': [13738660, 'edwin.barahona@grupopelsa.com']
         },
 
         # User for Retail - AV
@@ -95,9 +95,9 @@ def get_id_pipedrive():
 
 
 class GetIdUser:
-    def __init__(self, name=None, id_user_pipedrive=None):
+    def __init__(self, name=None, mail=None):
         self.name = name
-        self.id_user_PipeDrive = id_user_pipedrive
+        self.mail = mail
 
     def get_user_id_and_sector(self):
         result = {}
@@ -117,7 +117,11 @@ class GetIdUser:
             if self.name in all_sales_person:
                 result = {
                     'sector': row,
-                    'id_user_pipedrive': all_sales_person.get(f'{self.name}'),
-                    'name': self.name
+                    'id_user_pipedrive': all_sales_person.get(f'{self.name}')[0],
+                    'name': self.name,
+                    'mail_pelsa': all_sales_person.get(f'{self.name}')[1],
                 }
         return result
+    
+
+print(GetIdUser('SANDRA DOÑAN').get_user_id_and_sector())
