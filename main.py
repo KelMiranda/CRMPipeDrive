@@ -3,10 +3,6 @@ from mail.JinjaTemplateManager import JinjaTemplateManager
 
 if __name__ == '__main__':
   
-  
-
-
-
   mail = Mail('SMTP_SERVER', 'SMTP_USERNAME', 'SMTP_PASSWORD')
   template_manager = JinjaTemplateManager()
   productos = {
