@@ -40,55 +40,66 @@ def get_id_pipedrive():
 
         # User for Retail - AV
         'RETAIL - AV': {
-            'EMILY ORELLANA': 13738638,
-            'JOSSELYNE HERNANDEZ': 13738638,
-            'MARIA LUISA': 13091607,
-            'MARTIN OSEGUEDA': 13738638,
-            'MARTIN OSEGUEDA CARTERA': 13738638,
-            'SAUL RIVAS': 13091607,
+            'EMILY ORELLANA': [13738638, ''],
+            'JOSSELYNE HERNANDEZ': [13738638, ''],
+            'MARIA LUISA': [13091607, ''],
+            'MARTIN OSEGUEDA': [13738638, ''],
+            'MARTIN OSEGUEDA CARTERA': [13738638, ''],
+            'SAUL RIVAS': [13091607, ],
         },
 
         # User for Retail - SM
         'RETAIL- SM': {
-            'MISAEL CHAVEZ': 13738671,
-            'NELSON GUEVARA': 13091607,
-            'RENE LOPEZ': 13738671,
-            'WILMAN ORELLANA': 13091607,
+            'MISAEL CHAVEZ': [13738671, ''],
+            'NELSON GUEVARA': [13091607, ''],
+            'RENE LOPEZ': [13738671, ''],
+            'WILMAN ORELLANA': [13091607, ''],
         },
 
         # User for ING
         'ING': {
-            'CARLOS HERNANDEZ': 13545610,
-            'HUGO CERRITOS': 13545610,
-            'WILLIAM MOLINA': 13814725,
-            'GONZALO CHAVARRI': 13814725,
-            'WILLAN MEJIA': 13814736,
-            'FATIMA FLORES': 13814747,
-            'JOSE PREZA': 13814747,
-            'JAMIL PALMA': 13814747,
-            'ALEX  CAMPOS': 14592007,
+            'CARLOS HERNANDEZ': [13545610, ''],
+            'HUGO CERRITOS': [13545610, ''],
+            'WILLIAM MOLINA': [13814725, ''],
+            'GONZALO CHAVARRI': [13814725, ''],
+            'WILLAN MEJIA': [13814736, ''],
+            'FATIMA FLORES': [13814747, ''],
+            'JOSE PREZA': [13814747, ''],
+            'JAMIL PALMA': [13814747, ''],
+            'ALEX  CAMPOS': [14592007, ''],
         },
 
         # User for Mayo
         'MAYO': {
-            'ASTRID MORAN': 14592007,
-            'LUIS PACHECO GUARDADO': 14592007,
-            'ALEX  CAMPOS': 14592007,
-            'MARVIN RAMIREZ': 14592018,
-            'DAVID ISAAC ORELLANA VASQUEZ': 14592018,
-            'NICOLAS QUINTANILLA': 14592018,
-            'ERNESTO CAMPOS': 13060961,
-            'GERENTE MAYOREO': 13060961,
+            'ASTRID MORAN': [14592007, ''],
+            'LUIS PACHECO GUARDADO': [14592007, ''],
+            'ALEX  CAMPOS': [14592007, ''],
+            'MARVIN RAMIREZ': [14592018, ''],
+            'DAVID ISAAC ORELLANA VASQUEZ': [14592018, ''],
+            'NICOLAS QUINTANILLA': [14592018, ''],
+            'ERNESTO CAMPOS': [13060961, ''],
+            'GERENTE MAYOREO': [13060961, ''],
         },
 
         # User for Utili
         'UTIL': {
-            'JOSE ORTEGA': 14065624
+            'JOSE ORTEGA': [14065624, '']
         },
 
         # User for Admin
         'ADMIN': {
-            'GRUPO PELSA': 12806795
+            'GRUPO PELSA': [12806795, '']
+        },
+
+        #User for Guatemala
+        'GUATEMALA': {
+            '4 - ROBERTO ROMERO': [13013045, ''],
+            '33 - MYNOR GARCIA': [13004509, ''],
+            'JULIO JOSUE CANO LOPEZ': [13013045, ''],
+            'WALTER ENRIQUEZ': [13013045, ''],
+            'AMANDA BOCHE':[13004509, ''],
+            'GERENCIA': [12992629, ''],
+            'RUBEN ESCOBAR': [12992629, '']
         }
     }
     return user_ids
@@ -110,7 +121,8 @@ class GetIdUser:
             'RETAIL - FB',
             'RETAIL- SM',
             'UTIL',
-            'ADMIN'
+            'ADMIN',
+            'GUATEMALA'
         }
         for row in sector:
             all_sales_person = get_id_pipedrive().get(f'{row}')
@@ -122,6 +134,3 @@ class GetIdUser:
                     'mail_pelsa': all_sales_person.get(f'{self.name}')[1],
                 }
         return result
-    
-
-print(GetIdUser('SANDRA DOÑAN').get_user_id_and_sector())
