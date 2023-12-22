@@ -35,7 +35,6 @@ class Cotizaciones:
         
         return result, errores
     
-
     def validar_cotizacion(self, ord=None, docnum=None, serie=None):
         documentos_actualizados = []
         errores = []
@@ -85,3 +84,42 @@ class Cotizaciones:
         print('######################Finalizando Proceso##########################################')
         return documentos_actualizados, errores
    
+    def obtener_cotizacion(self, sector, validador):
+        errores = []
+        query = f"EXEC [dbo].[SP_SECTOR]'{self.pais}', '{sector}', '{validador}'"
+        try:
+            self.db.connect()
+            result = self.db.execute_query(query)
+
+        except Exception as e:
+            error_message = f"Error al ejecutar la consulta el error es: {str(e)}"
+            errores.append(error_message)
+        finally:
+            self.db.disconnect()
+        return result, errores
+
+    def obtener_cotizaciones_abiertas(self, SlpName):
+        errores = []
+        query = f"Select SlpName, CardCode, CardName, COUNT(*) AS #Cotizaciones from DatosProyectos_PipeDrive Where DocStatus = 'O' AND Pais = '{self.pais}' AND SlpName = '{SlpName}' Group By SlpName, CardCode, CardName Order By #Cotizaciones desc"
+        try:
+            self.db.connect()
+            result = self.db.execute_query(query)
+        except Exception as e:
+            error_message = f"Error al ejecutar la consulta el error es: {str(e)}"
+            errores.append(error_message)
+        finally:
+            self.db.disconnect()
+        return result, errores
+
+    def obtener_docnum_cotizacion(self, codigo_cliente):
+        errores = []
+        query = f"Select DocNum from DatosProyectos_PipeDrive Where CardCode = '{codigo_cliente}' AND DocStatus = 'O'"
+        try:
+            self.db.connect()
+            result = self.db.execute_query(query)
+        except Exception as e:
+            error_message = f"Error al ejecutar la consulta el error es: {str(e)}"
+            errores.append(error_message)
+        finally:
+            self.db.disconnect()
+        return result, errores

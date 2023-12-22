@@ -4,7 +4,7 @@ def get_id_pipedrive():
         'IGO': {
             'SANDRA DOÑAN': [13581921, 'sandra.donan@grupopelsa.com'],
             'ALVARO AVILES': [13581921, 'alvaro.aviles@grupopelsa.com'],
-            'CARLOS AVILES': [13581921, 'carlos.aviles@grupopelsa.com'],
+            'CARLOS AVILES': [13581921, 'nilson.doradea@grupopelsa.com'],
             'WILLIAM RAMIREZ': [13581932, 'william.ramirez@grupopelsa.com'],
             'ALEX ORELLANA': [13581932, 'alex.orellana@grupopelsa.com'],
             'JOSE ESTRADA': [13581943, 'vendedor.industria2@grupopelsa.com'], 
@@ -29,7 +29,7 @@ def get_id_pipedrive():
 
         # User for Retail-FB
         'RETAIL - FB': {
-            'ERIKA ESTHEFANY JOVEL ARCE (FLOR BLANCA)': [13738649, 'erika.jovel@grupopelsa.com'],
+            'ERIKA ESTHEFANY JOVEL ARCE (FLOR BLANCA)': [13738649, 'ventas.salafb@grupopelsa.com'],
             'ROBERTO GONZALES CARTERA': [13738649, 'roberto.gonzalez@grupopelsa.com'],
             'ROBERTO GONZALEZ': [13738649, 'roberto.gonzalez@grupopelsa.com'],
             'CESAR NAVIDAD': [13738660, 'cesar.navidad@grupopelsa.com'],
@@ -40,20 +40,20 @@ def get_id_pipedrive():
 
         # User for Retail - AV
         'RETAIL - AV': {
-            'EMILY ORELLANA': [13738638, ''],
-            'JOSSELYNE HERNANDEZ': [13738638, ''],
-            'MARIA LUISA': [13091607, ''],
-            'MARTIN OSEGUEDA': [13738638, ''],
-            'MARTIN OSEGUEDA CARTERA': [13738638, ''],
-            'SAUL RIVAS': [13091607, ],
+            'EMILY ORELLANA': [13738638, 'emily.orellana@grupopelsa.com'],
+            'JOSSELYNE HERNANDEZ': [13738638, 'jhosselyn.corvera@grupopelsa.com'],
+            'MARIA LUISA': [13091607, 'carmen.rivera@grupopelsa.com'],
+            'MARTIN OSEGUEDA': [13738638, 'martinh.osegueda@grupopelsa.com'],
+            'MARTIN OSEGUEDA CARTERA': [13738638, 'martinh.osegueda@grupopelsa.com'],
+            'SAUL RIVAS': [13091607, 'carmen.rivera@grupopelsa.com'],
         },
 
         # User for Retail - SM
         'RETAIL- SM': {
-            'MISAEL CHAVEZ': [13738671, ''],
-            'NELSON GUEVARA': [13091607, ''],
-            'RENE LOPEZ': [13738671, ''],
-            'WILMAN ORELLANA': [13091607, ''],
+            'MISAEL CHAVEZ': [13738671, 'misael.chavez@grupopelsa.com'],
+            'NELSON GUEVARA': [13091607, 'julio.guevara@grupopelsa.com'],
+            'RENE LOPEZ': [13738671, 'rene.lopez@grupopelsa.com'],
+            'WILMAN ORELLANA': [13091607, '	julio.guevara@grupopelsa.com'],
         },
 
         # User for ING
@@ -71,19 +71,19 @@ def get_id_pipedrive():
 
         # User for Mayo
         'MAYO': {
-            'ASTRID MORAN': [14592007, ''],
-            'LUIS PACHECO GUARDADO': [14592007, ''],
-            'ALEX  CAMPOS': [14592007, ''],
-            'MARVIN RAMIREZ': [14592018, ''],
-            'DAVID ISAAC ORELLANA VASQUEZ': [14592018, ''],
-            'NICOLAS QUINTANILLA': [14592018, ''],
-            'ERNESTO CAMPOS': [13060961, ''],
-            'GERENTE MAYOREO': [13060961, ''],
+            'ASTRID MORAN': [14592007, 'astrid.moran@grupopelsa.com'],
+            'LUIS PACHECO GUARDADO': [14592007, 'mayoreo4.es@grupopelsa.com'],
+            'ALEX  CAMPOS': [14592007, 'mayoreo1.es@grupopelsa.com'],
+            'MARVIN RAMIREZ': [14592018, 'david.ramirez@grupopelsa.com'],
+            'DAVID ISAAC ORELLANA VASQUEZ': [14592018, ' mayoreo3.sm@grupopelsa.com'],
+            'NICOLAS QUINTANILLA': [14592018, 'mayoreo4.sm@grupopelsa.com'],
+            'ERNESTO CAMPOS': [13060961, 'jefatura.mayoreo@grupopelsa.com'],
+            'GERENTE MAYOREO': [13060961, 'jefatura.mayoreo@grupopelsa.com'],
         },
 
         # User for Utili
         'UTIL': {
-            'JOSE ORTEGA': [14065624, '']
+            'JOSE ORTEGA': [14065624, 'jose.ortega@grupopelsa.com']
         },
 
         # User for Admin
