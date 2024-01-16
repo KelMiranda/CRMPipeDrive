@@ -1,3 +1,5 @@
+
+
 def get_id_pipedrive():
     user_ids = {
         # User for IGO
@@ -74,9 +76,9 @@ def get_id_pipedrive():
             'ASTRID MORAN': [14592007, 'astrid.moran@grupopelsa.com'],
             'LUIS PACHECO GUARDADO': [14592007, 'mayoreo4.es@grupopelsa.com'],
             'ALEX  CAMPOS': [14592007, 'mayoreo1.es@grupopelsa.com'],
-            'MARVIN RAMIREZ': [14592018, 'david.ramirez@grupopelsa.com'],
+            'MARVIN RAMIREZ': [14592018, 'marvin.ramirez@grupopelsa.com'],
             'DAVID ISAAC ORELLANA VASQUEZ': [14592018, ' mayoreo3.sm@grupopelsa.com'],
-            'NICOLAS QUINTANILLA': [14592018, 'mayoreo4.sm@grupopelsa.com'],
+            'NICOLAS QUINTANILLA': [14592018, 'mayoreo2.sm@grupopelsa.com'],
             'ERNESTO CAMPOS': [13060961, 'jefatura.mayoreo@grupopelsa.com'],
             'GERENTE MAYOREO': [13060961, 'jefatura.mayoreo@grupopelsa.com'],
         },
@@ -88,7 +90,7 @@ def get_id_pipedrive():
 
         # User for Admin
         'ADMIN': {
-            'GRUPO PELSA': [12806795, '']
+            'GRUPO PELSA': [12806795, 'kelvin.miranda@grupopelsa.com']
         },
 
         #User for Guatemala
@@ -106,9 +108,12 @@ def get_id_pipedrive():
 
 
 class GetIdUser:
-    def __init__(self, name=None, mail=None):
+    def __init__(self, name=None):
         self.name = name
-        self.mail = mail
+
+    def vendedor_sector(self, sector):
+        vendedores = get_id_pipedrive()
+        return vendedores.get(f'{sector}')
 
     def get_user_id_and_sector(self):
         result = {}
@@ -132,5 +137,10 @@ class GetIdUser:
                     'id_user_pipedrive': all_sales_person.get(f'{self.name}')[0],
                     'name': self.name,
                     'mail_pelsa': all_sales_person.get(f'{self.name}')[1],
+                }
+                break
+            else:
+                result = {
+                    'id_user_pipedrive': 12806795
                 }
         return result

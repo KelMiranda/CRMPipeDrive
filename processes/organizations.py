@@ -12,7 +12,7 @@ def get_all_organization():
         "start": 0,
         "limit": 100,
     }
-    result = PipedriveAPI('TOKEN_CRM').get_records('organizations', data)
+    result = PipedriveAPI('Token').get_records('organizations', data)
     return result
 
 
@@ -21,7 +21,7 @@ class OrganizationTable:
         self.table = table
         self.country = country
         self.db = SQLServerDatabase('SERVER', 'DATABASE', 'USERNAME_', 'PASSWORD')
-        self.pipe = PipedriveAPI('TOKEN_CRM')
+        self.pipe = PipedriveAPI('Token')
 
     def get_customers_from_a_table(self):
         query = f"Select * from {self.table} Where Pais = '{self.country}' AND Vendedor_Asignado != 'SIN CARTERA ASIGNADA' AND id_PipeDrive > 0 order by id_PipeDrive"

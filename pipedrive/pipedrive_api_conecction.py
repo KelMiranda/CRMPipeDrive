@@ -1,13 +1,18 @@
 import requests
 import os
 from urllib.parse import urljoin
+import configparser
+
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 
 class PipedriveAPI:
     BASE_URL = "https://api.pipedrive.com/v1"
 
     def __init__(self, api_token):
-        self.api_token = os.getenv(api_token)
+        #self.api_token = os.getenv(api_token)
+        self.api_token = config[f'{api_token}']['api_token']
 
     def get_request(self, endpoint, params=None):
         """
@@ -22,7 +27,6 @@ class PipedriveAPI:
         """
         try:
             params = {"api_token": self.api_token}
-            #headers=headers
             response = requests.get(f"{self.BASE_URL}/{endpoint}", params=params)
             response.raise_for_status()
 
@@ -86,8 +90,35 @@ class PipedriveAPI:
             print(f"Request Error: {e}")
             return None
 
+    def post_request(self, endpoint, data=None):
+        """
+        Realiza una solicitud POST a la API de Pipedrive.
+
+        Args:
+        - endpoint (str): El endpoint de la API.
+        - data (dict): El cuerpo de la solicitud para la API.
+
+        Returns:
+        - dict or None: Los datos de la respuesta JSON o None si hay un error.
+        """
+        try:
+            headers = {"Content-Type": "application/json"}
+            params = {"api_token": self.api_token}
+            response = requests.post(f"{self.BASE_URL}/{endpoint}", json=data, headers=headers, params=params)
+            response.raise_for_status()
+
+            # Verifica que el código de estado de la respuesta sea 201 (Creado)
+            if response.status_code == 201:
+                return response.json()
+            else:
+                return None
+        except requests.exceptions.RequestException as e:
+            # Puedes imprimir o registrar el error para facilitar la depuración
+            print(f"Request Error: {e}")
+            return None
+
     def get_deals(self, id_deal):
-        print(self.api_token)
+        #print(self.api_token)
         return self.get_request(f"deals/{id_deal}")
 
     def get_stages(self, id_stages):
@@ -159,3 +190,13 @@ class PipedriveAPI:
 
     def delete_followers_in_organization(self, id_organization, id_user_pipedrive):
         return self.delete_request(f'organizations/{int(id_organization)}/followers/{int(id_user_pipedrive)}')
+
+    def get_followers_deals(self, id_deals):
+        return self.get_request(f'deals/{id_deals}/followers')
+
+    def delete_followers_in_deals(self, id_deals, id_user_pipedrive):
+        return self.delete_request(f'deals/{int(id_deals)}/followers/{int(id_user_pipedrive)}')
+
+    def post_followers_in_deals(self, id_deals, data):
+        return self.post_request(f'deals/{int(id_deals)}/followers', data)
+
