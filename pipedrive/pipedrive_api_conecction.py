@@ -200,3 +200,5 @@ class PipedriveAPI:
     def post_followers_in_deals(self, id_deals, data):
         return self.post_request(f'deals/{int(id_deals)}/followers', data)
 
+    def get_all_user(self):
+        return self.get_request('users')

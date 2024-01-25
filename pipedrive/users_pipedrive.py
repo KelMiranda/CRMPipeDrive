@@ -99,7 +99,7 @@ def get_id_pipedrive():
             '33 - MYNOR GARCIA': [13004509, ''],
             'JULIO JOSUE CANO LOPEZ': [13013045, ''],
             'WALTER ENRIQUEZ': [13013045, ''],
-            'AMANDA BOCHE':[13004509, ''],
+            'AMANDA BOCHE': [13004509, ''],
             'GERENCIA': [12992629, ''],
             'RUBEN ESCOBAR': [12992629, '']
         }
@@ -107,13 +107,14 @@ def get_id_pipedrive():
     return user_ids
 
 
+def vendedor_sector(sector):
+    vendedores = get_id_pipedrive()
+    return vendedores.get(f'{sector}')
+
+
 class GetIdUser:
     def __init__(self, name=None):
         self.name = name
-
-    def vendedor_sector(self, sector):
-        vendedores = get_id_pipedrive()
-        return vendedores.get(f'{sector}')
 
     def get_user_id_and_sector(self):
         result = {}

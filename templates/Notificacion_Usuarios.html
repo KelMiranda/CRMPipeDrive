@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .container {
+            max-width: 50%;
+            margin: 0 auto;
+            background-color: white;
+            padding: 50px;
+            text-align: center;
+        }
+        .header {
+            background-color: white;
+            color: white;
+            padding: 10px;
+        }
+        .header img {
+            width: 50%;
+            height: auto;
+        }
+        .body {
+            margin: 10px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .body h1{
+            text-align: center;
+        }
+
+        table {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            align-content: center;
+            width: 50%;
+            border-collapse: collapse;
+        }
+
+        table tr th{
+            background-color: rgb(255, 246, 127);
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://sv.grupopelsa.com/wp-content/uploads/2022/06/LOGO-PELSA.png" alt="Logotipo GrupoPelsa">
+        </div>
+        <div class="body">
+            <h1>Notificación de ultima conexión</h1>
+            <p>Estimados {{nombre}},</p>
+            <p>Confío en que este mensaje les encuentre bien y en plena actividad.</p>
+            <p>Me complace compartir con ustedes un documento que refleja el estado actual de los usuarios de nuestro sistema CRM en El Salvador. Este documento ha sido preparado con la intención de brindar una visión clara y precisa de la interacción de nuestros usuarios con el sistema. {{fecha_actual}}</p>
+            <p>Encontrarán en este informe dos columnas que merecen especial atención:</p>
+            <ul>
+                <li><b>Días de Inactividad Total:</b> Esta columna muestra el número acumulado de días en los que cada usuario no ha registrado actividad en el sistema. Este dato es fundamental para comprender la frecuencia de uso y el nivel de compromiso de nuestros usuarios.</li>
+                <li><b>Fecha de Última Conexión:</b> La última columna del informe indica la fecha en la que cada usuario accedió al sistema por última vez, ofreciendo una perspectiva actualizada de su participación.</li>
+            </ul>
+            <!-- Agregando una tabla -->
+            <table>
+                <tr>
+                    <th>numero</th>
+                    <th>Usuario</th>
+                    <th>Días de Inactividad Total</th>
+                    <th>Fecha de Última Conexión</th>
+                </tr>
+                <!-- Aquí puedes insertar filas de productos dinámicamente -->
+                {% for id, values in datos.items() %}
+                    <tr>
+                        <td>{{ id }}</td>
+                        <td>{{ values['usuario'] }}</td>
+                        <td>{{ values['#dias'] }}</td>
+                        <td>{{ values['fecha'] }}</td>
+                    </tr>
+                {% endfor %}
+                <!-- Repite las filas según sea necesario -->
+            </table>
+            
+            <div class="espacio">
+                <p>Si tiene alguna duda o consulta sobre cómo proceder, no dude en contactarme. A continuación, le proporciono mis datos de contacto para facilitar nuestra comunicación:</p>
+            </div>
+
+            <table>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Extensión</th>
+                    <th>Correo Electrónico</th>
+                </tr>
+                <tr>
+                    <td>Kelvin Miranda</td>
+                    <td>6705</td>
+                    <td>kelvin.miranda@grupopelsa.com</td>
+                </tr>
+            </table>
+            
+        </div>
+    </div>
+</body>
+</html>
