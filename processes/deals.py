@@ -211,3 +211,37 @@ class DealTable:
                 else:
                     print(f'el vendedor:{id_row}, deja de seguir este trato')
                     print(self.pipe.delete_followers_in_deals(id_deal, int(row.get('id'))).get('success'))
+
+    def nombres_vendedor_cotizado(self):
+        si_existe = []
+        no_existe = []
+        query = f"Select distinct UserName from {self.table} Where Pais = '{self.country}'"
+        self.db.connect()
+        valores = self.db.execute_query(query)
+        opciones = get_all_option_for_fields_in_deals([12522]).get('12522')
+        for valor in valores:
+            if opciones.get(f'{valor[0]}'):
+                si_existe.append({f'{valor[0]}': 'Existe'})
+            else:
+                no_existe.append({f'{valor[0]}': 'No Existe'})
+
+        output = {'Si Existen': si_existe,
+                  'No Existe': no_existe}
+        return output
+
+    def nombres_vendedor_asignado(self):
+        si_existe = []
+        no_existe = []
+        query = f"Select distinct SlpName from {self.table} Where Pais = '{self.country}'"
+        self.db.connect()
+        valores = self.db.execute_query(query)
+        opciones = get_all_option_for_fields_in_deals([12521]).get('12521')
+        for valor in valores:
+            if opciones.get(f'{valor[0]}'):
+                si_existe.append({f'{valor[0]}': 'Existe'})
+            else:
+                no_existe.append({f'{valor[0]}': 'No Existe'})
+
+        output = {'Si Existen': si_existe,
+                  'No Existe': no_existe}
+        return output

@@ -1,28 +1,71 @@
 from database.sql_server_connection import SQLServerDatabase
-from time import sleep
+from time import sleep, time
+from processes.deals import get_all_option_for_fields_in_deals
+
+familias_padres = {
+    'CAJAS TERMICAS, BRK': 'c97bd1f994dce3b891f1189965c06ef775b53757',
+    'CANALIZ Y ACC MONTAJ': 'd8b5d8cdff3533b40d7374a4f9cfbfd0584f2037',
+    'CONDUCTOR Y ACC': 'c08631f1baceb0fb1cd7c34edaef621c6dd911fe',
+    'CONTROL': '557101afbead32fca908341f294788fb6dd57dd9',
+    'DESCONTINUADOS': '16b85bc05946a911000eda5f6c95578bb9b1db50',
+    'ENSAMBLE ARMADO': '9bf8fb0b8840223389f599ad4a1ef25271abdb28',
+    'ENSAMBLE PROYECTO': 'beaaabe8333b58df8b8971601d08a5257cf0fcb0',
+    'EQUIPO, HERRAMIENTAS': '588ad42ea917eb08864d97c7b60b401bd5d9b864',
+    'ILUMINACION Y ACC': 'def1bf7c50affda41b5f259ad136adb1eba39ecf',
+    'INGENIERIA': '4cd3d321ecc87ace08b03aefc712f50df86dec48',
+    'INTR, TOMA, PLACA': '71f471c6924d9bb1cce5b55c02ba8ce82ca4d77b',
+    'LINEAS DISTRIB Y TEL': 'f65cdf161909babfada6f69d55c0503b0fa8cfe4',
+    'POSTES': '57efa7dfd4669f9bf76c77287b859bbd3238caf7',
+    'PRODUCTOS P/DATOS': 'df423477485bc5fa9c447c497fd9b45c4157850b',
+    'PROTEC ALTA/BAJA T': '26b869616ea34b1dd7cae7b86b842f7f58a19882',
+    'REGULADOR DE ENERGIA': 'fef3cd02a2a74170c9ef7a7c9105a56b9803aaca',
+    'SERVICIO EXTERNO': '6065a5cb51451f337f93c2cf910bbaf52b1f2b69',
+    'TRANSFORM Y ACC': 'b88c83c134b66846b742619004c6163b94c63024'
+}
+
+datos_cotizacion = {
+    'vendedor_asignado': 'bdc9870365278bf245effd816618a8a9bff8fad9',
+    'vendedor_cot': 'c0af428ccdb6d8605a475372986995a0a6ed0a69',
+    'Sector_Vendedor': '057ae06bd90a1bcecb68ebceb30b99fb8be94801',
+    'Pais': '6aba016cdd852ee60aa6ae2ced2af84b9105d78c',
+    'obtener_estado_cotizacion': '6fe64586c7f0e32e9caabde4b5c1d7a2ea697748',
+    'DocNum': '1b847f729d427a61ac42094df3070a2cee4a0286',
+    'Serie': '801b170ad3139ba6ba293ac71270ddb96c8b8868',
+    'Comentario_POS': 'c1cbb4df13d9054e0c1bb4f99535ab0a1e9e668c',
+    'Descripcion_Pos': '9ac480743304f616d3575decabf7114625eddf53',
+    'T_Sector_Cliente': '9a5bb72d44fb456c5c89624053ff099c291bced4',
+    'expected_close_date': 'expected_close_date',
+    'label': 'label',
+    'Valor': 'value',
+    'Título': 'title',
+    'Organizacion': 'org_id',
+    'DocDate': 'add_time',
+    'DocDate1': '95b91ae97456e23b83e3a8a43f650a0156fff2f7',
+    'Autorizado': '1b27f2b74dcfb24d3dd5e4dfb5611da7150afa20',
+    'obtener_tipo_cotizacion': '6840b183ea0a8dd8a55b4f7cd773a4d1f73e442a',
+    'CardName': '060d979042413ee06230b755710f42901b6b0a92'
+}
 
 
 def notificar_errores(errores):
         # Aquí puedes implementar la lógica para enviar notificaciones con la lista de errores
         print("Enviando notificación de errores:", errores)
 
-        
 
 class Cotizaciones:
     def __init__(self, pais):
         self.pais = pais
         self.db = SQLServerDatabase('SERVER', 'DATABASE', 'USERNAME_', 'PASSWORD')
-    
 
     def cierre_de_cotizaciones(self):
         errores = []
+        result = []
         query = f'EXEC [dbo].[SP_CERRANDO_COTIZACIONES_{self.pais}]'
 
         try:
             self.db.connect()
             result = self.db.execute_query(query)
 
-        
         except Exception as e:
             error_message = f"Error al ejecutar la consulta dicho error es: {str(e)}"
             errores.append(error_message)
@@ -35,10 +78,11 @@ class Cotizaciones:
         
         return result, errores
     
-    def validar_cotizacion(self, ord=None, docnum=None, serie=None):
+    def validar_cotizacion(self, ord=None, docnum=None, serie=None, CardCode=None):
         documentos_actualizados = []
         errores = []
-        if ord is None and docnum is None and serie is None:
+
+        if ord is None and docnum is None and serie is None and CardCode is None:
             result = self.cierre_de_cotizaciones()
             if len(result[0]) == 0:
                 documentos_actualizados.append(f'No hay cotizaciones en la funcion de cierre en: {self.pais}')
@@ -62,8 +106,8 @@ class Cotizaciones:
                         self.db.disconnect()
 
         else:
-            query = f"EXEC [dbo].[SP_VALIDADOR_PROYECTO_MERGE_{self.pais}]'{ord}',{docnum},'{serie}'"
-            query_validador = f"Select * from DatosProyectos_PipeDrive Where DocNum = {docnum} AND ORD ='{ord}'"
+            query = f"EXEC [dbo].[SP_VALIDADOR_PROYECTO_MERGE_{self.pais}]'{ord}',{docnum},'{serie}', '{CardCode}'"
+            query_validador = f"Select * from DatosProyectos_PipeDrive Where DocNum = {docnum} AND ORD ='{ord}' AND CardCode = '{CardCode}'"
             self.db.connect()
             query_validador_result = self.db.execute_query(query_validador)
             if query_validador_result:
@@ -84,8 +128,9 @@ class Cotizaciones:
         print('######################Finalizando Proceso##########################################')
         return documentos_actualizados, errores
    
-    def obtener_cotizacion(self, sector, validador):
+    def obtener_cotizaciones(self, sector, validador):
         errores = []
+        result = []
         query = f"EXEC [dbo].[SP_SECTOR]'{self.pais}', '{sector}', '{validador}'"
         try:
             self.db.connect()
@@ -100,6 +145,7 @@ class Cotizaciones:
 
     def obtener_cotizaciones_abiertas(self, SlpName):
         errores = []
+        result = []
         query = f"Select SlpName, CardCode, CardName, COUNT(*) AS #Cotizaciones from DatosProyectos_PipeDrive Where DocStatus = 'O' AND Pais = '{self.pais}' AND SlpName = '{SlpName}' Group By SlpName, CardCode, CardName Order By #Cotizaciones desc"
         try:
             self.db.connect()
@@ -110,10 +156,11 @@ class Cotizaciones:
         finally:
             self.db.disconnect()
         return result, errores
-
-    def obtener_docnum_cotizacion(self, codigo_cliente):
+    
+    def cotizaciones_del_dia(self, fecha):
         errores = []
-        query = f"Select DocNum from DatosProyectos_PipeDrive Where CardCode = '{codigo_cliente}' AND DocStatus = 'O'"
+        result = []
+        query = f"EXEC [dbo].[SP_Cotizaciones_Dia_{self.pais}]{fecha}"
         try:
             self.db.connect()
             result = self.db.execute_query(query)
@@ -123,3 +170,138 @@ class Cotizaciones:
         finally:
             self.db.disconnect()
         return result, errores
+
+    def ultima_version(self, docnum, ORD, cardcode):
+        query = f"EXEC [dbo].[SP_COTIZACIONES_BUSQUEDA_{self.pais}_PY] {docnum}, '{ORD}', '{cardcode}'"
+        errores = []
+        result = []
+        try:
+            self.db.connect()
+            result = self.db.execute_query(query)
+        except Exception as e:
+            error_message = f"Error al ejecutar la consulta el error es: {str(e)}"
+            errores.append(error_message)
+        finally:
+            self.db.disconnect()
+        return result, errores
+
+    def familia_padre_de_la_cotizacion(self, DocNum, DocEntry):
+        errores = []
+        try:
+            # Intenta conectarse a la base de datos y ejecutar la consulta
+            self.db.connect()
+            query = f"EXEC [dbo].[SP_DetalleProducto_{self.pais}] {DocNum}, {DocEntry}"
+            valores = self.db.execute_query(query)
+            # Procesa los resultados de la consulta
+            result = []
+            for row in valores:
+                clave_familia = familias_padres.get(row[1])
+                if clave_familia is not None:
+                    result.append({f"{clave_familia}": float(row[0])})
+                else:
+                    print(f"Clave {row[1]} no encontrada en familias_padres.")
+
+            return result
+        except Exception as e:
+            # Maneja cualquier excepción que ocurra durante la conexión a la base de datos o la ejecución de la consulta
+            errores.append({'DocNum': DocNum, 'msg_error': str(e)})
+            # Decide cómo quieres manejar este error; podrías retornar None, una lista vacía, o re-lanzar la excepción
+            return None
+        finally:
+            # Código que se ejecutará independientemente de si se produjo una excepción o no
+            # Por ejemplo, cerrar la conexión a la base de datos si está abierta
+            if self.db.connect():
+                self.db.disconnect()
+                print("La conexión a la base de datos se ha cerrado.")
+
+    def datos_de_la_cotizacion(self, DocNum, DocEntry):
+        result = []
+        errores = []
+        try:
+            id_fields_deals = [12527, 12546, 12521, 12523, 12522, 12524, 12531, 12529, 12534]
+            values = get_all_option_for_fields_in_deals(id_fields_deals)
+            # Intenta conectarse a la base de datos y ejecutar la consulta
+            self.db.connect()
+            query = f"EXEC [dbo].[SP_COTIZACIONES_{self.pais}_PYTHON]  {DocNum}, {DocEntry}"
+            valores = self.db.execute_query(query)[0]
+            # Procesa los resultados de la consulta
+            result.append({
+                f"{datos_cotizacion.get('vendedor_asignado')}": values.get('12521').get(f'{valores[0]}'),
+                f"{datos_cotizacion.get('vendedor_cot')}": values.get('12522').get(f'{valores[1]}'),
+                f"{datos_cotizacion.get('Sector_Vendedor')}": values.get('12523').get(f'{valores[2]}'),
+                f"{datos_cotizacion.get('Pais')}": values.get('12524').get(f'{valores[3]}'),
+                f"{datos_cotizacion.get('obtener_estado_cotizacion')}": values.get('12527').get(f'{valores[4]}'),
+                f"{datos_cotizacion.get('DocNum')}": valores[5],
+                f"{datos_cotizacion.get('Serie')}": valores[6],
+                f"{datos_cotizacion.get('Comentario_POS')}": valores[7],
+                f"{datos_cotizacion.get('Descripcion_Pos')}": values.get('12531').get(f'{valores[8]}'),
+                f"{datos_cotizacion.get('T_Sector_Cliente')}": values.get('12529').get(f'{valores[9]}'),
+                f"{datos_cotizacion.get('expected_close_date')}": valores[10].strftime('%Y-%m-%d'),
+                f"{datos_cotizacion.get('label')}": valores[11],
+                f"{datos_cotizacion.get('Valor')}": float(valores[12]),
+                f"{datos_cotizacion.get('Título')}": valores[13],
+                f"{datos_cotizacion.get('Organizacion')}": valores[14],
+                f"{datos_cotizacion.get('DocDate')}": valores[15].strftime('%Y-%m-%d'),
+                f"{datos_cotizacion.get('DocDate1')}": valores[15].strftime('%Y-%m-%d'),
+                f"{datos_cotizacion.get('Autorizado')}": values.get('12534').get(f'{valores[16]}'),
+                f"{datos_cotizacion.get('obtener_tipo_cotizacion')}": values.get('12546').get(f'{valores[17]}'),
+                f"{datos_cotizacion.get('CardName')}": valores[18]
+            })
+            return result
+
+        except Exception as e:
+            # Maneja cualquier excepción que ocurra durante la conexión a la base de datos o la ejecución de la consulta
+            errores.append({'DocNum': DocNum, 'msg_error': str(e)})
+            # Decide cómo quieres manejar este error; podrías retornar None, una lista vacía, o re-lanzar la excepción
+            return errores
+        finally:
+            # Código que se ejecutará independientemente de si se produjo una excepción o no
+            # Por ejemplo, cerrar la conexión a la base de datos si está abierta
+            if self.db.connect():
+                self.db.disconnect()
+                print("La conexión a la base de datos se ha cerrado.")
+
+    def marcar_de_la_cotizacion(self, DocNum, DocEntry):
+        result = []
+        errores = []
+        salida = []
+        try:
+            self.db.connect()
+            query = f"Select distinct FirmName from [dbo].[VW_D_PRO_SV] Where DocNum = {DocNum} AND DocEntry = {DocEntry}"
+            valores = self.db.execute_query(query)
+            for row in valores:
+                salida.append(row)
+            # Procesa los resultados de la consulta
+            result = ", ".join([elemento[0] for elemento in salida])
+            return result
+
+        except Exception as e:
+            # Maneja cualquier excepción que ocurra durante la conexión a la base de datos o la ejecución de la consulta
+            errores.append({'DocNum': DocNum, 'msg_error': str(e)})
+            # Decide cómo quieres manejar este error; podrías retornar None, una lista vacía, o re-lanzar la excepción
+            return errores
+        finally:
+            # Código que se ejecutará independientemente de si se produjo una excepción o no
+            # Por ejemplo, cerrar la conexión a la base de datos si está abierta
+            if self.db.connect():
+                self.db.disconnect()
+                print("La conexión a la base de datos se ha cerrado.")
+
+    def cotizaciones_por_sector(self, sector, validador):
+        errores = []
+        result = []
+        query = f"Select DocNum, DocEntry from DatosProyectos_PipeDrive Where Pais = '{self.pais}' AND Validador = '{validador}' AND U_JEFE = '{sector}'"
+        try:
+            self.db.connect()
+            result = self.db.execute_query(query)
+
+        except Exception as e:
+            error_message = f"Error al ejecutar la consulta el error es: {str(e)}"
+            errores.append(error_message)
+        finally:
+            self.db.disconnect()
+        return result, errores
+
+    def datos_cliente(self, codigoCliente):
+        pass
+

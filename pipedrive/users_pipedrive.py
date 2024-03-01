@@ -31,13 +31,15 @@ def get_id_pipedrive():
 
         # User for Retail-FB
         'RETAIL - FB': {
-            'ERIKA ESTHEFANY JOVEL ARCE (FLOR BLANCA)': [13738649, 'ventas.salafb@grupopelsa.com'],
+            'ERIKA ESTHEFANY JOVEL ARCE (FLOR BLANCA)': [13738660, 'ventas.salafb@grupopelsa.com'],
             'ROBERTO GONZALES CARTERA': [13738649, 'roberto.gonzalez@grupopelsa.com'],
             'ROBERTO GONZALEZ': [13738649, 'roberto.gonzalez@grupopelsa.com'],
-            'CESAR NAVIDAD': [13738660, 'cesar.navidad@grupopelsa.com'],
-            'CESAR NAVIDAD CARTERA': [13738660, 'cesar.navidad@grupopelsa.com'],
-            'EDUARDO ACEVEDO': [13738660, 'eduardo.acevedo@grupopelsa.com'],
-            'EDWIN BARAHONA': [13738660, 'edwin.barahona@grupopelsa.com']
+            'CESAR NAVIDAD': [13738649, 'cesar.navidad@grupopelsa.com'],
+            'CESAR NAVIDAD CARTERA': [13738649, 'cesar.navidad@grupopelsa.com'],
+            'EDUARDO ACEVEDO': [13091607, 'eduardo.acevedo@grupopelsa.com'],
+            'EDWIN BARAHONA': [13091607, 'edwin.barahona@grupopelsa.com'],
+            'VILMA MEMBRENO': [13738660, 'ventas.salafb@grupopelsa.com'],
+            'SIN CARTERA ASIGNADA': [13091607, 'carmen.rivera@grupopelsa.com']
         },
 
         # User for Retail - AV

@@ -1,9 +1,18 @@
+import os
 import time
 from pipedrive.pipedrive_api_conecction import PipedriveAPI
 from database.sql_server_connection import SQLServerDatabase
 from processes.deals import get_all_option_for_fields_in_deals
 from processes.deals import dictionary_invert
+from processes.deals import save_json
 from pipedrive.users_pipedrive import GetIdUser
+
+
+def get_all_option_for_fields_in_get_all_organization(id_field_organization):
+    my_dictionary = {}
+    for row in id_field_organization:
+        my_dictionary[f"{row}"] = PipedriveAPI('Token').get_organization_field_id(row)
+    return my_dictionary
 
 
 def get_all_organization():
@@ -94,5 +103,67 @@ class OrganizationTable:
                 else:
                     print(f'el vendedor:{row}, deja de seguir a este cliente')
                     print(self.pipe.delete_followers_in_organization(id_organization, id_follower).get('success'))
+    
+    def get_the_customers(self, fecha):
+        #query = f"Select distinct A.CardCode from {self.table} AS A INNER JOIN DatosClientes AS B ON(A.SlpName != B.Vendedor_Asignado) Where B.Pais = '{self.country}' "
+        query = f"Select * from [dbo].[VW_DATOS_CLIENTES_SV] Where CardCode like 'C%' AND CONVERT(DATE, UpdateDate) >= '{fecha}'"
+        self.db.connect()
+        result = self.db.execute_query(query)
+        self.db.disconnect()
+        return result
+    
+    def validador_de_clientes(self):
+        client = get_all_organization()
+        self.db.connect()
 
+        # Inicializa las listas fuera del bucle
+        noexiste = []
+        existe = []
+        problema = []
 
+        for row in client:
+            time.sleep(0.1)
+            id_cliente = row.get('id')
+            CardCode_Pipe = str(row.get('bd4aa325c2375edc367c1d510faf509422f71a5b'))
+            query = f"Select top 1 * from DatosClientes Where id_PipeDrive = {id_cliente}"
+            result = self.db.execute_query(query)
+
+            if not result:
+                # Añade un diccionario a la lista
+                noexiste.append({'id_PipeDrive': id_cliente, 'Comentario': "no existe en la base de datos"})
+            else:
+                # Como result no está vacío, es seguro acceder a su contenido.
+                CardCode_base = result[0][1]
+                if CardCode_base == CardCode_Pipe:
+                    existe.append({'id_PipeDrive': id_cliente, 'Comentario': "Son iguales en la base de datos"})
+                else:
+                    problema.append({'id_PipeDrive': id_cliente, 'Comentario': "Si existe en base, pero con diferente codigo"})
+                    query2 = f"UPDATE DatosClientes SET CardCode = '{CardCode_Pipe}' Where id_PipeDrive = {id_cliente}"
+                    time.sleep(1)
+                    print(id_cliente, query2)
+                    self.db.execute_query(query2, False)
+        self.db.disconnect()
+
+        # Imprime los resultados fuera del bucle
+        save_json(noexiste, 'CardCode_NoExiste')
+        save_json(existe, 'CardCode_Existe')
+        save_json(problema, 'CardCode_Con_Problema')
+
+    def nombres_vendedor_asignados(self):
+        si_existe = []
+        no_existe = []
+        query = f"Select distinct Vendedor_Asignado from {self.table} Where Pais = '{self.country}' AND id_PipeDrive != 0"
+        self.db.connect()
+        valores = self.db.execute_query(query)
+        opciones = get_all_option_for_fields_in_get_all_organization([4028]).get('4028')
+        for valor in valores:
+            if opciones.get(f'{valor[0]}'):
+                si_existe.append({f'{valor[0]}': 'Existe'})
+            else:
+                no_existe.append({f'{valor[0]}': 'No Existe'})
+
+        output = {'Si Existen': si_existe,
+                  'No Existe': no_existe}
+        return output
+
+        
