@@ -12,23 +12,3 @@ if __name__ == '__main__':
     deal = DealTable('DatosProyectos_PipeDrive', 'SV')
     print(deal.nombres_vendedor_cotizado())
     print(deal.nombres_vendedor_asignado())
-
-
-
-
-
-
-
-
-    
-    
-    
-    
-
-    
-    
-    
-
-    
-            
-        
