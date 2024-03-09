@@ -11,9 +11,4 @@ if __name__ == '__main__':
     save_json(result, 'Cotizaciones_Diarias')
     result1 = ct.cotizaciones_actualizadas()
     save_json(result1, 'Cotizaciones_Actualizadas')
-    '''
-    result = GetIdUser().validador_de_usuarios()
-    save_json(result, 'Reporte_Usuarios')
-    OrganizationTable('DatosClientes', 'SV').cotizaciones_por_clientes()
-    Cotizaciones('SV').datos_cliente('C1413250')'''
 
