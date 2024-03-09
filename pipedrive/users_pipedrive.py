@@ -1,12 +1,17 @@
+import time
+import json
 
+from pipedrive.pipedrive_api_conecction import PipedriveAPI
+from database.sql_server_connection import SQLServerDatabase
+from datetime import datetime
 
 def get_id_pipedrive():
     user_ids = {
         # User for IGO
         'IGO': {
-            'SANDRA DOÑAN': [13581921, 'sandra.donan@grupopelsa.com'],
-            'ALVARO AVILES': [13581921, 'alvaro.aviles@grupopelsa.com'],
-            'CARLOS AVILES': [13581921, 'nilson.doradea@grupopelsa.com'],
+            'SANDRA DOÑAN': [13581921, 'sandra.donan@grupopelsa.com', 'VEND86'],
+            'ALVARO AVILES': [13581921, 'alvaro.aviles@grupopelsa.com', 'VEND100'],
+            'CARLOS AVILES': [13581921, 'nilson.doradea@grupopelsa.com', '' ],
             'WILLIAM RAMIREZ': [13581932, 'william.ramirez@grupopelsa.com'],
             'ALEX ORELLANA': [13581932, 'alex.orellana@grupopelsa.com'],
             'JOSE ESTRADA': [13581943, 'vendedor.industria2@grupopelsa.com'], 
@@ -117,6 +122,8 @@ def vendedor_sector(sector):
 class GetIdUser:
     def __init__(self, name=None):
         self.name = name
+        self.pipe = PipedriveAPI('Token')
+        self.db = SQLServerDatabase('SERVER', 'DATABASE2', 'USERNAME_', 'PASSWORD')
 
     def get_user_id_and_sector(self):
         result = {}
@@ -147,3 +154,67 @@ class GetIdUser:
                     'id_user_pipedrive': 12806795
                 }
         return result
+
+    def get_all_user_pipedrive(self):
+        usuarios = []
+        error = []
+        try:
+            for user in self.pipe.get_all_user().get('data', []):
+                usuarios.append({
+                    'PipedriveId': user.get('id'),
+                    'name': user.get('name'),
+                    'email': user.get('email'),
+                    'created': datetime.strptime(user.get('created'), "%Y-%m-%d %H:%M:%S").date(),
+                    'last_login': datetime.strptime(user.get('last_login'), "%Y-%m-%d %H:%M:%S").date(),
+                    'modified': datetime.strptime(user.get('modified'), "%Y-%m-%d %H:%M:%S").date()
+                })
+        except Exception as e:
+            error.append({
+                'mensaje': f"Ocurrió un error al obtener los usuarios: {e}"
+            })
+
+        return usuarios, error
+
+    def validador_de_usuarios(self):
+        usuarioIngresado = []
+        usuarioModificado = []
+        usuarioError = []
+        try:
+            valores = self.get_all_user_pipedrive()
+            self.db.connect()
+            for usuario in valores[0]:
+                time.sleep(1)
+                try:
+                    query = f"SELECT COUNT(*) FROM users WHERE PipedriveId = {usuario.get('PipedriveId')}"
+                    validador = self.db.execute_query(query)
+                    if validador[0][0] == 0:
+                        query2 = f"INSERT INTO users (PipedriveId, name, email, created, last_login, modified) VALUES ({usuario.get('PipedriveId')}, '{usuario.get('name')}', '{usuario.get('email')}', '{usuario.get('created')}', '{usuario.get('last_login')}', '{usuario.get('modified')}')"
+                        # Suponiendo que execute_query ejecuta y confirma la inserción
+                        self.db.execute_query(query2, False)
+                        usuarioIngresado.append({
+                            f'{usuario.get("name")}': "Fue Ingresado con exito"
+                        })
+                    else:
+                        usuarioModificado.append({
+                            f'{usuario.get("name")}': "Fue modificado con exito"
+                        })
+                except Exception as e_inner:
+                    # Añade el usuario y el error específico al listado de errores
+                    usuarioError.append({
+                        "usuario": usuario.get('name'), "error": str(e_inner)
+                    })
+        except Exception as e:
+            print(f"Ocurrió un error al procesar los usuarios: {e}")
+        finally:
+            if self.db.connection:
+                self.db.disconnect()
+
+        output = {
+            'ingresados': usuarioIngresado,
+            'modificados': usuarioModificado,
+            'con error': usuarioError
+        }
+        return output  # Devuelve el resultado como un string en formato JSON
+
+
+

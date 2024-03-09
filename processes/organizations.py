@@ -166,4 +166,20 @@ class OrganizationTable:
                   'No Existe': no_existe}
         return output
 
-        
+    def cotizaciones_por_clientes(self):
+        try:
+            query = f"SELECT * FROM {self.table} WHERE Pais = '{self.country}'"
+            self.db.connect()
+            valores = self.db.execute_query(query)
+            for valor in valores:
+                codigo_cliente = valor[1]
+                query2 = f"SELECT COUNT(*) AS Total_Trato FROM DatosProyectos_PipeDrive WHERE CardCode = '{codigo_cliente}' AND Pais = '{self.country}'"
+                Numero_de_tratos = self.db.execute_query(query2)[0][0]
+                query3 = f"UPDATE DatosClientes SET #cotizaciones = {Numero_de_tratos} WHERE CardCode = '{codigo_cliente}' AND Pais = '{self.country}'"
+                modificando = self.db.execute_query(query3, False)
+                if modificando is None:
+                    print(f"El cliente con codigo: {codigo_cliente} tiene: {Numero_de_tratos} Cotizaciones")
+        except Exception as e:
+            print(f"Error: {e}")
+        finally:
+            self.db.disconnect()

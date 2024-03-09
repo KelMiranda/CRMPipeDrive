@@ -303,5 +303,9 @@ class Cotizaciones:
         return result, errores
 
     def datos_cliente(self, codigoCliente):
-        pass
+        query = f"Select * from DatosClientes Where CardCode = '{codigoCliente}' AND Pais = '{self.pais}'"
+        self.db.connect()
+        result = self.db.execute_query(query)[0]
+        datos_POS = {'CardCode':result[1], 'CardName':result[2], 'Address':result[3], 'Phone1':result[4], 'Municipio':result[5], 'Departamento':result[6], 'Email':result[7], 'Sector':result[11], 'Coordenadas': result[13], 'Pais': result[14], 'Vendedor_Asignado': result[15]}
+        print(datos_POS)
 
