@@ -149,7 +149,7 @@ class OrganizationTable:
         save_json(existe, 'CardCode_Existe')
         save_json(problema, 'CardCode_Con_Problema')
 
-    def nombres_vendedor_asignados(self):
+    def nombres_vendedor_asignados_organizacion(self):
         si_existe = []
         no_existe = []
         query = f"Select distinct Vendedor_Asignado from {self.table} Where Pais = '{self.country}' AND id_PipeDrive != 0"
