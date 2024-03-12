@@ -12,11 +12,11 @@ class IngresoDeCotizaciones:
         self.db = SQLServerDatabase('SERVER', 'DATABASE', 'USERNAME_', 'PASSWORD')
         self.ct = Cotizaciones(f'{self.pais}')
 
-    def cotizaciones_diarias(self):
+    def cotizaciones_diarias(self, days):
         errores = []
         result = []
         today = dt.date.today()
-        one_day = dt.timedelta(days=1)
+        one_day = dt.timedelta(days=days)
         yesterday = today - one_day
         ct = Cotizaciones(f'{self.pais}')
         self.db.connect()

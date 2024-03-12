@@ -1,6 +1,9 @@
 from database.sql_server_connection import SQLServerDatabase
 from time import sleep, time
 from processes.deals import get_all_option_for_fields_in_deals
+from pipedrive.pipedrive_api_conecction import PipedriveAPI
+from processes.organizations import get_all_option_for_fields_in_get_all_organization
+from processes.deals import dictionary_invert
 
 familias_padres = {
     'CAJAS TERMICAS, BRK': 'c97bd1f994dce3b891f1189965c06ef775b53757',
@@ -56,6 +59,7 @@ class Cotizaciones:
     def __init__(self, pais):
         self.pais = pais
         self.db = SQLServerDatabase('SERVER', 'DATABASE', 'USERNAME_', 'PASSWORD')
+        self.pipe = PipedriveAPI('Token')
 
     def cierre_de_cotizaciones(self):
         errores = []
@@ -303,9 +307,57 @@ class Cotizaciones:
         return result, errores
 
     def datos_cliente(self, codigoCliente):
-        query = f"Select * from DatosClientes Where CardCode = '{codigoCliente}' AND Pais = '{self.pais}'"
-        self.db.connect()
-        result = self.db.execute_query(query)[0]
-        datos_POS = {'CardCode':result[1], 'CardName':result[2], 'Address':result[3], 'Phone1':result[4], 'Municipio':result[5], 'Departamento':result[6], 'Email':result[7], 'Sector':result[11], 'Coordenadas': result[13], 'Pais': result[14], 'Vendedor_Asignado': result[15]}
-        print(datos_POS)
+        try:
+            query = f"Select * from DatosClientes Where CardCode = '{codigoCliente}' AND Pais = '{self.pais}'"
+            query2 = f"Select * from [dbo].[VW_DATOS_CLIENTES_{self.pais}] Where CardCode = '{codigoCliente}'"
+            self.db.connect()
+            result = self.db.execute_query(query)[0]
+            result2 = self.db.execute_query(query2)[0]
+            lista = get_all_option_for_fields_in_get_all_organization([4025, 4024, 4023, 4028])
+            datos_POS = {
+                'CardCode': result[1],
+                'CardName': result[2],
+                'Municipio': result[5],
+                'Departamento': result[6],
+                'Sector': result[11],
+                'Coordenadas': result[13],
+                'Vendedor_Asignado': result[15]
+            }
+            result_pipe = self.pipe.get_organization_id(result[8]).get('data')
+            datos_pipe = {
+                'CardCode': result_pipe.get('bd4aa325c2375edc367c1d510faf509422f71a5b'),
+                'CardName': result_pipe.get('name'),
+                'Municipio': dictionary_invert(lista.get('4025'),
+                                               result_pipe.get('99daf5439284d6a809aee36c4d52a53c9826300b')),
+                'Departamento': dictionary_invert(lista.get('4024'),
+                                                  result_pipe.get('deca3dd694894b2ca93df56db39f66468cb3885d')),
+                'Sector': dictionary_invert(lista.get('4023'),
+                                            result_pipe.get('8b8121d03ef920b724ffa68b0f6177fdf281ad3f')),
+                'Coordenadas': result_pipe.get('3ed19788ef9c8ebeaf0f24f58394f67ac784684c'),
+                'Vendedor_Asignado': dictionary_invert(lista.get('4028'),
+                                                       result_pipe.get('fd0f15b9338615a55ca56a3cada567919ec33306'))
+            }
+            datos_vw_pos = {
+                'CardCode': result2[0],
+                'CardName': result2[1],
+                'Municipio': result2[4],
+                'Departamento': result2[5],
+                'Sector': result2[10],
+                'Coordenadas': result2[12],
+                'Vendedor_Asignado': result2[14]
+            }
+            output = {
+                'Diferencia de datos entre POS y pipeDrive': datos_POS != datos_pipe,
+                'Diferencia de datos entre POS y VW_POS': datos_vw_pos != datos_POS,
+                'datos_POS': datos_POS,
+                'datos_vw_pos': datos_vw_pos,
+                'datos_pipe': datos_pipe
+            }
+            return output
+        except Exception as e:
+            error = {f"El cliente: {codigoCliente} tiene el siguiente error: ": {e}}
+            return error
+        finally:
+            self.db.disconnect()
+
 
