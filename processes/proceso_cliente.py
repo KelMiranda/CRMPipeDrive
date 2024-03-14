@@ -98,12 +98,16 @@ class Cliente:
             '3ed19788ef9c8ebeaf0f24f58394f67ac784684c': datos_POS.get('Coordenadas'),
             'fd0f15b9338615a55ca56a3cada567919ec33306': lista.get('4028').get(f"{datos_POS.get('Vendedor_Asignado')}"),
             'label': 1,
+            '2d4edef00aec72dcc0fd1a240f7897fb0eb34465': lista.get('4026').get(f"{datos_POS.get('Pais')}"),
             'owner_id': cuenta_asignada[0],
-            'followers': 13046551
+            'address': datos_POS.get('address')
         }
+        print(datos)
 
         if resultado.get('datos_pipe') == 'No existe en pipedrive':
-            print(self.pipe.post_organization(datos))
+            resultado_pipe = self.pipe.post_organization(datos)
+            id_pipedrive = resultado_pipe.get('data').get('id')
+            print(id_pipedrive)
         else:
             if resultado.get('Diferencia de datos entre POS y pipeDrive') is True:
                 print('El usuario existe en pipedrive, pero tiene datos diferentes a la base de datos')

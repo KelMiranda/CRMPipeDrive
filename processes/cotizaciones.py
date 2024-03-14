@@ -51,8 +51,8 @@ datos_cotizacion = {
 
 
 def notificar_errores(errores):
-        # Aquí puedes implementar la lógica para enviar notificaciones con la lista de errores
-        print("Enviando notificación de errores:", errores)
+    # Aquí puedes implementar la lógica para enviar notificaciones con la lista de errores
+    print("Enviando notificación de errores:", errores)
 
 
 class Cotizaciones:
@@ -76,12 +76,12 @@ class Cotizaciones:
 
         finally:
             self.db.disconnect()
-        
+
         if errores:
             notificar_errores(errores)
-        
+
         return result, errores
-    
+
     def validar_cotizacion(self, ord=None, docnum=None, serie=None, CardCode=None):
         documentos_actualizados = []
         errores = []
@@ -131,7 +131,7 @@ class Cotizaciones:
 
         print('######################Finalizando Proceso##########################################')
         return documentos_actualizados, errores
-   
+
     def obtener_cotizaciones(self, sector, validador):
         errores = []
         result = []
@@ -160,7 +160,7 @@ class Cotizaciones:
         finally:
             self.db.disconnect()
         return result, errores
-    
+
     def cotizaciones_del_dia(self, fecha):
         errores = []
         result = []
@@ -314,13 +314,14 @@ class Cotizaciones:
             id_pipedrive = result[8]
             id_registro = result[0]
             result2 = self.db.execute_query(query2)[0]
-            lista = get_all_option_for_fields_in_get_all_organization([4025, 4024, 4023, 4028])
+            lista = get_all_option_for_fields_in_get_all_organization([4025, 4024, 4023, 4028, 4026])
             datos_POS = {
                 'CardCode': result[1],
                 'CardName': result[2],
                 'address': result[3],
                 'Municipio': result[5],
                 'Departamento': result[6],
+                'Pais': result[14],
                 'Sector': result[11],
                 'Coordenadas': result[13],
                 'Vendedor_Asignado': result[15]
@@ -331,6 +332,7 @@ class Cotizaciones:
                 'address': result2[2],
                 'Municipio': result2[4],
                 'Departamento': result2[5],
+                'Pais': result2[13],
                 'Sector': result2[10],
                 'Coordenadas': result2[12],
                 'Vendedor_Asignado': result2[14]
@@ -358,7 +360,9 @@ class Cotizaciones:
                                                 result_pipe.get('8b8121d03ef920b724ffa68b0f6177fdf281ad3f')),
                     'Coordenadas': result_pipe.get('3ed19788ef9c8ebeaf0f24f58394f67ac784684c'),
                     'Vendedor_Asignado': dictionary_invert(lista.get('4028'),
-                                                           result_pipe.get('fd0f15b9338615a55ca56a3cada567919ec33306'))
+                                                           result_pipe.get('fd0f15b9338615a55ca56a3cada567919ec33306')),
+                    'Pais': dictionary_invert(lista.get('4026'),
+                                              result_pipe.get('2d4edef00aec72dcc0fd1a240f7897fb0eb34465'))
                 }
                 output = {
                     'Diferencia de datos entre POS y pipeDrive': datos_POS != datos_pipe,
@@ -374,5 +378,3 @@ class Cotizaciones:
             return error
         finally:
             self.db.disconnect()
-
-
