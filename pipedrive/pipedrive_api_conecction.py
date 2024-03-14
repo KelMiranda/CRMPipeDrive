@@ -11,7 +11,7 @@ class PipedriveAPI:
     BASE_URL = "https://api.pipedrive.com/v1"
 
     def __init__(self, api_token):
-        #self.api_token = os.getenv(api_token)
+        # self.api_token = os.getenv(api_token)
         self.api_token = config[f'{api_token}']['api_token']
 
     def get_request(self, endpoint, params=None):
@@ -118,7 +118,7 @@ class PipedriveAPI:
             return None
 
     def get_deals(self, id_deal):
-        #print(self.api_token)
+        # print(self.api_token)
         return self.get_request(f"deals/{id_deal}")
 
     def get_stages(self, id_stages):
@@ -202,3 +202,6 @@ class PipedriveAPI:
 
     def get_all_user(self):
         return self.get_request('users')
+
+    def post_organization(self, data):
+        return self.post_request(f'organizations', data)

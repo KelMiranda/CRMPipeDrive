@@ -164,7 +164,7 @@ class Cotizaciones:
     def cotizaciones_del_dia(self, fecha):
         errores = []
         result = []
-        query = f"EXEC [dbo].[SP_Cotizaciones_Dia_{self.pais}]{fecha}"
+        query = f"EXEC [dbo].[SP_Cotizaciones_Dia_{self.pais}]'{fecha}'"
         try:
             self.db.connect()
             result = self.db.execute_query(query)
@@ -197,11 +197,11 @@ class Cotizaciones:
             query = f"EXEC [dbo].[SP_DetalleProducto_{self.pais}] {DocNum}, {DocEntry}"
             valores = self.db.execute_query(query)
             # Procesa los resultados de la consulta
-            result = []
+            result = {}
             for row in valores:
                 clave_familia = familias_padres.get(row[1])
                 if clave_familia is not None:
-                    result.append({f"{clave_familia}": float(row[0])})
+                    result.update({f"{clave_familia}": float(row[0])})
                 else:
                     print(f"Clave {row[1]} no encontrada en familias_padres.")
 
@@ -219,7 +219,7 @@ class Cotizaciones:
                 print("La conexión a la base de datos se ha cerrado.")
 
     def datos_de_la_cotizacion(self, DocNum, DocEntry):
-        result = []
+        result = {}
         errores = []
         try:
             id_fields_deals = [12527, 12546, 12521, 12523, 12522, 12524, 12531, 12529, 12534]
@@ -229,7 +229,7 @@ class Cotizaciones:
             query = f"EXEC [dbo].[SP_COTIZACIONES_{self.pais}_PYTHON]  {DocNum}, {DocEntry}"
             valores = self.db.execute_query(query)[0]
             # Procesa los resultados de la consulta
-            result.append({
+            result.update({
                 f"{datos_cotizacion.get('vendedor_asignado')}": values.get('12521').get(f'{valores[0]}'),
                 f"{datos_cotizacion.get('vendedor_cot')}": values.get('12522').get(f'{valores[1]}'),
                 f"{datos_cotizacion.get('Sector_Vendedor')}": values.get('12523').get(f'{valores[2]}'),
@@ -252,7 +252,6 @@ class Cotizaciones:
                 f"{datos_cotizacion.get('CardName')}": valores[18]
             })
             return result
-
         except Exception as e:
             # Maneja cualquier excepción que ocurra durante la conexión a la base de datos o la ejecución de la consulta
             errores.append({'DocNum': DocNum, 'msg_error': str(e)})
@@ -312,47 +311,63 @@ class Cotizaciones:
             query2 = f"Select * from [dbo].[VW_DATOS_CLIENTES_{self.pais}] Where CardCode = '{codigoCliente}'"
             self.db.connect()
             result = self.db.execute_query(query)[0]
+            id_pipedrive = result[8]
+            id_registro = result[0]
             result2 = self.db.execute_query(query2)[0]
             lista = get_all_option_for_fields_in_get_all_organization([4025, 4024, 4023, 4028])
             datos_POS = {
                 'CardCode': result[1],
                 'CardName': result[2],
+                'address': result[3],
                 'Municipio': result[5],
                 'Departamento': result[6],
                 'Sector': result[11],
                 'Coordenadas': result[13],
                 'Vendedor_Asignado': result[15]
             }
-            result_pipe = self.pipe.get_organization_id(result[8]).get('data')
-            datos_pipe = {
-                'CardCode': result_pipe.get('bd4aa325c2375edc367c1d510faf509422f71a5b'),
-                'CardName': result_pipe.get('name'),
-                'Municipio': dictionary_invert(lista.get('4025'),
-                                               result_pipe.get('99daf5439284d6a809aee36c4d52a53c9826300b')),
-                'Departamento': dictionary_invert(lista.get('4024'),
-                                                  result_pipe.get('deca3dd694894b2ca93df56db39f66468cb3885d')),
-                'Sector': dictionary_invert(lista.get('4023'),
-                                            result_pipe.get('8b8121d03ef920b724ffa68b0f6177fdf281ad3f')),
-                'Coordenadas': result_pipe.get('3ed19788ef9c8ebeaf0f24f58394f67ac784684c'),
-                'Vendedor_Asignado': dictionary_invert(lista.get('4028'),
-                                                       result_pipe.get('fd0f15b9338615a55ca56a3cada567919ec33306'))
-            }
             datos_vw_pos = {
                 'CardCode': result2[0],
                 'CardName': result2[1],
+                'address': result2[2],
                 'Municipio': result2[4],
                 'Departamento': result2[5],
                 'Sector': result2[10],
                 'Coordenadas': result2[12],
                 'Vendedor_Asignado': result2[14]
             }
-            output = {
-                'Diferencia de datos entre POS y pipeDrive': datos_POS != datos_pipe,
-                'Diferencia de datos entre POS y VW_POS': datos_vw_pos != datos_POS,
-                'datos_POS': datos_POS,
-                'datos_vw_pos': datos_vw_pos,
-                'datos_pipe': datos_pipe
-            }
+
+            if id_pipedrive is None:
+                output = {
+                    'datos_pipe': 'No existe en pipedrive',
+                    'Diferencia de datos entre POS y VW_POS': datos_vw_pos != datos_POS,
+                    'datos_POS': datos_POS,
+                    'datos_vw_pos': datos_vw_pos,
+                    'id_registro': id_registro,
+                    'lista': lista
+                }
+            else:
+                result_pipe = self.pipe.get_organization_id(result[8]).get('data')
+                datos_pipe = {
+                    'CardCode': result_pipe.get('bd4aa325c2375edc367c1d510faf509422f71a5b'),
+                    'CardName': result_pipe.get('name'),
+                    'Municipio': dictionary_invert(lista.get('4025'),
+                                                   result_pipe.get('99daf5439284d6a809aee36c4d52a53c9826300b')),
+                    'Departamento': dictionary_invert(lista.get('4024'),
+                                                      result_pipe.get('deca3dd694894b2ca93df56db39f66468cb3885d')),
+                    'Sector': dictionary_invert(lista.get('4023'),
+                                                result_pipe.get('8b8121d03ef920b724ffa68b0f6177fdf281ad3f')),
+                    'Coordenadas': result_pipe.get('3ed19788ef9c8ebeaf0f24f58394f67ac784684c'),
+                    'Vendedor_Asignado': dictionary_invert(lista.get('4028'),
+                                                           result_pipe.get('fd0f15b9338615a55ca56a3cada567919ec33306'))
+                }
+                output = {
+                    'Diferencia de datos entre POS y pipeDrive': datos_POS != datos_pipe,
+                    'Diferencia de datos entre POS y VW_POS': datos_vw_pos != datos_POS,
+                    'datos_POS': datos_POS,
+                    'datos_vw_pos': datos_vw_pos,
+                    'datos_pipe': datos_pipe,
+                    'lista': lista
+                }
             return output
         except Exception as e:
             error = {f"El cliente: {codigoCliente} tiene el siguiente error: ": {e}}

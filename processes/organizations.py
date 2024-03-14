@@ -183,3 +183,20 @@ class OrganizationTable:
             print(f"Error: {e}")
         finally:
             self.db.disconnect()
+
+    def nombres_vendedor_asignado(self):
+        si_existe = []
+        no_existe = []
+        query = f"Select distinct Vendedor_Asignado from {self.table} Where Pais = '{self.country}'"
+        self.db.connect()
+        valores = self.db.execute_query(query)
+        opciones = get_all_option_for_fields_in_get_all_organization([4028]).get('4028')
+        for valor in valores:
+            if opciones.get(f'{valor[0]}'):
+                si_existe.append({f'{valor[0]}': 'Existe'})
+            else:
+                no_existe.append({f'{valor[0]}': 'No Existe'})
+
+        output = {'Si Existen': si_existe,
+                  'No Existe': no_existe}
+        return output

@@ -69,8 +69,11 @@ class IngresoDeCotizaciones:
 
     def trato_pipedrive(self, DocNum, DocEntry):
         data = {}
-        datosFamilia = self.ct.familia_padre_de_la_cotizacion(DocNum, DocEntry)
         datosCotizacion = self.ct.datos_de_la_cotizacion(DocNum, DocEntry)
+        print(datosCotizacion)
+        datosFamilia = self.ct.familia_padre_de_la_cotizacion(DocNum, DocEntry)
+        print(datosFamilia)
+
 
 
 
