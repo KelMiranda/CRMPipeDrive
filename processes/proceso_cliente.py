@@ -80,6 +80,19 @@ class Cliente:
 
         return result, errores
 
+    def actualizacionCliente(self, id_pipedrive, datos):
+        clientesModificados = {}
+        if self.pipe.put_organization_id(id_pipedrive, datos).get('success') is True:
+            query = f"Update DatosClientes SET Validador = 'Ñ', Fecha_Modificacion = GETDATE() Where id_PipeDrive = {id_pipedrive}"
+            if self.db.execute_query(query, False) is None:
+                clientesModificados.update({
+                    'CardCode': datos.get('bd4aa325c2375edc367c1d510faf509422f71a5b'),
+                    'id_pipedrive': id_pipedrive,
+                    'mensaje': 'Modificacion con Exito en PipeDrive y Base de dato'
+                })
+        return clientesModificados
+
+
     def ingresar_o_actualizar_cliente_pipedrive(self, codigo_cliente):
         resultado = self.ct.datos_cliente(codigo_cliente)
         datos_POS = resultado.get('datos_POS')
@@ -89,6 +102,8 @@ class Cliente:
         self.db.connect()
         cuenta_asignada = self.db.execute_query(cuenta_asignada)[0]
         lista = resultado.get('lista')
+        id_pipedrive = resultado.get('id_pipedrive')
+        print(id_pipedrive)
         datos = {
             'name': datos_POS.get('CardName'),
             'bd4aa325c2375edc367c1d510faf509422f71a5b': datos_POS.get('CardCode'),
@@ -105,12 +120,14 @@ class Cliente:
         print(datos)
 
         if resultado.get('datos_pipe') == 'No existe en pipedrive':
-            resultado_pipe = self.pipe.post_organization(datos)
-            id_pipedrive = resultado_pipe.get('data').get('id')
-            print(id_pipedrive)
+            #resultado_pipe = self.pipe.post_organization(datos)
+            #id_pipedrive = resultado_pipe.get('data').get('id')
+            print('No existe en pipedrive')
+
         else:
-            if resultado.get('Diferencia de datos entre POS y pipeDrive') is True:
-                print('El usuario existe en pipedrive, pero tiene datos diferentes a la base de datos')
+            if resultado.get('Diferencia de datos entre POS y pipeDrive') is True and resultado.get('Diferencia de datos entre POS y VW_POS') is False:
+                re = self.actualizacionCliente(id_pipedrive, datos)
+                print(re)
             else:
                 print('No tiene ningun cambio este cliente')
 

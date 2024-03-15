@@ -14,16 +14,14 @@ def ingreso_o_actualizacion_de_cliente(Pais):
     ct = Cotizaciones(Pais)
     cl = Cliente(Pais)
     respuesta = ct.cotizaciones_del_dia('2024-03-12')[0]
-    cl.ingresar_o_actualizar_cliente_pipedrive('C1051571')
-
-
+    cl.ingresar_o_actualizar_cliente_pipedrive('C1063600')
 
 
 if __name__ == '__main__':
+
     '''ct = IngresoDeCotizaciones('SV')
     result = ct.cotizaciones_diarias(1)
     save_json(result, 'Cotizaciones_Diarias')
     result1 = ct.cotizaciones_actualizadas()
     save_json(result1, 'Cotizaciones_Actualizadas')'''
     ingreso_o_actualizacion_de_cliente('SV')
-

@@ -17,10 +17,10 @@ class IngresoDeCotizaciones:
         result = []
         today = dt.date.today()
         one_day = dt.timedelta(days=days)
-        yesterday = today - one_day
+        yesterday = today-one_day
         ct = Cotizaciones(f'{self.pais}')
         self.db.connect()
-        for row in ct.cotizaciones_del_dia(f"'{yesterday}'")[0]:
+        for row in ct.cotizaciones_del_dia(f"{yesterday}")[0]:
             time.sleep(5)
             print(row)
             query = f"EXEC [dbo].[SP_VALIDADOR_PROYECTO_MERGE_{self.pais}]'{row[3]}', {row[1]}, '{row[0]}', '{row[2]}'"

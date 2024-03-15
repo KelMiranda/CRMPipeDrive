@@ -165,6 +165,7 @@ class Cotizaciones:
         errores = []
         result = []
         query = f"EXEC [dbo].[SP_Cotizaciones_Dia_{self.pais}]'{fecha}'"
+        print(query)
         try:
             self.db.connect()
             result = self.db.execute_query(query)
@@ -370,7 +371,8 @@ class Cotizaciones:
                     'datos_POS': datos_POS,
                     'datos_vw_pos': datos_vw_pos,
                     'datos_pipe': datos_pipe,
-                    'lista': lista
+                    'lista': lista,
+                    'id_pipedrive': result[8]
                 }
             return output
         except Exception as e:
