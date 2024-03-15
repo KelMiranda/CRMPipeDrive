@@ -85,13 +85,17 @@ class OrganizationTable:
             iteration = total - count
             print(f'########----{iteration}------#########################################################')
 
-    def remove_followers(self, id_organization):
+    def remove_followers(self, id_organization, id_user_pipedrive=True):
         result = self.pipe.get_organization_id(id_organization)
         followers_result = result['additional_data']['followers']
         value_customer = result['data']['fd0f15b9338615a55ca56a3cada567919ec33306']
         customer = self.pipe.get_organization_field_id('4028')
         customer_name = dictionary_invert(customer, value_customer)
-        id_customer = str(GetIdUser(f'{customer_name}').get_user_id_and_sector()['id_user_pipedrive'])
+        if id_user_pipedrive is True:
+            id_customer = str(GetIdUser(f'{customer_name}').get_user_id_and_sector()['id_user_pipedrive'])
+        else:
+            id_customer = id_user_pipedrive
+
         if len(followers_result) == 0:
             print('No tiene seguidores')
         else:

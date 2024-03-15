@@ -2,6 +2,7 @@ from database.sql_server_connection import SQLServerDatabase
 from processes.cotizaciones import Cotizaciones
 from pipedrive.pipedrive_api_conecction import PipedriveAPI
 from processes.deals import dictionary_invert
+from processes.organizations import OrganizationTable
 
 
 def comparar_registros_cliente(registro1, registro2):
@@ -40,6 +41,7 @@ class Cliente:
         self.db = SQLServerDatabase('SERVER', 'DATABASE', 'USERNAME_', 'PASSWORD')
         self.ct = Cotizaciones(self.pais)
         self.pipe = PipedriveAPI('Token')
+        self.org = OrganizationTable(None, self.pais)
 
     def validadorCliente(self, CardCode):
         query = f"[dbo].[SP_VALIDADOR_DE_CLIENTE] '{CardCode}', '{self.pais}'"
@@ -84,6 +86,17 @@ class Cliente:
         clientesModificados = {}
         if self.pipe.put_organization_id(id_pipedrive, datos).get('success') is True:
             query = f"Update DatosClientes SET Validador = 'Ñ', Fecha_Modificacion = GETDATE() Where id_PipeDrive = {id_pipedrive}"
+            self.org.remove_followers(id_pipedrive, datos.get('owner_id'))
+            seguidores = [13092377, 13046551]
+            for agre in seguidores:
+                add = {
+                    "user_id": agre
+                }
+                seguidor = self.pipe.post_followers_in_organization(id_pipedrive, add).get('success')
+                clientesModificados.update({
+                    f"el id: '{agre}'": seguidor
+                })
+
             if self.db.execute_query(query, False) is None:
                 clientesModificados.update({
                     'CardCode': datos.get('bd4aa325c2375edc367c1d510faf509422f71a5b'),
@@ -92,9 +105,9 @@ class Cliente:
                 })
         return clientesModificados
 
-
     def ingresar_o_actualizar_cliente_pipedrive(self, codigo_cliente):
         resultado = self.ct.datos_cliente(codigo_cliente)
+        print(resultado)
         datos_POS = resultado.get('datos_POS')
         cuenta_asignada = (f"Select b.PipedriveId from [PipeDrive].[dbo].[vendedores] AS A INNER JOIN [PipeDrive]."
                            f"[dbo].[users] AS B ON (A.id_vendedores = B.id_vendedores) "
@@ -103,7 +116,8 @@ class Cliente:
         cuenta_asignada = self.db.execute_query(cuenta_asignada)[0]
         lista = resultado.get('lista')
         id_pipedrive = resultado.get('id_pipedrive')
-        print(id_pipedrive)
+        print(resultado.get('Diferencia de datos entre POS y pipeDrive'))
+        print(resultado.get('Diferencia de datos entre POS y VW_POS'))
         datos = {
             'name': datos_POS.get('CardName'),
             'bd4aa325c2375edc367c1d510faf509422f71a5b': datos_POS.get('CardCode'),
@@ -117,7 +131,6 @@ class Cliente:
             'owner_id': cuenta_asignada[0],
             'address': datos_POS.get('address')
         }
-        print(datos)
 
         if resultado.get('datos_pipe') == 'No existe en pipedrive':
             #resultado_pipe = self.pipe.post_organization(datos)
@@ -125,11 +138,15 @@ class Cliente:
             print('No existe en pipedrive')
 
         else:
-            if resultado.get('Diferencia de datos entre POS y pipeDrive') is True and resultado.get('Diferencia de datos entre POS y VW_POS') is False:
+            if resultado.get('Diferencia de datos entre POS y pipeDrive') is False or resultado.get('Diferencia de datos entre POS y VW_POS') is False:
+                self.db.connect()
+                query = f"EXEC [dbo].[SP_VALIDADOR_CLIENTE_MERGE_{self.pais}]'{datos_POS.get('CardCode')}'"
+                self.db.execute_query(query, False)
                 re = self.actualizacionCliente(id_pipedrive, datos)
-                print(re)
             else:
                 print('No tiene ningun cambio este cliente')
+
+        return re
 
 
 

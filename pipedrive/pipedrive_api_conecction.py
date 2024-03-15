@@ -191,6 +191,9 @@ class PipedriveAPI:
     def delete_followers_in_organization(self, id_organization, id_user_pipedrive):
         return self.delete_request(f'organizations/{int(id_organization)}/followers/{int(id_user_pipedrive)}')
 
+    def post_followers_in_organization(self, id_organization, data):
+        return self.post_request(f'organizations/{int(id_organization)}/followers', data)
+
     def get_followers_deals(self, id_deals):
         return self.get_request(f'deals/{id_deals}/followers')
 
