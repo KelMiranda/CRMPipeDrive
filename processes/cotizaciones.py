@@ -353,6 +353,7 @@ class Cotizaciones:
                 datos_pipe = {
                     'CardCode': result_pipe.get('bd4aa325c2375edc367c1d510faf509422f71a5b'),
                     'CardName': result_pipe.get('name'),
+                    'address': result_pipe.get('address'),
                     'Municipio': dictionary_invert(lista.get('4025'),
                                                    result_pipe.get('99daf5439284d6a809aee36c4d52a53c9826300b')),
                     'Departamento': dictionary_invert(lista.get('4024'),
@@ -380,3 +381,9 @@ class Cotizaciones:
             return error
         finally:
             self.db.disconnect()
+
+    def clientes_por_sector_validador(self, Validador):
+        self.db.connect()
+        query = f"Select CardCode from DatosClientes Where Pais = '{self.pais}' AND Validador = '{Validador}'"
+        result = self.db.execute_query(query)
+        return result, len(result)

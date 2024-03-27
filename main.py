@@ -13,15 +13,22 @@ from processes.proceso_cliente import Cliente
 def ingreso_o_actualizacion_de_cliente(Pais):
     ct = Cotizaciones(Pais)
     cl = Cliente(Pais)
-    respuesta = ct.cotizaciones_del_dia('2024-03-12')[0]
-    cl.ingresar_o_actualizar_cliente_pipedrive('C1063600')
+    resultado = ct.clientes_por_sector_validador('U')
+    total = resultado[1]
+    count = 0
+    for row in resultado[0]:
+        faltante = total - count
+        time.sleep(0.2)
+        print(f"----------------------Cliente: {row[0]}     Faltan: {faltante}------------------------------------------")
+        cl.ingresar_o_actualizar_cliente_pipedrive(row[0])
+        count = count + 1
 
 
 if __name__ == '__main__':
 
-    '''ct = IngresoDeCotizaciones('SV')
+    ct = IngresoDeCotizaciones('SV')
     result = ct.cotizaciones_diarias(1)
     save_json(result, 'Cotizaciones_Diarias')
     result1 = ct.cotizaciones_actualizadas()
-    save_json(result1, 'Cotizaciones_Actualizadas')'''
-    ingreso_o_actualizacion_de_cliente('SV')
+    save_json(result1, 'Cotizaciones_Actualizadas')
+    #ingreso_o_actualizacion_de_cliente('GT')

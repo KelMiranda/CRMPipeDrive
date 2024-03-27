@@ -2,6 +2,7 @@ from unittest import result
 from processes.cotizaciones import Cotizaciones
 import datetime as dt
 from database.sql_server_connection import SQLServerDatabase
+from processes.cotizaciones import Cotizaciones
 import time
 import json
 
@@ -67,12 +68,8 @@ class IngresoDeCotizaciones:
         }
         return output
 
-    def trato_pipedrive(self, DocNum, DocEntry):
-        data = {}
-        datosCotizacion = self.ct.datos_de_la_cotizacion(DocNum, DocEntry)
-        print(datosCotizacion)
-        datosFamilia = self.ct.familia_padre_de_la_cotizacion(DocNum, DocEntry)
-        print(datosFamilia)
+    def datos_cotizacion(self, DocNum, DocEntry):
+        pass
 
 
 

@@ -87,7 +87,14 @@ class Cliente:
         if self.pipe.put_organization_id(id_pipedrive, datos).get('success') is True:
             query = f"Update DatosClientes SET Validador = 'Ñ', Fecha_Modificacion = GETDATE() Where id_PipeDrive = {id_pipedrive}"
             self.org.remove_followers(id_pipedrive, datos.get('owner_id'))
-            seguidores = [13092377, 13046551]
+            SeguidoresSV = [13092377, 13046551]
+            SeguidoresGT = [12992629, 13046551]
+            seguidores = []
+            if self.pais == 'SV':
+                seguidores = SeguidoresSV
+            elif self.pais == 'GT':
+                seguidores = SeguidoresGT
+
             for agre in seguidores:
                 add = {
                     "user_id": agre
@@ -107,17 +114,13 @@ class Cliente:
 
     def ingresar_o_actualizar_cliente_pipedrive(self, codigo_cliente):
         resultado = self.ct.datos_cliente(codigo_cliente)
-        print(resultado)
         datos_POS = resultado.get('datos_POS')
-        cuenta_asignada = (f"Select b.PipedriveId from [PipeDrive].[dbo].[vendedores] AS A INNER JOIN [PipeDrive]."
-                           f"[dbo].[users] AS B ON (A.id_vendedores = B.id_vendedores) "
-                           f"Where a.SlpName = '{datos_POS.get('Vendedor_Asignado')}'")
+        cuenta_asignada_query = f"SELECT COALESCE((SELECT b.PipedriveId FROM[PipeDrive].[dbo].[vendedores] AS a INNER JOIN[PipeDrive].[dbo].[users] AS b ON a.id_vendedores = b.id_vendedores WHERE a.SlpName = '{datos_POS.get('Vendedor_Asignado')}'),NULL) AS PipedriveId;"
         self.db.connect()
-        cuenta_asignada = self.db.execute_query(cuenta_asignada)[0]
+        print(cuenta_asignada_query)
+        cuenta_asignada = self.db.execute_query(cuenta_asignada_query)[0]
         lista = resultado.get('lista')
         id_pipedrive = resultado.get('id_pipedrive')
-        print(resultado.get('Diferencia de datos entre POS y pipeDrive'))
-        print(resultado.get('Diferencia de datos entre POS y VW_POS'))
         datos = {
             'name': datos_POS.get('CardName'),
             'bd4aa325c2375edc367c1d510faf509422f71a5b': datos_POS.get('CardCode'),
@@ -131,6 +134,10 @@ class Cliente:
             'owner_id': cuenta_asignada[0],
             'address': datos_POS.get('address')
         }
+        if cuenta_asignada is None:
+            datos.update({'owner_id': 12806795})
+        else:
+            datos.update({'owner_id': cuenta_asignada[0]})
 
         if resultado.get('datos_pipe') == 'No existe en pipedrive':
             #resultado_pipe = self.pipe.post_organization(datos)
@@ -138,15 +145,11 @@ class Cliente:
             print('No existe en pipedrive')
 
         else:
-            if resultado.get('Diferencia de datos entre POS y pipeDrive') is False or resultado.get('Diferencia de datos entre POS y VW_POS') is False:
-                self.db.connect()
-                query = f"EXEC [dbo].[SP_VALIDADOR_CLIENTE_MERGE_{self.pais}]'{datos_POS.get('CardCode')}'"
-                self.db.execute_query(query, False)
-                re = self.actualizacionCliente(id_pipedrive, datos)
-            else:
-                print('No tiene ningun cambio este cliente')
-
-        return re
+            self.db.connect()
+            query = f"EXEC [dbo].[SP_VALIDADOR_CLIENTE_MERGE_{self.pais}]'{datos_POS.get('CardCode')}'"
+            self.db.execute_query(query, False)
+            re = self.actualizacionCliente(id_pipedrive, datos)
+            return re
 
 
 
