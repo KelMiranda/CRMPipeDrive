@@ -69,7 +69,8 @@ class IngresoDeCotizaciones:
         return output
 
     def datos_cotizacion(self, DocNum, DocEntry):
-        pass
+        query = f"EXEC [dbo].[sel_ObtenerDatosCotizacion]{DocNum},{DocEntry},'{self.pais}'"
+        print(query)
 
 
 
