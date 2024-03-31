@@ -27,7 +27,7 @@ def ingreso_o_actualizacion_de_cliente(Pais):
 if __name__ == '__main__':
 
     ct = IngresoDeCotizaciones('SV')
-    result = ct.cotizaciones_diarias(1)
+    result = ct.cotizaciones_diarias(4)
     save_json(result, 'Cotizaciones_Diarias')
     result1 = ct.cotizaciones_actualizadas()
     save_json(result1, 'Cotizaciones_Actualizadas')
