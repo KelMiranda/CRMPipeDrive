@@ -26,13 +26,11 @@ def ingreso_o_actualizacion_de_cliente(Pais):
 
 if __name__ == '__main__':
 
-    ct = IngresoDeCotizaciones('SV')
-    result = ct.cotizaciones_diarias(4)
     '''ct = IngresoDeCotizaciones('SV')
     result = ct.cotizaciones_diarias(1)
     save_json(result, 'Cotizaciones_Diarias')
     result1 = ct.cotizaciones_actualizadas()
     save_json(result1, 'Cotizaciones_Actualizadas')'''
     #ingreso_o_actualizacion_de_cliente('GT')
-    IngresoDeCotizaciones('SV').datos_cotizacion(459371, 592566)
+    IngresoDeCotizaciones('SV').datos_cotizacion(459388, 593356)
 
