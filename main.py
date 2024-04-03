@@ -26,13 +26,14 @@ def ingreso_o_actualizacion_de_cliente(Pais):
 
 if __name__ == '__main__':
 
-    ct = IngresoDeCotizaciones('SV')
-    result = ct.cotizaciones_diarias(4)
-    '''ct = IngresoDeCotizaciones('SV')
-    result = ct.cotizaciones_diarias(1)
-    save_json(result, 'Cotizaciones_Diarias')
-    result1 = ct.cotizaciones_actualizadas()
-    save_json(result1, 'Cotizaciones_Actualizadas')'''
-    #ingreso_o_actualizacion_de_cliente('GT')
-    IngresoDeCotizaciones('SV').datos_cotizacion(459371, 592566)
+    pais = ['SV', 'GT']
+    print(IngresoDeCotizaciones('SV').datos_cotizacion(370756, 466309))
+
+    '''for row in pais:
+        ct = IngresoDeCotizaciones(f'{row}')
+        result = ct.cotizaciones_diarias(1)
+        result_act = ct.cotizaciones_actualizadas()
+        save_json(result, f'Cotizaciones_diarias_{row}')
+        save_json(result_act, f'Cotizaciones_actualizadas_{row}')'''
+
 

@@ -69,8 +69,29 @@ class IngresoDeCotizaciones:
         return output
 
     def datos_cotizacion(self, DocNum, DocEntry):
+        datos_coti = self.ct.datos_de_la_cotizacion(DocNum, DocEntry)
+        print(datos_coti)
         query = f"EXEC [dbo].[sel_ObtenerDatosCotizacion]{DocNum},{DocEntry},'{self.pais}'"
-        print(query)
+        dato = {}
+        self.db.connect()
+        resultado = self.db.execute_query(query)[0]
+        if not resultado:
+            dato.update({
+                'status_cliente': False,
+                'Cliente': 'No Existe en la tabla'
+            })
+        elif resultado[29] is None:
+            dato.update({
+                'status_cliente': True,
+                'Cliente': 'Existe en la tabla, pero no esta vinculado a la cotizacion'
+            })
+        else:
+            dato.update({
+                'status_cliente': True,
+                'Cliente': f"Existe y tiene un id: {resultado[29]} de la tabla DatosClientes"
+            })
+
+        return dato
 
 
 
