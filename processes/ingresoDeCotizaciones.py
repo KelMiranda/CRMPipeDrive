@@ -71,28 +71,49 @@ class IngresoDeCotizaciones:
     def datos_cotizacion(self, DocNum, DocEntry):
         datos_coti = self.ct.datos_de_la_cotizacion(DocNum, DocEntry)
         query = f"EXEC [dbo].[sel_ObtenerDatosCotizacion]{DocNum},{DocEntry},'{self.pais}'"
-        dato = {}
+        dato = {'cotizacion_Pipedrive': datos_coti}
         self.db.connect()
-        resultado = self.db.execute_query(query)[0]
+        resultado = self.db.execute_query(query)
         if not resultado:
-            dato.update({
-                'status_cliente': False,
-                'Cliente': 'No Existe en la tabla'
-            })
-        elif resultado[29] is None:
-            dato.update({
+            dato['Validador'] = dict(status_cliente=False)
+        elif resultado[0][29] is None:
+            dato['Validador'] = {
                 'status_cliente': True,
                 'Cliente': 'Existe en la tabla, pero no esta vinculado a la cotizacion',
-                'status_cotizacion': resultado[6]
-            })
+                'status_cotizacion': resultado[0][6]
+            }
         else:
-            dato.update({
+            dato['Validador'] = {
                 'status_cliente': True,
-                'Cliente': f"Existe y tiene un id: {resultado[29]} de la tabla DatosClientes",
-                'status_cotizacion': resultado[6]
-            })
+                'Cliente': f"Existe y tiene un id: {resultado[0][29]} de la tabla DatosClientes",
+                'status_cotizacion': resultado[0][6]
+            }
 
-        return dato, datos_coti
+        return dato
+
+    def validacion_cliente(self, days):
+        today = dt.date.today()
+        one_day = dt.timedelta(days=days)
+        yesterday = today - one_day
+        ct = Cotizaciones(f'{self.pais}')
+        errores = []
+        cliente_existe = {}
+        cliente_noexiste = {}
+        self.db.connect()
+        for row in ct.cotizaciones_del_dia(f"{yesterday}")[0]:
+            query = f"Select CardCode from DatosClientes Where CardCode = '{row[2]}'"
+            try:
+                if self.db.execute_query(query) is None:
+                    cliente_noexiste.update({row[2]: False})
+                else:
+                    cliente_existe.update({row[2]: True})
+            except Exception as e:
+                errores.append({'DocNum': row[1], 'Codigo Del Cliente': f"{row[2]}", 'msg_error': str(e)})
+            finally:
+                print(f"##########################Terminando el analisis#####################################################")
+
+        return cliente_existe, cliente_noexiste
+
 
 
 
