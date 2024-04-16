@@ -308,74 +308,88 @@ class Cotizaciones:
 
     def datos_cliente(self, codigoCliente):
         try:
-            query = f"Select * from DatosClientes Where CardCode = '{codigoCliente}' AND Pais = '{self.pais}'"
-            query2 = f"Select * from [dbo].[VW_DATOS_CLIENTES_{self.pais}] Where CardCode = '{codigoCliente}'"
+            queryv = f"EXEC [PipeDrive].[dbo].[sp_ValidadorCliente_sv] '{codigoCliente}'"
             self.db.connect()
-            result = self.db.execute_query(query)[0]
-            id_pipedrive = result[8]
-            id_registro = result[0]
-            result2 = self.db.execute_query(query2)[0]
-            lista = get_all_option_for_fields_in_get_all_organization([4025, 4024, 4023, 4028, 4026])
-            datos_POS = {
-                'CardCode': result[1],
-                'CardName': result[2],
-                'address': result[3],
-                'Municipio': result[5],
-                'Departamento': result[6],
-                'Pais': result[14],
-                'Sector': result[11],
-                'Coordenadas': result[13],
-                'Vendedor_Asignado': result[15]
-            }
-            datos_vw_pos = {
-                'CardCode': result2[0],
-                'CardName': result2[1],
-                'address': result2[2],
-                'Municipio': result2[4],
-                'Departamento': result2[5],
-                'Pais': result2[13],
-                'Sector': result2[10],
-                'Coordenadas': result2[12],
-                'Vendedor_Asignado': result2[14]
-            }
+            validador = self.db.execute_query(queryv)[0][0]
+            if validador == 'Existe':
+                query = f"SELECT COALESCE((Select * from DatosClientes Where CardCode = '{codigoCliente}' AND Pais = '{self.pais}'),NULL)"
+                query2 = f"SELECT COALESCE((Select * from [dbo].[VW_DATOS_CLIENTES_{self.pais}] Where CardCode = '{codigoCliente}'), NULL)"
 
-            if id_pipedrive is None:
-                output = {
-                    'datos_pipe': 'No existe en pipedrive',
-                    'Diferencia de datos entre POS y VW_POS': datos_vw_pos != datos_POS,
-                    'datos_POS': datos_POS,
-                    'datos_vw_pos': datos_vw_pos,
-                    'id_registro': id_registro,
-                    'lista': lista
+                result = self.db.execute_query(query)[0]
+                id_pipedrive = result[8]
+                id_registro = result[0]
+                result2 = self.db.execute_query(query2)[0]
+                lista = get_all_option_for_fields_in_get_all_organization([4025, 4024, 4023, 4028, 4026])
+                datos_POS = {
+                    'CardCode': result[1],
+                    'CardName': result[2],
+                    'address': result[3],
+                    'Municipio': result[5],
+                    'Departamento': result[6],
+                    'Pais': result[14],
+                    'Sector': result[11],
+                    'Coordenadas': result[13],
+                    'Vendedor_Asignado': result[15]
                 }
+                datos_vw_pos = {
+                    'CardCode': result2[0],
+                    'CardName': result2[1],
+                    'address': result2[2],
+                    'Municipio': result2[4],
+                    'Departamento': result2[5],
+                    'Pais': result2[13],
+                    'Sector': result2[10],
+                    'Coordenadas': result2[12],
+                    'Vendedor_Asignado': result2[14]
+                }
+
+                if id_pipedrive is None:
+                    output = {
+                        'status': 'No existe en pipedrive, pero si en la tabla',
+                        'Diferencia de datos entre POS y VW_POS': datos_vw_pos != datos_POS,
+                        'datos_POS': datos_POS,
+                        'datos_vw_pos': datos_vw_pos,
+                        'id_registro': id_registro,
+                        'lista': lista
+                    }
+                else:
+                    result_pipe = self.pipe.get_organization_id(result[8]).get('data')
+                    datos_pipe = {
+                        'CardCode': result_pipe.get('bd4aa325c2375edc367c1d510faf509422f71a5b'),
+                        'CardName': result_pipe.get('name'),
+                        'address': result_pipe.get('address'),
+                        'Municipio': dictionary_invert(lista.get('4025'),
+                                                       result_pipe.get('99daf5439284d6a809aee36c4d52a53c9826300b')),
+                        'Departamento': dictionary_invert(lista.get('4024'),
+                                                          result_pipe.get('deca3dd694894b2ca93df56db39f66468cb3885d')),
+                        'Sector': dictionary_invert(lista.get('4023'),
+                                                    result_pipe.get('8b8121d03ef920b724ffa68b0f6177fdf281ad3f')),
+                        'Coordenadas': result_pipe.get('3ed19788ef9c8ebeaf0f24f58394f67ac784684c'),
+                        'Vendedor_Asignado': dictionary_invert(lista.get('4028'),
+                                                               result_pipe.get(
+                                                                   'fd0f15b9338615a55ca56a3cada567919ec33306')),
+                        'Pais': dictionary_invert(lista.get('4026'),
+                                                  result_pipe.get('2d4edef00aec72dcc0fd1a240f7897fb0eb34465'))
+                    }
+                    output = {
+                        'Diferencia de datos entre POS y pipeDrive': datos_POS != datos_pipe,
+                        'Diferencia de datos entre POS y VW_POS': datos_vw_pos != datos_POS,
+                        'datos_POS': datos_POS,
+                        'datos_vw_pos': datos_vw_pos,
+                        'datos_pipe': datos_pipe,
+                        'lista': lista,
+                        'id_pipedrive': result[8]
+                    }
+                return output
             else:
-                result_pipe = self.pipe.get_organization_id(result[8]).get('data')
-                datos_pipe = {
-                    'CardCode': result_pipe.get('bd4aa325c2375edc367c1d510faf509422f71a5b'),
-                    'CardName': result_pipe.get('name'),
-                    'address': result_pipe.get('address'),
-                    'Municipio': dictionary_invert(lista.get('4025'),
-                                                   result_pipe.get('99daf5439284d6a809aee36c4d52a53c9826300b')),
-                    'Departamento': dictionary_invert(lista.get('4024'),
-                                                      result_pipe.get('deca3dd694894b2ca93df56db39f66468cb3885d')),
-                    'Sector': dictionary_invert(lista.get('4023'),
-                                                result_pipe.get('8b8121d03ef920b724ffa68b0f6177fdf281ad3f')),
-                    'Coordenadas': result_pipe.get('3ed19788ef9c8ebeaf0f24f58394f67ac784684c'),
-                    'Vendedor_Asignado': dictionary_invert(lista.get('4028'),
-                                                           result_pipe.get('fd0f15b9338615a55ca56a3cada567919ec33306')),
-                    'Pais': dictionary_invert(lista.get('4026'),
-                                              result_pipe.get('2d4edef00aec72dcc0fd1a240f7897fb0eb34465'))
-                }
                 output = {
-                    'Diferencia de datos entre POS y pipeDrive': datos_POS != datos_pipe,
-                    'Diferencia de datos entre POS y VW_POS': datos_vw_pos != datos_POS,
-                    'datos_POS': datos_POS,
-                    'datos_vw_pos': datos_vw_pos,
-                    'datos_pipe': datos_pipe,
-                    'lista': lista,
-                    'id_pipedrive': result[8]
+                    'Codigo Del Cliente': codigoCliente,
+                    'Pais': self.pais,
+                    'status': 'No Existe Cliente en la tabla'
                 }
-            return output
+                return output
+
+
         except Exception as e:
             error = {f"El cliente: {codigoCliente} tiene el siguiente error: ": {e}}
             return error

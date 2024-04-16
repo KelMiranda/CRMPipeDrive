@@ -114,10 +114,9 @@ class Cliente:
 
     def ingresar_o_actualizar_cliente_pipedrive(self, codigo_cliente):
         resultado = self.ct.datos_cliente(codigo_cliente)
-        datos_POS = resultado.get('datos_POS')
-        cuenta_asignada_query = f"SELECT COALESCE((SELECT b.PipedriveId FROM[PipeDrive].[dbo].[vendedores] AS a INNER JOIN[PipeDrive].[dbo].[users] AS b ON a.id_vendedores = b.id_vendedores WHERE a.SlpName = '{datos_POS.get('Vendedor_Asignado')}'),NULL) AS PipedriveId;"
+        '''datos_POS = resultado.get('datos_POS')
+        cuenta_asignada_query = f"SELECT COALESCE((SELECT PipedriveId FROM [PipeDrive].[dbo].[vw_idUserPipeDrive]WHERE SlpName = '{datos_POS.get('Vendedor_Asignado')}'), NULL) AS PipedriveId;"
         self.db.connect()
-        print(cuenta_asignada_query)
         cuenta_asignada = self.db.execute_query(cuenta_asignada_query)[0]
         lista = resultado.get('lista')
         id_pipedrive = resultado.get('id_pipedrive')
@@ -133,23 +132,8 @@ class Cliente:
             '2d4edef00aec72dcc0fd1a240f7897fb0eb34465': lista.get('4026').get(f"{datos_POS.get('Pais')}"),
             'owner_id': cuenta_asignada[0],
             'address': datos_POS.get('address')
-        }
-        if cuenta_asignada is None:
-            datos.update({'owner_id': 12806795})
-        else:
-            datos.update({'owner_id': cuenta_asignada[0]})
-
-        if resultado.get('datos_pipe') == 'No existe en pipedrive':
-            #resultado_pipe = self.pipe.post_organization(datos)
-            #id_pipedrive = resultado_pipe.get('data').get('id')
-            print('No existe en pipedrive')
-
-        else:
-            self.db.connect()
-            query = f"EXEC [dbo].[SP_VALIDADOR_CLIENTE_MERGE_{self.pais}]'{datos_POS.get('CardCode')}'"
-            self.db.execute_query(query, False)
-            re = self.actualizacionCliente(id_pipedrive, datos)
-            return re
+        }'''
+        return resultado
 
 
 
