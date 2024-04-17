@@ -312,9 +312,8 @@ class Cotizaciones:
             self.db.connect()
             validador = self.db.execute_query(queryv)[0][0]
             if validador == 'Existe':
-                query = f"SELECT COALESCE((Select * from DatosClientes Where CardCode = '{codigoCliente}' AND Pais = '{self.pais}'),NULL)"
-                query2 = f"SELECT COALESCE((Select * from [dbo].[VW_DATOS_CLIENTES_{self.pais}] Where CardCode = '{codigoCliente}'), NULL)"
-
+                query = f"Select * from DatosClientes Where CardCode = '{codigoCliente}' AND Pais = '{self.pais}'"
+                query2 = f"Select * from [dbo].[VW_DATOS_CLIENTES_{self.pais}] Where CardCode = '{codigoCliente}'"
                 result = self.db.execute_query(query)[0]
                 id_pipedrive = result[8]
                 id_registro = result[0]
@@ -345,7 +344,7 @@ class Cotizaciones:
 
                 if id_pipedrive is None:
                     output = {
-                        'status': 'No existe en pipedrive, pero si en la tabla',
+                        'Status': 'No existe en pipedrive, pero si en la tabla',
                         'Diferencia de datos entre POS y VW_POS': datos_vw_pos != datos_POS,
                         'datos_POS': datos_POS,
                         'datos_vw_pos': datos_vw_pos,
@@ -372,6 +371,7 @@ class Cotizaciones:
                                                   result_pipe.get('2d4edef00aec72dcc0fd1a240f7897fb0eb34465'))
                     }
                     output = {
+                        'Status': 'Si existe en pipedrive y tambien en la tabla',
                         'Diferencia de datos entre POS y pipeDrive': datos_POS != datos_pipe,
                         'Diferencia de datos entre POS y VW_POS': datos_vw_pos != datos_POS,
                         'datos_POS': datos_POS,
@@ -383,13 +383,11 @@ class Cotizaciones:
                 return output
             else:
                 output = {
+                    'Status': 'No Existe Cliente en la tabla',
                     'Codigo Del Cliente': codigoCliente,
                     'Pais': self.pais,
-                    'status': 'No Existe Cliente en la tabla'
                 }
                 return output
-
-
         except Exception as e:
             error = {f"El cliente: {codigoCliente} tiene el siguiente error: ": {e}}
             return error

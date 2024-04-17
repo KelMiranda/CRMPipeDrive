@@ -35,6 +35,8 @@ def comparar_registros_cliente(registro1, registro2):
     return diferencias
 
 
+
+
 class Cliente:
     def __init__(self, pais):
         self.pais = pais
@@ -112,28 +114,52 @@ class Cliente:
                 })
         return clientesModificados
 
+    def datosClienteExistente(self, codigo_cliente):
+        resultado = self.ct.datos_cliente(codigo_cliente)
+        print(resultado.get('id_pipedrive'))
+        if resultado.get('id_pipedrive') is not None:
+            datos_POS = resultado.get('datos_POS')
+            cuenta_asignada_query = f"SELECT COALESCE((SELECT PipedriveId FROM [PipeDrive].[dbo].[vw_idUserPipeDrive]WHERE SlpName = '{datos_POS.get('Vendedor_Asignado')}'), NULL) AS PipedriveId;"
+            self.db.connect()
+            cuenta_asignada = self.db.execute_query(cuenta_asignada_query)[0]
+            lista = resultado.get('lista')
+            id_pipedrive = resultado.get('id_pipedrive')
+            datos = {
+                'name': datos_POS.get('CardName'),
+                'bd4aa325c2375edc367c1d510faf509422f71a5b': datos_POS.get('CardCode'),
+                '8b8121d03ef920b724ffa68b0f6177fdf281ad3f': lista.get('4023').get(f"{datos_POS.get('Sector')}"),
+                '99daf5439284d6a809aee36c4d52a53c9826300b': lista.get('4025').get(f"{datos_POS.get('Municipio')}"),
+                'deca3dd694894b2ca93df56db39f66468cb3885d': lista.get('4024').get(
+                    f"{datos_POS.get('Departamento')}"),
+                '3ed19788ef9c8ebeaf0f24f58394f67ac784684c': datos_POS.get('Coordenadas'),
+                'fd0f15b9338615a55ca56a3cada567919ec33306': lista.get('4028').get(
+                    f"{datos_POS.get('Vendedor_Asignado')}"),
+                'label': 1,
+                '2d4edef00aec72dcc0fd1a240f7897fb0eb34465': lista.get('4026').get(f"{datos_POS.get('Pais')}"),
+                'owner_id': cuenta_asignada[0],
+                'address': datos_POS.get('address')
+            }
+            return datos, id_pipedrive
+        else:
+            return False
+
+
+
     def ingresar_o_actualizar_cliente_pipedrive(self, codigo_cliente):
         resultado = self.ct.datos_cliente(codigo_cliente)
-        '''datos_POS = resultado.get('datos_POS')
-        cuenta_asignada_query = f"SELECT COALESCE((SELECT PipedriveId FROM [PipeDrive].[dbo].[vw_idUserPipeDrive]WHERE SlpName = '{datos_POS.get('Vendedor_Asignado')}'), NULL) AS PipedriveId;"
-        self.db.connect()
-        cuenta_asignada = self.db.execute_query(cuenta_asignada_query)[0]
-        lista = resultado.get('lista')
-        id_pipedrive = resultado.get('id_pipedrive')
-        datos = {
-            'name': datos_POS.get('CardName'),
-            'bd4aa325c2375edc367c1d510faf509422f71a5b': datos_POS.get('CardCode'),
-            '8b8121d03ef920b724ffa68b0f6177fdf281ad3f': lista.get('4023').get(f"{datos_POS.get('Sector')}"),
-            '99daf5439284d6a809aee36c4d52a53c9826300b': lista.get('4025').get(f"{datos_POS.get('Municipio')}"),
-            'deca3dd694894b2ca93df56db39f66468cb3885d': lista.get('4024').get(f"{datos_POS.get('Departamento')}"),
-            '3ed19788ef9c8ebeaf0f24f58394f67ac784684c': datos_POS.get('Coordenadas'),
-            'fd0f15b9338615a55ca56a3cada567919ec33306': lista.get('4028').get(f"{datos_POS.get('Vendedor_Asignado')}"),
-            'label': 1,
-            '2d4edef00aec72dcc0fd1a240f7897fb0eb34465': lista.get('4026').get(f"{datos_POS.get('Pais')}"),
-            'owner_id': cuenta_asignada[0],
-            'address': datos_POS.get('address')
-        }'''
-        return resultado
+
+        if resultado.get('status') == 'No Existe Cliente en la tabla':
+            query = F"EXEC [CRM].[dbo].[SP_VALIDADOR_CLIENTE_MERGE_{self.pais}] '{codigo_cliente}'"
+            print(query)
+        elif resultado.get('Status') == 'Si existe en pipedrive y tambien en la tabla':
+            if resultado.get('Diferencia de datos entre POS y VW_POS') is False:
+                query = F"EXEC [CRM].[dbo].[SP_VALIDADOR_CLIENTE_MERGE_{self.pais}] '{codigo_cliente}'"
+                print(query)
+                print(self.datosClienteExistente(codigo_cliente))
+        elif resultado.get('Status') == 'No existe en pipedrive, pero si en la tabla':
+            print("Estoy aqui")
+
+
 
 
 
