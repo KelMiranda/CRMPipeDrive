@@ -186,6 +186,8 @@ class Cliente:
                 print(self.actualizacionCliente(id_pipedrive, data))
 
         elif resultado.get('Status') == 'Si existe en pipedrive y tambien en la tabla':
+            print(resultado.get('Diferencia de datos entre POS y pipeDrive'))
+            print(resultado.get('Diferencia de datos entre POS y VW_POS'))
             print("Si existe en pipedrive y tambien en la tabla")
             print(f"EXEC [CRM].[dbo].[SP_VALIDADOR_CLIENTE_MERGE_{self.pais}] '{codigo_cliente}'")
 
