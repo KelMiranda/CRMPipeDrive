@@ -172,26 +172,27 @@ class Cliente:
     def ingresar_o_actualizar_cliente_pipedrive(self, codigo_cliente):
         self.db.connect()
         resultado = self.ct.datos_cliente(codigo_cliente)
-        if resultado.get('Status') == 'No Existe Cliente en la tabla':
-            print("No Existe Cliente en la tabla")
-            query = f"EXEC [CRM].[dbo].[SP_VALIDADOR_CLIENTE_MERGE_{self.pais}] '{codigo_cliente}'"
-            self.db.execute_query(query, False)
-            resultado_2 = self.ct.datos_cliente(codigo_cliente)
-            id_registro = resultado_2.get('id_registro')
-            data = self.construir_datos_cliente(resultado_2)[0]
-            Json = self.pipe.post_organization(data)
-            if Json.get('success') is True:
-                id_pipedrive = Json.get('data').get('id')
-                print(self.actualizar_tablas(id_pipedrive, id_registro))
-                print(self.actualizacionCliente(id_pipedrive, data))
+        status = resultado.get('Status')
 
-        elif resultado.get('Status') == 'Si existe en pipedrive y tambien en la tabla':
-            print(resultado.get('Diferencia de datos entre POS y pipeDrive'))
-            print(resultado.get('Diferencia de datos entre POS y VW_POS'))
-            print("Si existe en pipedrive y tambien en la tabla")
-            print(f"EXEC [CRM].[dbo].[SP_VALIDADOR_CLIENTE_MERGE_{self.pais}] '{codigo_cliente}'")
+        if status == 'No Existe Cliente en la tabla' or (status == 'Si existe en pipedrive y tambien en la tabla' and
+                                                         (resultado.get(
+                                                             'Diferencia de datos entre POS y pipeDrive') or resultado.get(
+                                                             'Diferencia de datos entre POS y VW_POS')) or
+                                                         status == 'No existe en pipedrive, pero si en la tabla'):
+            self.procesar_cliente(codigo_cliente)
 
-        elif resultado.get('Status') == 'No existe en pipedrive, pero si en la tabla':
-            print('No existe en pipedrive, pero si en la tabla')
-            print(resultado.get('id_registro'))
-            #print(self.datos_cliente_existente(codigo_cliente, False))
+    def procesar_cliente(self, codigo_cliente):
+        resultado = self.ct.datos_cliente(codigo_cliente)
+        print(resultado.get('Status'))
+        query = f"EXEC [CRM].[dbo].[SP_VALIDADOR_CLIENTE_MERGE_{self.pais}] '{codigo_cliente}'"
+        self.db.execute_query(query, False)
+        resultado_2 = self.ct.datos_cliente(codigo_cliente)
+        print(resultado_2)
+        id_registro = resultado_2.get('id_registro')
+        data = self.construir_datos_cliente(resultado_2)[0]
+        Json = self.pipe.post_organization(data)
+        if Json.get('success') is True:
+            id_pipedrive = Json.get('data').get('id')
+            print(self.actualizar_tablas(id_pipedrive, id_registro))
+            print(self.actualizacionCliente(id_pipedrive, data))
+
