@@ -23,6 +23,6 @@ if __name__ == '__main__':
         result_act = ct.cotizaciones_actualizadas()
         save_json(result, f'Cotizaciones_diarias_{row}')
         save_json(result_act, f'Cotizaciones_actualizadas_{row}')'''
-    Cliente('GT').ingresar_o_actualizar_cliente_pipedrive('C156')
+    Cliente('SV').ingresar_o_actualizar_cliente_pipedrive('C3311262')
 
 

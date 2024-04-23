@@ -308,7 +308,7 @@ class Cotizaciones:
 
     def datos_cliente(self, codigoCliente):
         try:
-            queryv = f"EXEC [PipeDrive].[dbo].[sp_ValidadorCliente_sv] '{codigoCliente}'"
+            queryv = f"EXEC [PipeDrive].[dbo].[sp_ValidadorCliente_{self.pais}] '{codigoCliente}'"
             self.db.connect()
             validador = self.db.execute_query(queryv)[0][0]
             if validador == 'Existe':
