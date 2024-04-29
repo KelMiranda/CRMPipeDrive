@@ -229,7 +229,6 @@ class Cotizaciones:
             self.db.connect()
             query = f"EXEC [dbo].[SP_COTIZACIONES_{self.pais}_PYTHON]  {DocNum}, {DocEntry}"
             valores = self.db.execute_query(query)[0]
-            # Procesa los resultados de la consulta
             result.update({
                 f"{datos_cotizacion.get('vendedor_asignado')}": values.get('12521').get(f'{valores[0]}'),
                 f"{datos_cotizacion.get('vendedor_cot')}": values.get('12522').get(f'{valores[1]}'),
@@ -238,8 +237,6 @@ class Cotizaciones:
                 f"{datos_cotizacion.get('obtener_estado_cotizacion')}": values.get('12527').get(f'{valores[4]}'),
                 f"{datos_cotizacion.get('DocNum')}": valores[5],
                 f"{datos_cotizacion.get('Serie')}": valores[6],
-                f"{datos_cotizacion.get('Comentario_POS')}": valores[7],
-                f"{datos_cotizacion.get('Descripcion_Pos')}": values.get('12531').get(f'{valores[8]}'),
                 f"{datos_cotizacion.get('T_Sector_Cliente')}": values.get('12529').get(f'{valores[9]}'),
                 f"{datos_cotizacion.get('expected_close_date')}": valores[10].strftime('%Y-%m-%d'),
                 f"{datos_cotizacion.get('label')}": valores[11],
@@ -252,7 +249,18 @@ class Cotizaciones:
                 f"{datos_cotizacion.get('obtener_tipo_cotizacion')}": values.get('12546').get(f'{valores[17]}'),
                 f"{datos_cotizacion.get('CardName')}": valores[18]
             })
-            return result
+            if valores[4] == 'Closed':
+                result.update(
+                    {
+                        f"{datos_cotizacion.get('Comentario_POS')}": valores[7],
+                        f"{datos_cotizacion.get('Descripcion_Pos')}": values.get('12531').get(f'{valores[8]}'),
+                    }
+                )
+                pass
+            # Procesa los resultados de la consulta
+
+
+            return result, {'id_deal': valores[19]}
         except Exception as e:
             # Maneja cualquier excepción que ocurra durante la conexión a la base de datos o la ejecución de la consulta
             errores.append({'DocNum': DocNum, 'msg_error': str(e)})
