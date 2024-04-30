@@ -229,6 +229,28 @@ class Cotizaciones:
             self.db.connect()
             query = f"EXEC [dbo].[SP_COTIZACIONES_{self.pais}_PYTHON]  {DocNum}, {DocEntry}"
             valores = self.db.execute_query(query)[0]
+
+            def actualizar_data1(valores, values):
+                # Casos especiales donde se necesita un "stage_id"
+                casos_especiales = ["Presupuesto", "Recotización", "Cierre por cambio de cotizacion"]
+
+                # Configura "data1" según el motivo de pérdida
+                if valores[8] in casos_especiales:
+                    data1 = {
+                        "status": "lost",
+                        "lost_reason": values.get('12531').get(valores[8]),
+                        "stage_id": 21
+                    }
+                elif valores[8] == "Venta":
+                    # Si no hay que actualizar nada para "Venta", simplemente pasar
+                    pass
+                else:
+                    # Configuración general para los casos de pérdida
+                    data1 = {
+                        "status": "lost",
+                        "lost_reason": values.get('12531').get(valores[8])
+                    }
+                return data1
             result.update({
                 f"{datos_cotizacion.get('vendedor_asignado')}": values.get('12521').get(f'{valores[0]}'),
                 f"{datos_cotizacion.get('vendedor_cot')}": values.get('12522').get(f'{valores[1]}'),
@@ -249,17 +271,16 @@ class Cotizaciones:
                 f"{datos_cotizacion.get('obtener_tipo_cotizacion')}": values.get('12546').get(f'{valores[17]}'),
                 f"{datos_cotizacion.get('CardName')}": valores[18]
             })
+
             if valores[4] == 'Closed':
+                result.update(actualizar_data1(valores, values))
                 result.update(
                     {
                         f"{datos_cotizacion.get('Comentario_POS')}": valores[7],
                         f"{datos_cotizacion.get('Descripcion_Pos')}": values.get('12531').get(f'{valores[8]}'),
                     }
                 )
-                pass
             # Procesa los resultados de la consulta
-
-
             return result, {'id_deal': valores[19]}
         except Exception as e:
             # Maneja cualquier excepción que ocurra durante la conexión a la base de datos o la ejecución de la consulta
