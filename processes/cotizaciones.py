@@ -242,8 +242,12 @@ class Cotizaciones:
                         "stage_id": 21
                     }
                 elif valores[8] == "Venta":
-                    # Si no hay que actualizar nada para "Venta", simplemente pasar
-                    pass
+                    data1 = {
+                        "status": "won",
+                        "lost_reason": values.get('12531').get(valores[8]),
+                        "stage_id": 21
+                    }
+
                 else:
                     # Configuración general para los casos de pérdida
                     data1 = {
@@ -273,7 +277,7 @@ class Cotizaciones:
             })
 
             if valores[4] == 'Closed':
-                result.update(actualizar_data1(valores, values))
+                #result.update(actualizar_data1(valores, values))
                 result.update(
                     {
                         f"{datos_cotizacion.get('Comentario_POS')}": valores[7],
@@ -428,3 +432,31 @@ class Cotizaciones:
         query = f"Select CardCode from DatosClientes Where Pais = '{self.pais}' AND Validador = '{Validador}'"
         result = self.db.execute_query(query)
         return result, len(result)
+
+    def consulta_factura(self, docnum, docentry):
+        # Conectar a la base de datos
+        self.db.connect()
+
+        # Consulta para obtener información de la factura
+        query = (f"SELECT DocNum, Serie, ORD, DetailSum, id_deal, CancelComments, CancelReason, CDESCRIPCION, SlpName "
+                 f"FROM DatosProyectos_PipeDrive WHERE DocNum = {docnum} AND DocEntry = {docentry}")
+        row = self.db.execute_query(query)[0]
+
+        # Construir el número de orden y el tipo de referencia
+        order_number = row[1] + str(row[0])
+        ref_type = row[2]
+
+        # Ejecutar el procedimiento almacenado para consultar la factura
+        query1 = f"EXEC sp_consulta_factura {order_number}, {ref_type}"
+        valor_facturado = float(self.db.execute_query(query1)[0][0])
+        valor_cotizacion = float(row[3])
+
+        # Establecer la moneda según el país, asumiendo USD por defecto
+        currency_mapping = {'SV': 'USD', 'GT': 'GTQ', 'HN': 'HNL'}
+        currency = currency_mapping.get(self.pais, 'USD')
+
+        # Crear y devolver el resultado solo si los valores coinciden
+        if valor_facturado == valor_cotizacion:
+            return {"currency": currency, "value": valor_facturado}
+        else:
+            return {"currency": currency, "value": valor_facturado}

@@ -22,9 +22,10 @@ if __name__ == '__main__':
         result = ct.cotizaciones_diarias(1)
         result_act = ct.cotizaciones_actualizadas()
         save_json(result, f'Cotizaciones_diarias_{row}')
-        save_json(result_act, f'Cotizaciones_actualizadas_{row}')
-    '''
-    #Cliente('GT').ingresar_o_actualizar_cliente_pipedrive('C2584')
-    print(Cotizaciones('SV').datos_de_la_cotizacion(16206, 21156))
+        save_json(result_act, f'Cotizaciones_actualizadas_{row}')'''
+
+    #Cliente('SV').ingresar_o_actualizar_cliente_pipedrive('c2449596')
+    #print(Cotizaciones('SV').datos_de_la_cotizacion(468373, 605154))
+    print(Cotizaciones('SV').consulta_factura(356821, 447735))
 
 
