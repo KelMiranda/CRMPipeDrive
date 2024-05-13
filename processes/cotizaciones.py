@@ -199,10 +199,12 @@ class Cotizaciones:
             valores = self.db.execute_query(query)
             # Procesa los resultados de la consulta
             result = {}
+            currency_mapping = {'SV': 'USD', 'GT': 'GTQ', 'HN': 'HNL'}
+            currency = currency_mapping.get(self.pais, 'USD')
             for row in valores:
                 clave_familia = familias_padres.get(row[1])
                 if clave_familia is not None:
-                    result.update({f"{clave_familia}": float(row[0])})
+                    result.update({f"{clave_familia}": float(row[0]), f"{clave_familia}_currency": currency})
                 else:
                     print(f"Clave {row[1]} no encontrada en familias_padres.")
 
