@@ -17,16 +17,16 @@ if __name__ == '__main__':
     #result = IngresoDeCotizaciones('SV').validacion_cliente(0)
     #print(result)
 
-    for row in pais:
+    '''for row in pais:
         ct = IngresoDeCotizaciones(f'{row}')
         result = ct.cotizaciones_diarias(1)
         result_act = ct.cotizaciones_actualizadas()
         save_json(result, f'Cotizaciones_diarias_{row}')
-        save_json(result_act, f'Cotizaciones_actualizadas_{row}')
+        save_json(result_act, f'Cotizaciones_actualizadas_{row}')'''
 
     #Cliente('SV').ingresar_o_actualizar_cliente_pipedrive('c2449596')
-    #print(Cotizaciones('SV').datos_de_la_cotizacion(468373, 605154))
-    #print(Cotizaciones('SV').consulta_factura(356821, 447735))
+    #print(Cotizaciones('SV').datos_de_la_cotizacion(16194, 21138))
+    print(Cotizaciones('SV').consulta_factura(370587, 477731))
     #print(Cotizaciones('SV').familia_padre_de_la_cotizacion(356821, 447735))
     #print(Cotizaciones('GT').familia_padre_de_la_cotizacion(26191, 34674))
 

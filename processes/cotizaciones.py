@@ -249,7 +249,6 @@ class Cotizaciones:
                         "lost_reason": values.get('12531').get(valores[8]),
                         "stage_id": 21
                     }
-
                 else:
                     # Configuración general para los casos de pérdida
                     data1 = {
@@ -450,15 +449,19 @@ class Cotizaciones:
 
         # Ejecutar el procedimiento almacenado para consultar la factura
         query1 = f"EXEC sp_consulta_factura {order_number}, {ref_type}"
-        valor_facturado = float(self.db.execute_query(query1)[0][0])
-        valor_cotizacion = float(row[3])
-
-        # Establecer la moneda según el país, asumiendo USD por defecto
-        currency_mapping = {'SV': 'USD', 'GT': 'GTQ', 'HN': 'HNL'}
-        currency = currency_mapping.get(self.pais, 'USD')
-
-        # Crear y devolver el resultado solo si los valores coinciden
-        if valor_facturado == valor_cotizacion:
-            return {"currency": currency, "value": valor_facturado}
+        resultado = self.db.execute_query(query1)[0][0]
+        if resultado == 'Sin Factura':
+            return resultado
         else:
-            return {"currency": currency, "value": valor_facturado}
+            valor_facturado = float(resultado)
+            valor_cotizacion = float(row[3])
+
+            # Establecer la moneda según el país, asumiendo USD por defecto
+            currency_mapping = {'SV': 'USD', 'GT': 'GTQ', 'HN': 'HNL'}
+            currency = currency_mapping.get(self.pais, 'USD')
+
+            # Crear y devolver el resultado solo si los valores coinciden
+            if valor_facturado == valor_cotizacion:
+                return {"currency": currency, "value": valor_facturado}
+            else:
+                return {"currency": currency, "value": valor_facturado}
