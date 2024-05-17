@@ -232,6 +232,8 @@ class Cotizaciones:
             query = f"EXEC [dbo].[SP_COTIZACIONES_{self.pais}_PYTHON]  {DocNum}, {DocEntry}"
             valores = self.db.execute_query(query)[0]
 
+            familias_padres = self.familia_padre_de_la_cotizacion(DocNum, DocEntry)
+
             def actualizar_data1(valores, values):
                 # Casos especiales donde se necesita un "stage_id"
                 casos_especiales = ["Presupuesto", "Recotización", "Cierre por cambio de cotizacion"]
@@ -244,11 +246,29 @@ class Cotizaciones:
                         "stage_id": 21
                     }
                 elif valores[8] == "Venta":
-                    data1 = {
-                        "status": "won",
-                        "lost_reason": values.get('12531').get(valores[8]),
-                        "stage_id": 21
-                    }
+                    validador = self.consulta_factura(DocNum, DocEntry)
+                    if validador == 'Sin Factura':
+                        data1 = {
+                            "status": "lost",
+                            "lost_reason": "Cotización mal cerrada en pos"
+                        }
+                    else:
+                        data1 = {
+                            "status": "won"
+                        }
+                        data1.update(validador)
+                elif valores[8] == "Venta Parcial":
+                    validador = self.consulta_factura(DocNum, DocEntry)
+                    if validador == 'Sin Factura':
+                        data1 = {
+                            "status": "lost",
+                            "lost_reason": "Cotización mal cerrada en pos"
+                        }
+                    else:
+                        data1 = {
+                            "status": "won"
+                        }
+                        data1.update(validador)
                 else:
                     # Configuración general para los casos de pérdida
                     data1 = {
@@ -256,6 +276,7 @@ class Cotizaciones:
                         "lost_reason": values.get('12531').get(valores[8])
                     }
                 return data1
+
             result.update({
                 f"{datos_cotizacion.get('vendedor_asignado')}": values.get('12521').get(f'{valores[0]}'),
                 f"{datos_cotizacion.get('vendedor_cot')}": values.get('12522').get(f'{valores[1]}'),
@@ -276,9 +297,10 @@ class Cotizaciones:
                 f"{datos_cotizacion.get('obtener_tipo_cotizacion')}": values.get('12546').get(f'{valores[17]}'),
                 f"{datos_cotizacion.get('CardName')}": valores[18]
             })
+            result.update(familias_padres)
 
             if valores[4] == 'Closed':
-                #result.update(actualizar_data1(valores, values))
+                result.update(actualizar_data1(valores, values))
                 result.update(
                     {
                         f"{datos_cotizacion.get('Comentario_POS')}": valores[7],
@@ -459,9 +481,10 @@ class Cotizaciones:
             # Establecer la moneda según el país, asumiendo USD por defecto
             currency_mapping = {'SV': 'USD', 'GT': 'GTQ', 'HN': 'HNL'}
             currency = currency_mapping.get(self.pais, 'USD')
+            porcentaje = round(valor_facturado * 100 / valor_cotizacion, 2)
 
             # Crear y devolver el resultado solo si los valores coinciden
             if valor_facturado == valor_cotizacion:
-                return {"currency": currency, "value": valor_facturado}
+                return {"currency": currency, "value": valor_facturado, "estado": 'Facturado Completamente', 'e98fda1c30bf99bce1876a34e6caa56c540a4e32': porcentaje, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32_currency':currency}
             else:
-                return {"currency": currency, "value": valor_facturado}
+                return {"currency": currency, "value": valor_facturado, "estado": 'Facturado Parcialmente', 'e98fda1c30bf99bce1876a34e6caa56c540a4e32': porcentaje, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32_currency':currency}
