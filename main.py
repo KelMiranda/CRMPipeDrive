@@ -24,7 +24,7 @@ if __name__ == '__main__':
         save_json(result, f'Cotizaciones_diarias_{row}')
         save_json(result_act, f'Cotizaciones_actualizadas_{row}')'''
 
-    #Cliente('SV').ingresar_o_actualizar_cliente_pipedrive('c2449596')
+    Cliente('SV').ingresar_o_actualizar_cliente_pipedrive('c2449596')
     print(Cotizaciones('SV').datos_de_la_cotizacion(369729,464840))
     print(Cotizaciones('SV').datos_cliente('C2829963'))
     #print(Cotizaciones('SV').consulta_factura(369729,464840))
