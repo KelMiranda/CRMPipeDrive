@@ -5,6 +5,7 @@ from pipedrive.pipedrive_api_conecction import PipedriveAPI
 from processes.organizations import get_all_option_for_fields_in_get_all_organization
 from processes.deals import dictionary_invert
 
+
 familias_padres = {
     'CAJAS TERMICAS, BRK': 'c97bd1f994dce3b891f1189965c06ef775b53757',
     'CANALIZ Y ACC MONTAJ': 'd8b5d8cdff3533b40d7374a4f9cfbfd0584f2037',
@@ -60,6 +61,7 @@ class Cotizaciones:
         self.pais = pais
         self.db = SQLServerDatabase('SERVER', 'DATABASE', 'USERNAME_', 'PASSWORD')
         self.pipe = PipedriveAPI('Token')
+
 
     def cierre_de_cotizaciones(self):
         errores = []
@@ -231,9 +233,7 @@ class Cotizaciones:
             self.db.connect()
             query = f"EXEC [dbo].[SP_COTIZACIONES_{self.pais}_PYTHON]  {DocNum}, {DocEntry}"
             valores = self.db.execute_query(query)[0]
-
             familias_padres = self.familia_padre_de_la_cotizacion(DocNum, DocEntry)
-
             def actualizar_data1(valores, values):
                 # Casos especiales donde se necesita un "stage_id"
                 casos_especiales = ["Presupuesto", "Recotización", "Cierre por cambio de cotizacion"]
@@ -276,7 +276,6 @@ class Cotizaciones:
                         "lost_reason": values.get('12531').get(valores[8])
                     }
                 return data1
-
             result.update({
                 f"{datos_cotizacion.get('vendedor_asignado')}": values.get('12521').get(f'{valores[0]}'),
                 f"{datos_cotizacion.get('vendedor_cot')}": values.get('12522').get(f'{valores[1]}'),
@@ -298,7 +297,6 @@ class Cotizaciones:
                 f"{datos_cotizacion.get('CardName')}": valores[18]
             })
             result.update(familias_padres)
-
             if valores[4] == 'Closed':
                 result.update(actualizar_data1(valores, values))
                 result.update(
@@ -488,3 +486,6 @@ class Cotizaciones:
                 return {"currency": currency, "value": valor_facturado, "estado": 'Facturado Completamente', 'e98fda1c30bf99bce1876a34e6caa56c540a4e32': porcentaje, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32_currency':currency}
             else:
                 return {"currency": currency, "value": valor_facturado, "estado": 'Facturado Parcialmente', 'e98fda1c30bf99bce1876a34e6caa56c540a4e32': porcentaje, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32_currency':currency}
+
+
+

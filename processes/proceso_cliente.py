@@ -173,13 +173,20 @@ class Cliente:
         self.db.connect()
         resultado = self.ct.datos_cliente(codigo_cliente)
         status = resultado.get('Status')
+        variable1 = resultado.get('Diferencia de datos entre POS y pipeDrive')
+        variable2 = resultado.get('Diferencia de datos entre POS y VW_POS')
 
-        if status == 'No Existe Cliente en la tabla' or (status == 'Si existe en pipedrive y tambien en la tabla' and
-                                                         (resultado.get(
-                                                             'Diferencia de datos entre POS y pipeDrive') or resultado.get(
-                                                             'Diferencia de datos entre POS y VW_POS')) or
-                                                         status == 'No existe en pipedrive, pero si en la tabla'):
-            self.procesar_cliente(codigo_cliente)
+        if status == 'Si existe en pipedrive y tambien en la tabla':
+            if variable1 is True or variable2 is True:
+                self.procesar_cliente(codigo_cliente)
+                return "Cliente Actualizado"
+            return "Cliente no tiene cambios"
+        elif status == 'No existe en pipedrive, pero si en la tabla':
+            result = f"self.procesar_cliente(codigo_cliente)"
+            return result
+        else:
+            result = f"self.procesar_cliente(codigo_cliente)"
+            return result
 
     def procesar_cliente(self, codigo_cliente):
         resultado = self.ct.datos_cliente(codigo_cliente)
@@ -195,4 +202,5 @@ class Cliente:
             id_pipedrive = Json.get('data').get('id')
             print(self.actualizar_tablas(id_pipedrive, id_registro))
             print(self.actualizacionCliente(id_pipedrive, data))
+            return {"id_registro": id_registro, "id_pipedrive": id_pipedrive}
 

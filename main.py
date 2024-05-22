@@ -9,8 +9,6 @@ from database.sql_server_connection import SQLServerDatabase
 from processes.deals import DealTable
 from processes.proceso_cliente import Cliente
 
-
-
 if __name__ == '__main__':
 
     pais = ['SV', 'GT']
@@ -24,9 +22,9 @@ if __name__ == '__main__':
         save_json(result, f'Cotizaciones_diarias_{row}')
         save_json(result_act, f'Cotizaciones_actualizadas_{row}')'''
 
-    Cliente('SV').ingresar_o_actualizar_cliente_pipedrive('c2449596')
-    print(Cotizaciones('SV').datos_de_la_cotizacion(369729,464840))
-    print(Cotizaciones('SV').datos_cliente('C2829963'))
+    #print(Cliente('SV').ingresar_o_actualizar_cliente_pipedrive('C3232875'))
+    print(Cotizaciones('SV').datos_de_la_cotizacion(468689, 605589))
+    #print(Cotizaciones('SV').datos_cliente('C2829963'))
     #print(Cotizaciones('SV').consulta_factura(369729,464840))
     #print(Cotizaciones('SV').familia_padre_de_la_cotizacion(356821, 447735))
     #print(Cotizaciones('GT').familia_padre_de_la_cotizacion(26191, 34674))
