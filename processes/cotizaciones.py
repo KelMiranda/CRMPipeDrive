@@ -362,17 +362,24 @@ class Cotizaciones:
 
     def datos_cliente(self, codigoCliente):
         try:
+            # Consulta para validar la existencia del cliente
             queryv = f"EXEC [PipeDrive].[dbo].[sp_ValidadorCliente_{self.pais}] '{codigoCliente}'"
             self.db.connect()
             validador = self.db.execute_query(queryv)[0][0]
+
             if validador == 'Existe':
-                query = f"Select * from DatosClientes Where CardCode = '{codigoCliente}' AND Pais = '{self.pais}'"
-                query2 = f"Select * from [dbo].[VW_DATOS_CLIENTES_{self.pais}] Where CardCode = '{codigoCliente}'"
+                # Consultas para obtener los datos del cliente
+                query = f"SELECT * FROM DatosClientes WHERE CardCode = '{codigoCliente}' AND Pais = '{self.pais}'"
+                query2 = f"SELECT * FROM [dbo].[VW_DATOS_CLIENTES_{self.pais}] WHERE CardCode = '{codigoCliente}'"
                 result = self.db.execute_query(query)[0]
                 id_pipedrive = result[8]
                 id_registro = result[0]
                 result2 = self.db.execute_query(query2)[0]
+
+                # Obtención de las listas de opciones
                 lista = get_all_option_for_fields_in_get_all_organization([4025, 4024, 4023, 4028, 4026])
+
+                # Datos del cliente en diferentes fuentes
                 datos_POS = {
                     'CardCode': result[1],
                     'CardName': result[2],
@@ -384,6 +391,7 @@ class Cotizaciones:
                     'Coordenadas': result[13],
                     'Vendedor_Asignado': result[15]
                 }
+
                 datos_vw_pos = {
                     'CardCode': result2[0],
                     'CardName': result2[1],
@@ -406,7 +414,7 @@ class Cotizaciones:
                         'lista': lista
                     }
                 else:
-                    result_pipe = self.pipe.get_organization_id(result[8]).get('data')
+                    result_pipe = self.pipe.get_organization_id(id_pipedrive).get('data')
                     datos_pipe = {
                         'CardCode': result_pipe.get('bd4aa325c2375edc367c1d510faf509422f71a5b'),
                         'CardName': result_pipe.get('name'),
@@ -418,9 +426,8 @@ class Cotizaciones:
                         'Sector': dictionary_invert(lista.get('4023'),
                                                     result_pipe.get('8b8121d03ef920b724ffa68b0f6177fdf281ad3f')),
                         'Coordenadas': result_pipe.get('3ed19788ef9c8ebeaf0f24f58394f67ac784684c'),
-                        'Vendedor_Asignado': dictionary_invert(lista.get('4028'),
-                                                               result_pipe.get(
-                                                                   'fd0f15b9338615a55ca56a3cada567919ec33306')),
+                        'Vendedor_Asignado': dictionary_invert(lista.get('4028'), result_pipe.get(
+                            'fd0f15b9338615a55ca56a3cada567919ec33306')),
                         'Pais': dictionary_invert(lista.get('4026'),
                                                   result_pipe.get('2d4edef00aec72dcc0fd1a240f7897fb0eb34465'))
                     }
@@ -432,19 +439,18 @@ class Cotizaciones:
                         'datos_vw_pos': datos_vw_pos,
                         'datos_pipe': datos_pipe,
                         'lista': lista,
-                        'id_pipedrive': result[8]
+                        'id_pipedrive': id_pipedrive,
+                        'id_registro': id_registro
                     }
                 return output
             else:
-                output = {
+                return {
                     'Status': 'No Existe Cliente en la tabla',
                     'Codigo Del Cliente': codigoCliente,
                     'Pais': self.pais,
                 }
-                return output
         except Exception as e:
-            error = {f"El cliente: {codigoCliente} tiene el siguiente error: ": {e}}
-            return error
+            return {f"El cliente: {codigoCliente} tiene el siguiente error: ": str(e)}
         finally:
             self.db.disconnect()
 

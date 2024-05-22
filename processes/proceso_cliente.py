@@ -163,44 +163,104 @@ class Cliente:
         return None
 
     def actualizar_tablas(self, id_pipedrive, id_registro):
-        query = F'UPDATE [CRM].[dbo].[DatosClientes] SET id_PipeDrive = {id_pipedrive} Where id_clientes = {id_registro}'
+        query = F"UPDATE [CRM].[dbo].[DatosClientes] SET id_PipeDrive = {id_pipedrive}, Validador =  'Ñ' Where id_clientes = {id_registro}"
         self.db.connect()
         self.db.execute_query(query, False)
         self.db.disconnect()
         return "-----------------idPipeDrive ingresado-------------------"
 
     def ingresar_o_actualizar_cliente_pipedrive(self, codigo_cliente):
-        self.db.connect()
-        resultado = self.ct.datos_cliente(codigo_cliente)
-        status = resultado.get('Status')
-        variable1 = resultado.get('Diferencia de datos entre POS y pipeDrive')
-        variable2 = resultado.get('Diferencia de datos entre POS y VW_POS')
+        try:
+            # Conectar a la base de datos
+            self.db.connect()
 
-        if status == 'Si existe en pipedrive y tambien en la tabla':
-            if variable1 is True or variable2 is True:
-                self.procesar_cliente(codigo_cliente)
-                return "Cliente Actualizado"
-            return "Cliente no tiene cambios"
-        elif status == 'No existe en pipedrive, pero si en la tabla':
-            result = f"self.procesar_cliente(codigo_cliente)"
-            return result
-        else:
-            result = f"self.procesar_cliente(codigo_cliente)"
-            return result
+            # Obtener los datos del cliente
+            resultado = self.ct.datos_cliente(codigo_cliente)
+            status = resultado.get('Status')
+            diferencia_pos_pipedrive = resultado.get('Diferencia de datos entre POS y pipeDrive')
+            diferencia_pos_vwpos = resultado.get('Diferencia de datos entre POS y VW_POS')
 
-    def procesar_cliente(self, codigo_cliente):
-        resultado = self.ct.datos_cliente(codigo_cliente)
-        print(resultado.get('Status'))
-        query = f"EXEC [CRM].[dbo].[SP_VALIDADOR_CLIENTE_MERGE_{self.pais}] '{codigo_cliente}'"
-        self.db.execute_query(query, False)
-        resultado_2 = self.ct.datos_cliente(codigo_cliente)
-        print(resultado_2)
-        id_registro = resultado_2.get('id_registro')
-        data = self.construir_datos_cliente(resultado_2)[0]
-        Json = self.pipe.post_organization(data)
-        if Json.get('success') is True:
-            id_pipedrive = Json.get('data').get('id')
-            print(self.actualizar_tablas(id_pipedrive, id_registro))
-            print(self.actualizacionCliente(id_pipedrive, data))
-            return {"id_registro": id_registro, "id_pipedrive": id_pipedrive}
+            # Ejecutar el procedimiento almacenado para validar o fusionar cliente
+            def ejecutar_procedimiento_merge():
+                query = f"EXEC [CRM].[dbo].[SP_VALIDADOR_CLIENTE_MERGE_{self.pais}] '{codigo_cliente}'"
+                self.db.execute_query(query, False)
+
+            # Verificar el estado del cliente y actuar en consecuencia
+            if status == 'Si existe en pipedrive y tambien en la tabla':
+
+                # Debo de volver a ejecutar el resultad, porque es la misma respuesta la que estoy actualizando
+                if diferencia_pos_pipedrive or diferencia_pos_vwpos:
+                    print(diferencia_pos_pipedrive, diferencia_pos_vwpos)
+                    ejecutar_procedimiento_merge()
+                    self.actualizarCliente(codigo_cliente)
+                    return "Cliente Actualizado"
+                return "Cliente no tiene cambios"
+            elif status == 'No existe en pipedrive, pero si en la tabla':
+                ejecutar_procedimiento_merge()
+                result = self.ingresandoCliente(codigo_cliente)
+                return result, 'Cliente ingresado en pipedrive'
+            else:
+                ejecutar_procedimiento_merge()
+                result = self.ingresandoCliente(codigo_cliente)
+                return result, 'Cliente ingresado en la tabla y en pipedrive'
+        except Exception as e:
+            return {"error": f"Error al procesar el cliente: {str(e)}"}
+        finally:
+            self.db.disconnect()
+
+    def actualizarCliente(self, codigo_cliente):
+        try:
+            # Obtener los datos del cliente
+            resultado = self.ct.datos_cliente(codigo_cliente)
+
+            id_registro = resultado.get('id_registro')
+            id_pipedrive = resultado.get('id_pipedrive')
+
+            # Construir los datos del cliente para la actualización
+            data = self.construir_datos_cliente(resultado)[0]
+
+            # Actualizar la organización en Pipedrive
+            insert = self.pipe.put_organization_id(id_pipedrive, data)
+
+            if insert.get('success'):
+                # Actualizar las tablas locales si la actualización en Pipedrive fue exitosa
+                print(id_pipedrive, id_registro)
+                self.actualizar_tablas(id_pipedrive, id_registro)
+                return {"id_registro": id_registro, "id_pipedrive": id_pipedrive}
+            else:
+                return {"error": "No se pudo actualizar el cliente en Pipedrive."}
+
+        except Exception as e:
+            return {"error": f"Error al actualizar el cliente: {str(e)}"}
+
+    def ingresandoCliente(self, codigo_cliente):
+        try:
+            # Obtener los datos del cliente
+            resultado = self.ct.datos_cliente(codigo_cliente)
+
+            # Verificar si el cliente existe en la base de datos
+            if resultado.get('Status') == 'No Existe Cliente en la tabla':
+                return {"error": "El cliente no existe en la tabla de datos."}
+
+            id_registro = resultado.get('id_registro')
+
+            # Construir los datos del cliente para la inserción
+            data = self.construir_datos_cliente(resultado)[0]
+
+            # Insertar la organización en Pipedrive
+            insert = self.pipe.post_organization(data)
+
+            if insert.get('success'):
+                # Actualizar las tablas locales si la inserción en Pipedrive fue exitosa
+                id_pipedrive = insert.get('data').get('id')
+                self.actualizar_tablas(id_pipedrive, id_registro)
+                return {"id_registro": id_registro, "id_pipedrive": id_pipedrive}
+            else:
+                return {"error": "No se pudo insertar el cliente en Pipedrive."}
+
+        except Exception as e:
+            return {"error": f"Error al ingresar el cliente: {str(e)}"}
+
+
+
 

@@ -1,5 +1,6 @@
 from unittest import result
 from processes.cotizaciones import Cotizaciones
+from processes.proceso_cliente import Cliente
 import datetime as dt
 from database.sql_server_connection import SQLServerDatabase
 from processes.cotizaciones import Cotizaciones
@@ -12,6 +13,7 @@ class IngresoDeCotizaciones:
         self.pais = pais
         self.db = SQLServerDatabase('SERVER', 'DATABASE', 'USERNAME_', 'PASSWORD')
         self.ct = Cotizaciones(f'{self.pais}')
+        self.cliente = Cliente(f'{self.pais}')
 
     def cotizaciones_diarias(self, days):
         errores = []
@@ -26,7 +28,9 @@ class IngresoDeCotizaciones:
             print(row)
             query = f"EXEC [dbo].[SP_VALIDADOR_PROYECTO_MERGE_{self.pais}]'{row[3]}', {row[1]}, '{row[0]}', '{row[2]}'"
             try:
-                self.db.execute_query(query, False)
+                print(query)
+                print(self.cliente.ingresar_o_actualizar_cliente_pipedrive(f'{row[2]}'))
+                #self.db.execute_query(query, False)
                 result.append({'DocNum': row[1], 'Codigo Del Cliente': f"{row[2]}"})
 
             except Exception as e:
