@@ -226,6 +226,7 @@ class Cotizaciones:
     def datos_de_la_cotizacion(self, DocNum, DocEntry):
         result = {}
         errores = []
+        data = {}
         try:
             id_fields_deals = [12527, 12546, 12521, 12523, 12522, 12524, 12531, 12529, 12534]
             values = get_all_option_for_fields_in_deals(id_fields_deals)
@@ -233,7 +234,6 @@ class Cotizaciones:
             self.db.connect()
             query = f"EXEC [dbo].[SP_COTIZACIONES_{self.pais}_PYTHON]  {DocNum}, {DocEntry}"
             valores = self.db.execute_query(query)[0]
-            familias_padres = self.familia_padre_de_la_cotizacion(DocNum, DocEntry)
             def actualizar_data1(valores, values):
                 # Casos especiales donde se necesita un "stage_id"
                 casos_especiales = ["Presupuesto", "Recotización", "Cierre por cambio de cotizacion"]
@@ -276,7 +276,8 @@ class Cotizaciones:
                         "lost_reason": values.get('12531').get(valores[8])
                     }
                 return data1
-            result.update({
+
+            datos_coti={
                 f"{datos_cotizacion.get('vendedor_asignado')}": values.get('12521').get(f'{valores[0]}'),
                 f"{datos_cotizacion.get('vendedor_cot')}": values.get('12522').get(f'{valores[1]}'),
                 f"{datos_cotizacion.get('Sector_Vendedor')}": values.get('12523').get(f'{valores[2]}'),
@@ -295,18 +296,24 @@ class Cotizaciones:
                 f"{datos_cotizacion.get('Autorizado')}": values.get('12534').get(f'{valores[16]}'),
                 f"{datos_cotizacion.get('obtener_tipo_cotizacion')}": values.get('12546').get(f'{valores[17]}'),
                 f"{datos_cotizacion.get('CardName')}": valores[18]
-            })
-            result.update(familias_padres)
+            }
+            familias_padres = self.familia_padre_de_la_cotizacion(DocNum, DocEntry)
             if valores[4] == 'Closed':
-                result.update(actualizar_data1(valores, values))
-                result.update(
+                datos_coti.update(
                     {
                         f"{datos_cotizacion.get('Comentario_POS')}": valores[7],
                         f"{datos_cotizacion.get('Descripcion_Pos')}": values.get('12531').get(f'{valores[8]}'),
                     }
                 )
+            datos_pipe = actualizar_data1(valores, values)
+            data.update({
+                "datos_coti": datos_coti,
+                "familias_padres": familias_padres,
+                "datos_pipe": datos_pipe
+            })
             # Procesa los resultados de la consulta
-            return result, {'id_deal': valores[19]}
+
+            return data, {'id_deal': valores[19]}
         except Exception as e:
             # Maneja cualquier excepción que ocurra durante la conexión a la base de datos o la ejecución de la consulta
             errores.append({'DocNum': DocNum, 'msg_error': str(e)})
@@ -486,12 +493,10 @@ class Cotizaciones:
             currency_mapping = {'SV': 'USD', 'GT': 'GTQ', 'HN': 'HNL'}
             currency = currency_mapping.get(self.pais, 'USD')
             porcentaje = round(valor_facturado * 100 / valor_cotizacion, 2)
-
             # Crear y devolver el resultado solo si los valores coinciden
             if valor_facturado == valor_cotizacion:
-                return {"currency": currency, "value": valor_facturado, "estado": 'Facturado Completamente', 'e98fda1c30bf99bce1876a34e6caa56c540a4e32': porcentaje, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32_currency':currency}
+                return {"currency": currency, "value": valor_facturado, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32': porcentaje, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32_currency':currency}
             else:
-                return {"currency": currency, "value": valor_facturado, "estado": 'Facturado Parcialmente', 'e98fda1c30bf99bce1876a34e6caa56c540a4e32': porcentaje, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32_currency':currency}
-
+                return {"currency": currency, "value": valor_facturado, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32': porcentaje, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32_currency':currency}
 
 

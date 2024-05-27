@@ -184,25 +184,28 @@ class Cliente:
             def ejecutar_procedimiento_merge():
                 query = f"EXEC [CRM].[dbo].[SP_VALIDADOR_CLIENTE_MERGE_{self.pais}] '{codigo_cliente}'"
                 self.db.execute_query(query, False)
+                print("merge ejecutado")
 
             # Verificar el estado del cliente y actuar en consecuencia
             if status == 'Si existe en pipedrive y tambien en la tabla':
-
                 # Debo de volver a ejecutar el resultad, porque es la misma respuesta la que estoy actualizando
                 if diferencia_pos_pipedrive or diferencia_pos_vwpos:
-                    print(diferencia_pos_pipedrive, diferencia_pos_vwpos)
+                    #print(diferencia_pos_pipedrive, diferencia_pos_vwpos)
                     ejecutar_procedimiento_merge()
-                    self.actualizarCliente(codigo_cliente)
-                    return "Cliente Actualizado"
+                    datos = self.actualizarCliente(codigo_cliente)
+                    return "Cliente Actualizado", datos
+
                 return "Cliente no tiene cambios"
+
             elif status == 'No existe en pipedrive, pero si en la tabla':
                 ejecutar_procedimiento_merge()
                 result = self.ingresandoCliente(codigo_cliente)
-                return result, 'Cliente ingresado en pipedrive'
+                return'Cliente ingresado en pipedrive', result
+
             else:
                 ejecutar_procedimiento_merge()
                 result = self.ingresandoCliente(codigo_cliente)
-                return result, 'Cliente ingresado en la tabla y en pipedrive'
+                return 'Cliente ingresado en la tabla y en pipedrive', result
         except Exception as e:
             return {"error": f"Error al procesar el cliente: {str(e)}"}
         finally:
@@ -212,7 +215,6 @@ class Cliente:
         try:
             # Obtener los datos del cliente
             resultado = self.ct.datos_cliente(codigo_cliente)
-
             id_registro = resultado.get('id_registro')
             id_pipedrive = resultado.get('id_pipedrive')
 

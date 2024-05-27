@@ -28,9 +28,9 @@ class IngresoDeCotizaciones:
             print(row)
             query = f"EXEC [dbo].[SP_VALIDADOR_PROYECTO_MERGE_{self.pais}]'{row[3]}', {row[1]}, '{row[0]}', '{row[2]}'"
             try:
-                print(query)
-                print(self.cliente.ingresar_o_actualizar_cliente_pipedrive(f'{row[2]}'))
-                #self.db.execute_query(query, False)
+                #print(query)
+                #print(self.cliente.ingresar_o_actualizar_cliente_pipedrive(f'{row[2]}'))
+                self.db.execute_query(query, False)
                 result.append({'DocNum': row[1], 'Codigo Del Cliente': f"{row[2]}"})
 
             except Exception as e:
