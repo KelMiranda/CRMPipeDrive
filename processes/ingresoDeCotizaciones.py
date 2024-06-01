@@ -72,27 +72,5 @@ class IngresoDeCotizaciones:
         }
         return output
 
-    def datos_cotizacion(self, DocNum, DocEntry):
-        datos_coti = self.ct.datos_de_la_cotizacion(DocNum, DocEntry)
-        query = f"EXEC [dbo].[sel_ObtenerDatosCotizacion]{DocNum},{DocEntry},'{self.pais}'"
-        dato = {'cotizacion_Pipedrive': datos_coti}
-        self.db.connect()
-        resultado = self.db.execute_query(query)
-        if not resultado:
-            dato['Validador'] = dict(status_cliente=False)
-        elif resultado[0][29] is None:
-            dato['Validador'] = {
-                'status_cliente': True,
-                'Cliente': 'Existe en la tabla, pero no esta vinculado a la cotizacion',
-                'status_cotizacion': resultado[0][6]
-            }
-        else:
-            dato['Validador'] = {
-                'status_cliente': True,
-                'Cliente': f"Existe y tiene un id: {resultado[0][29]} de la tabla DatosClientes",
-                'status_cotizacion': resultado[0][6]
-            }
-
-        return dato
 
 

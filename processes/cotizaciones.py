@@ -234,48 +234,54 @@ class Cotizaciones:
             self.db.connect()
             query = f"EXEC [dbo].[SP_COTIZACIONES_{self.pais}_PYTHON]  {DocNum}, {DocEntry}"
             valores = self.db.execute_query(query)[0]
-            def actualizar_data1(valores, values):
+            def actualizar_data1(valores, values, docstatus):
                 # Casos especiales donde se necesita un "stage_id"
                 casos_especiales = ["Presupuesto", "Recotización", "Cierre por cambio de cotizacion"]
-
+                if docstatus == 'Closed':
                 # Configura "data1" según el motivo de pérdida
-                if valores[8] in casos_especiales:
-                    data1 = {
-                        "status": "lost",
-                        "lost_reason": values.get('12531').get(valores[8]),
-                        "stage_id": 21
-                    }
-                elif valores[8] == "Venta":
-                    validador = self.consulta_factura(DocNum, DocEntry)
-                    if validador == 'Sin Factura':
+                    if valores[8] in casos_especiales:
                         data1 = {
                             "status": "lost",
-                            "lost_reason": "Cotización mal cerrada en pos"
+                            "lost_reason": values.get('12531').get(valores[8]),
+                            "stage_id": 21
                         }
+                    elif valores[8] == "Venta":
+                        validador = self.consulta_factura(DocNum, DocEntry)
+                        if validador == 'Sin Factura':
+                            data1 = {
+                                "status": "lost",
+                                "lost_reason": "Cotización mal cerrada en pos"
+                            }
+                        else:
+                            data1 = {
+                                "status": "won"
+                            }
+                            data1.update(validador)
+                    elif valores[8] == "Venta Parcial":
+                        validador = self.consulta_factura(DocNum, DocEntry)
+                        if validador == 'Sin Factura':
+                            data1 = {
+                                "status": "lost",
+                                "lost_reason": "Cotización mal cerrada en pos"
+                            }
+                        else:
+                            data1 = {
+                                "status": "won"
+                            }
+                            data1.update(validador)
                     else:
-                        data1 = {
-                            "status": "won"
-                        }
-                        data1.update(validador)
-                elif valores[8] == "Venta Parcial":
-                    validador = self.consulta_factura(DocNum, DocEntry)
-                    if validador == 'Sin Factura':
+                        # Configuración general para los casos de pérdida
                         data1 = {
                             "status": "lost",
-                            "lost_reason": "Cotización mal cerrada en pos"
+                            "lost_reason": values.get('12531').get(valores[8])
                         }
-                    else:
-                        data1 = {
-                            "status": "won"
-                        }
-                        data1.update(validador)
-                else:
-                    # Configuración general para los casos de pérdida
-                    data1 = {
-                        "status": "lost",
-                        "lost_reason": values.get('12531').get(valores[8])
-                    }
-                return data1
+                    return data1
+            cliente = self.datos_cliente(valores[18])
+            datosClientes = {
+                "Status": cliente.get('Status'),
+                "POS != Pipedrive": cliente.get('Diferencia de datos entre POS y pipeDrive'),
+                "POS != VW_POS": cliente.get('Diferencia de datos entre POS y VW_POS')
+            }
 
             datos_coti={
                 f"{datos_cotizacion.get('vendedor_asignado')}": values.get('12521').get(f'{valores[0]}'),
@@ -305,11 +311,12 @@ class Cotizaciones:
                         f"{datos_cotizacion.get('Descripcion_Pos')}": values.get('12531').get(f'{valores[8]}'),
                     }
                 )
-            datos_pipe = actualizar_data1(valores, values)
+            datos_pipe = actualizar_data1(valores, values, valores[4])
             data.update({
                 "datos_coti": datos_coti,
                 "familias_padres": familias_padres,
-                "datos_pipe": datos_pipe
+                "datos_pipe": datos_pipe,
+                "dato_cliente": datosClientes
             })
             # Procesa los resultados de la consulta
 
@@ -499,4 +506,22 @@ class Cotizaciones:
             else:
                 return {"currency": currency, "value": valor_facturado, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32': porcentaje, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32_currency':currency}
 
+    def data_vendedor(self, SlpName, UserName=None):
+        query_vendedor_asignado = f"Select * from [PipeDrive].[dbo].[vw_idUserPipeDrive] Where SlpName = '{SlpName}'"
+        query_vendedor_coti = f"Select * from [PipeDrive].[dbo].[vw_idUserPipeDrive] Where UserName = '{UserName}'"
+        self.db.connect()
+        result_ven_as = self.db.execute_query(query_vendedor_asignado)[0]
+        id_pipedrive_ven_as = result_ven_as[2]
+        result_ven_coti = self.db.execute_query(query_vendedor_coti)[0]
+        id_pipedrive_ven_cot = result_ven_coti[2]
+        if id_pipedrive_ven_as == id_pipedrive_ven_cot:
+            data = {
+                "Status": "El vendedor asignado hizo la cotizacion",
+                "user_id": id_pipedrive_ven_as
 
+            }
+            return data
+        else:
+            print("El vendedor cotizado NO es el mismo que el vendedor asignado")
+
+        return id_pipedrive_ven_cot, id_pipedrive_ven_as
