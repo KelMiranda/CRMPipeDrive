@@ -233,6 +233,7 @@ class Cotizaciones:
             # Intenta conectarse a la base de datos y ejecutar la consulta
             self.db.connect()
             query = f"EXEC [dbo].[SP_COTIZACIONES_{self.pais}_PYTHON]  {DocNum}, {DocEntry}"
+            print(query)
             valores = self.db.execute_query(query)[0]
             def actualizar_data1(valores, values, docstatus):
                 # Casos especiales donde se necesita un "stage_id"
@@ -319,6 +320,8 @@ class Cotizaciones:
                 "dato_cliente": datosClientes
             })
             # Procesa los resultados de la consulta
+
+            #self.data_vendedor()
 
             return data, {'id_deal': valores[19]}
         except Exception as e:
@@ -518,10 +521,14 @@ class Cotizaciones:
             data = {
                 "Status": "El vendedor asignado hizo la cotizacion",
                 "user_id": id_pipedrive_ven_as
-
             }
             return data
         else:
-            print("El vendedor cotizado NO es el mismo que el vendedor asignado")
+            data = {
+                "Status": "El vendedor cotizado NO es el mismo que el vendedor asignado",
+                "user_id": id_pipedrive_ven_as,
+                "Seguidor": id_pipedrive_ven_cot
+            }
+            return data
 
         return id_pipedrive_ven_cot, id_pipedrive_ven_as
