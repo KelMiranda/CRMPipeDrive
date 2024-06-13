@@ -8,6 +8,7 @@ from processes.cotizaciones import Cotizaciones
 from database.sql_server_connection import SQLServerDatabase
 from processes.deals import DealTable
 from processes.proceso_cliente import Cliente
+from processes.gesto_de_contraseña import PasswordManager
 
 if __name__ == '__main__':
 
@@ -23,9 +24,12 @@ if __name__ == '__main__':
         save_json(result_act, f'Cotizaciones_actualizadas_{row}')'''
 
 
-    #print(Cotizaciones('SV').data_vendedor('KEVIN RIVAS', 'WILLIAM MOLINA'))
-    print(Cotizaciones('SV').datos_de_la_cotizacion(473373,612257))
+    #print(Cotizaciones('SV').data_vendedor(90, 'VEND69'))
+    print(Cotizaciones('SV').datos_de_la_cotizacion(475737,617157))
     #print(Cotizaciones('SV').datos_cliente('C1230125').get('Status'))
+    #print(DealTable('DatosProyectos_PipeDrive', 'SV').nombres_vendedor_cotizado())
+    #print(DealTable('DatosProyectos_PipeDrive', 'SV').nombres_vendedor_asignado())
+
 
 
 

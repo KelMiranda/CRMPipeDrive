@@ -4,6 +4,11 @@ from processes.deals import get_all_option_for_fields_in_deals
 from pipedrive.pipedrive_api_conecction import PipedriveAPI
 from processes.organizations import get_all_option_for_fields_in_get_all_organization
 from processes.deals import dictionary_invert
+import configparser
+
+
+config = configparser.ConfigParser()
+config.read('sector.ini')
 
 
 familias_padres = {
@@ -278,12 +283,13 @@ class Cotizaciones:
                         }
                     return data1
             cliente = self.datos_cliente(valores[18])
+            print(cliente.get("datos_POS").get("Vendedor_Asignado"))
+            print(cliente.get("datos_vw_pos").get("Vendedor_Asignado"))
             datosClientes = {
                 "Status": cliente.get('Status'),
                 "POS != Pipedrive": cliente.get('Diferencia de datos entre POS y pipeDrive'),
                 "POS != VW_POS": cliente.get('Diferencia de datos entre POS y VW_POS')
             }
-
             datos_coti={
                 f"{datos_cotizacion.get('vendedor_asignado')}": values.get('12521').get(f'{valores[0]}'),
                 f"{datos_cotizacion.get('vendedor_cot')}": values.get('12522').get(f'{valores[1]}'),
@@ -305,6 +311,9 @@ class Cotizaciones:
                 f"{datos_cotizacion.get('CardName')}": valores[18]
             }
             familias_padres = self.familia_padre_de_la_cotizacion(DocNum, DocEntry)
+
+            print(self.data_vendedor(valores[20], valores[21], valores[22]))
+
             if valores[4] == 'Closed':
                 datos_coti.update(
                     {
@@ -380,7 +389,7 @@ class Cotizaciones:
     def datos_cliente(self, codigoCliente):
         try:
             # Consulta para validar la existencia del cliente
-            queryv = f"EXEC [PipeDrive].[dbo].[sp_ValidadorCliente_{self.pais}] '{codigoCliente}'"
+            queryv = f"DECLARE @resultado NVARCHAR(10); EXEC [PipeDrive].[dbo].[sp_ValidadorCliente_{self.pais}] '{codigoCliente}', @resultado OUTPUT; SELECT @resultado AS Resultado;"
             self.db.connect()
             validador = self.db.execute_query(queryv)[0][0]
 
@@ -509,26 +518,40 @@ class Cotizaciones:
             else:
                 return {"currency": currency, "value": valor_facturado, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32': porcentaje, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32_currency':currency}
 
-    def data_vendedor(self, SlpName, UserName=None):
-        query_vendedor_asignado = f"Select * from [PipeDrive].[dbo].[vw_idUserPipeDrive] Where SlpName = '{SlpName}'"
-        query_vendedor_coti = f"Select * from [PipeDrive].[dbo].[vw_idUserPipeDrive] Where UserName = '{UserName}'"
+    def data_vendedor(self, SlpCode, UserCode, Sector):
+        query_vendedor_asignado = f"Select * from [PipeDrive].[dbo].[VendedoresConCredenciales] Where SlpCode = {SlpCode}"
+        query_vendedor_coti = f"Select * from [PipeDrive].[dbo].[VendedoresConCredenciales] Where UserCode = UPPER('{UserCode}')"
         self.db.connect()
-        result_ven_as = self.db.execute_query(query_vendedor_asignado)[0]
-        id_pipedrive_ven_as = result_ven_as[2]
-        result_ven_coti = self.db.execute_query(query_vendedor_coti)[0]
-        id_pipedrive_ven_cot = result_ven_coti[2]
+        print(Sector)
+        match (self.pais):
+            case 'SV':
+                pass
+                #seguidores = config[f"'{Sector}'"]['PipedriveID']
+                #print(seguidores)
+
+        result_ven_as = self.db.execute_query(query_vendedor_asignado)
+        id_pipedrive_ven_as = result_ven_as
+        result_ven_coti = self.db.execute_query(query_vendedor_coti)
+        print(result_ven_coti, id_pipedrive_ven_as)
+        id_pipedrive_ven_cot = result_ven_coti
         if id_pipedrive_ven_as == id_pipedrive_ven_cot:
             data = {
-                "Status": "El vendedor asignado hizo la cotizacion",
-                "user_id": id_pipedrive_ven_as
+                "Status": "Igual",
+                "user_id": id_pipedrive_ven_as[0][2]
+            }
+            return data
+        elif len(id_pipedrive_ven_as) == 0 or len(id_pipedrive_ven_cot) == 0:
+            data = {
+                "Status": "No CRM",
+                "user_id": id_pipedrive_ven_as[0][2]
             }
             return data
         else:
             data = {
-                "Status": "El vendedor cotizado NO es el mismo que el vendedor asignado",
-                "user_id": id_pipedrive_ven_as,
-                "Seguidor": id_pipedrive_ven_cot
+                "Status": "Diferentes",
+                "user_id": id_pipedrive_ven_as[0][2],
+                "Seguidor": [id_pipedrive_ven_cot[0][2]]
             }
             return data
 
-        return id_pipedrive_ven_cot, id_pipedrive_ven_as
+        #return id_pipedrive_ven_cot, id_pipedrive_ven_as
