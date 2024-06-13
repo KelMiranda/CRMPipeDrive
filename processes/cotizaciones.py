@@ -523,11 +523,11 @@ class Cotizaciones:
         query_vendedor_coti = f"Select * from [PipeDrive].[dbo].[VendedoresConCredenciales] Where UserCode = UPPER('{UserCode}')"
         self.db.connect()
         print(Sector)
+        seguidores = {}
         match (self.pais):
             case 'SV':
-                pass
-                #seguidores = config[f"'{Sector}'"]['PipedriveID']
-                #print(seguidores)
+                seguidores = config[f'{Sector}']['PipedriveID']
+                return print(seguidores)
 
         result_ven_as = self.db.execute_query(query_vendedor_asignado)
         id_pipedrive_ven_as = result_ven_as
