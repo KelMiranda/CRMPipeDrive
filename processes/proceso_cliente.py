@@ -262,7 +262,3 @@ class Cliente:
 
         except Exception as e:
             return {"error": f"Error al ingresar el cliente: {str(e)}"}
-
-
-
-
