@@ -8,7 +8,6 @@ from processes.cotizaciones import Cotizaciones
 from database.sql_server_connection import SQLServerDatabase
 from processes.deals import DealTable
 from processes.proceso_cliente import Cliente
-from processes.gesto_de_contraseña import PasswordManager
 
 if __name__ == '__main__':
 

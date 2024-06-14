@@ -283,8 +283,6 @@ class Cotizaciones:
                         }
                     return data1
             cliente = self.datos_cliente(valores[18])
-            print(cliente.get("datos_POS").get("Vendedor_Asignado"))
-            print(cliente.get("datos_vw_pos").get("Vendedor_Asignado"))
             datosClientes = {
                 "Status": cliente.get('Status'),
                 "POS != Pipedrive": cliente.get('Diferencia de datos entre POS y pipeDrive'),
@@ -312,7 +310,7 @@ class Cotizaciones:
             }
             familias_padres = self.familia_padre_de_la_cotizacion(DocNum, DocEntry)
 
-            print(self.data_vendedor(valores[20], valores[21], valores[22]))
+            datos_vendedor = self.data_vendedor(valores[20], valores[21], valores[22])
 
             if valores[4] == 'Closed':
                 datos_coti.update(
@@ -321,12 +319,14 @@ class Cotizaciones:
                         f"{datos_cotizacion.get('Descripcion_Pos')}": values.get('12531').get(f'{valores[8]}'),
                     }
                 )
+
             datos_pipe = actualizar_data1(valores, values, valores[4])
             data.update({
                 "datos_coti": datos_coti,
                 "familias_padres": familias_padres,
                 "datos_pipe": datos_pipe,
-                "dato_cliente": datosClientes
+                "dato_cliente": datosClientes,
+                "datos_vendedor": datos_vendedor
             })
             # Procesa los resultados de la consulta
 
@@ -522,35 +522,45 @@ class Cotizaciones:
         query_vendedor_asignado = f"Select * from [PipeDrive].[dbo].[VendedoresConCredenciales] Where SlpCode = {SlpCode}"
         query_vendedor_coti = f"Select * from [PipeDrive].[dbo].[VendedoresConCredenciales] Where UserCode = UPPER('{UserCode}')"
         self.db.connect()
-        print(Sector)
-        seguidores = {}
-        match (self.pais):
-            case 'SV':
-                seguidores = config[f'{Sector}']['PipedriveID']
-                return print(seguidores)
+        def seguidores(Sector):
+            seguidores = []
+            print(Sector)
+            match (self.pais):
+                case 'SV':
+                    gerente_general = 13092377
+                    jefe_lineas = 13046551
+                    seguidores = [config[f'{Sector}']['PipedriveID']]
+                    seguidores.append(gerente_general)
+                    seguidores.append(jefe_lineas)
+                    return seguidores
 
         result_ven_as = self.db.execute_query(query_vendedor_asignado)
         id_pipedrive_ven_as = result_ven_as
         result_ven_coti = self.db.execute_query(query_vendedor_coti)
-        print(result_ven_coti, id_pipedrive_ven_as)
         id_pipedrive_ven_cot = result_ven_coti
         if id_pipedrive_ven_as == id_pipedrive_ven_cot:
+            variable = seguidores(Sector)
             data = {
                 "Status": "Igual",
-                "user_id": id_pipedrive_ven_as[0][2]
+                "user_id": id_pipedrive_ven_as[0][2],
+                "Seguidores": variable
+
             }
             return data
         elif len(id_pipedrive_ven_as) == 0 or len(id_pipedrive_ven_cot) == 0:
+            variable = seguidores(Sector)
             data = {
                 "Status": "No CRM",
-                "user_id": id_pipedrive_ven_as[0][2]
+                "user_id": variable[0],
+                "Seguidores": variable[1:]
             }
             return data
         else:
+            variable = seguidores(Sector)
             data = {
                 "Status": "Diferentes",
                 "user_id": id_pipedrive_ven_as[0][2],
-                "Seguidor": [id_pipedrive_ven_cot[0][2]]
+                "Seguidor": variable.append(id_pipedrive_ven_cot[0][2])
             }
             return data
 
