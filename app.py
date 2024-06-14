@@ -1,4 +1,4 @@
-import time
+from flask import Flask, render_template, request, redirect, url_for
 from processes.ingresoDeCotizaciones import IngresoDeCotizaciones
 from processes.deals import save_json
 from processes.deals import DealTable
@@ -6,30 +6,34 @@ from pipedrive.users_pipedrive import GetIdUser
 from processes.organizations import OrganizationTable
 from processes.cotizaciones import Cotizaciones
 from database.sql_server_connection import SQLServerDatabase
-from processes.deals import DealTable
 from processes.proceso_cliente import Cliente
 
-if __name__ == '__main__':
+app = Flask(__name__)
 
-    pais = ['SV', 'GT']
-    #result = IngresoDeCotizaciones('SV').validacion_cliente(0)
-    #print(result)
 
-    for row in pais:
-        ct = IngresoDeCotizaciones(f'{row}')
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+
+@app.route('/cotizaciones', methods=['POST'])
+def cotizaciones():
+    paises = request.form.getlist('paises')
+    results = {}
+
+    for row in paises:
+        ct = IngresoDeCotizaciones(row)
         result = ct.cotizaciones_diarias(1)
         result_act = ct.cotizaciones_actualizadas()
         save_json(result, f'Cotizaciones_diarias_{row}')
         save_json(result_act, f'Cotizaciones_actualizadas_{row}')
+        results[row] = {
+            'cotizaciones_diarias': result,
+            'cotizaciones_actualizadas': result_act
+        }
+
+    return render_template('result.html', results=results)
 
 
-    #print(Cotizaciones('SV').data_vendedor(90, 'VEND69'))
-    #print(Cotizaciones('SV').datos_de_la_cotizacion(475737,617157))
-    #print(Cotizaciones('SV').datos_cliente('C1230125').get('Status'))
-    #print(DealTable('DatosProyectos_PipeDrive', 'SV').nombres_vendedor_cotizado())
-    #print(DealTable('DatosProyectos_PipeDrive', 'SV').nombres_vendedor_asignado())
-
-
-
-
-
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)

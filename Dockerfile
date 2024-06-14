@@ -31,5 +31,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copiar el resto del código de la aplicación al directorio de trabajo
 COPY . .
 
-# Comando para ejecutar tu aplicación
-CMD ["python", "main.py"]
+# Comando para ejecutar tu aplicación Flask
+CMD ["python", "app.py"]

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Resultados de las Cotizaciones</h1>
+        <div class="result">
+            {% for pais, data in results.items() %}
+                <h2>{{ pais }}</h2>
+                <h3>Cotizaciones Diarias</h3>
+                <pre>{{ data.cotizaciones_diarias }}</pre>
+                <h3>Cotizaciones Actualizadas</h3>
+                <pre>{{ data.cotizaciones_actualizadas }}</pre>
+            {% endfor %}
+        </div>
+        <a href="{{ url_for('home') }}">Volver</a>
+    </div>
+</body>
+</html>

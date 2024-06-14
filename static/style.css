@@ -1,0 +1,105 @@
+/* Estilo básico */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+    max-width: 1200px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+form label {
+    font-weight: bold;
+}
+
+form input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+form button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+.result {
+    margin-top: 20px;
+}
+
+.result h2 {
+    color: #333;
+}
+
+.result pre {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Media queries para diseño responsivo */
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        margin-top: 20px;
+        padding: 10px;
+    }
+
+    form {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    form button {
+        width: 100%;
+    }
+
+    .result pre {
+        white-space: pre-wrap; /* Permitir que el texto se ajuste al ancho del contenedor */
+        word-wrap: break-word;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5em;
+    }
+
+    form {
+        gap: 5px;
+    }
+
+    form label {
+        font-size: 1em;
+    }
+
+    .result h2 {
+        font-size: 1.2em;
+    }
+}
