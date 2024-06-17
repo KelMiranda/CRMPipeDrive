@@ -519,9 +519,17 @@ class Cotizaciones:
                 return {"currency": currency, "value": valor_facturado, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32': porcentaje, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32_currency':currency}
 
     def data_vendedor(self, SlpCode, UserCode, Sector):
+
         query_vendedor_asignado = f"Select * from [PipeDrive].[dbo].[VendedoresConCredenciales] Where SlpCode = {SlpCode}"
         query_vendedor_coti = f"Select * from [PipeDrive].[dbo].[VendedoresConCredenciales] Where UserCode = UPPER('{UserCode}')"
         self.db.connect()
+
+        if Sector == 'BERNARDO SALAZAR - ING':
+            pass
+        else:
+            pass
+
+
         def seguidores(Sector):
             seguidores = []
             print(Sector)
