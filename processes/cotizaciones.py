@@ -310,7 +310,7 @@ class Cotizaciones:
             }
             familias_padres = self.familia_padre_de_la_cotizacion(DocNum, DocEntry)
 
-            datos_vendedor = self.data_vendedor(valores[20], valores[21], valores[22])
+            #datos_vendedor = self.data_vendedor(valores[20], valores[21], valores[22])
 
             if valores[4] == 'Closed':
                 datos_coti.update(
@@ -326,7 +326,7 @@ class Cotizaciones:
                 "familias_padres": familias_padres,
                 "datos_pipe": datos_pipe,
                 "dato_cliente": datosClientes,
-                "datos_vendedor": datos_vendedor
+                #"datos_vendedor": datos_vendedor
             })
             # Procesa los resultados de la consulta
 
