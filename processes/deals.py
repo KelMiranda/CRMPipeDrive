@@ -128,6 +128,7 @@ def get_all_deals():
             deals[f"{row.get('id')}"].update(pais)
 
     save_json(deals, 'deals')
+    return deals
 
 
 class DealTable:

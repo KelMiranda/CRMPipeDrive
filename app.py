@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for,jsonify
 from processes.ingresoDeCotizaciones import IngresoDeCotizaciones
 from processes.deals import save_json
 from processes.deals import DealTable
@@ -7,14 +7,22 @@ from processes.organizations import OrganizationTable
 from processes.cotizaciones import Cotizaciones
 from database.sql_server_connection import SQLServerDatabase
 from processes.proceso_cliente import Cliente
+from processes.deals import get_all_deals
 
 app = Flask(__name__)
-
 
 @app.route('/')
 def home():
     return render_template('index.html')
 
+@app.route('/deals', methods=['GET'])
+def get_deals():
+    # Aquí puedes agregar la lógica para generar o recuperar tus datos
+    result = get_all_deals()
+    return jsonify(result)
+@app.route('/coti')
+def home_coti():
+    return render_template('coti.html')
 
 @app.route('/cotizaciones', methods=['POST'])
 def cotizaciones():

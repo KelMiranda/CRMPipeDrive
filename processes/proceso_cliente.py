@@ -118,7 +118,7 @@ class Cliente:
         query = f"""
                 SELECT COALESCE((
                     SELECT PipedriveId 
-                    FROM [PipeDrive].[dbo].[vw_idUserPipeDrive]
+                    FROM [PipeDrive].[dbo].[VendedoresConCredenciales]
                     WHERE SlpName = '{vendedor_asignado}'
                 ), NULL) AS PipedriveId
             """
