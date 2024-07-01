@@ -8,39 +8,35 @@ from processes.cotizaciones import Cotizaciones
 from database.sql_server_connection import SQLServerDatabase
 from processes.proceso_cliente import Cliente
 from processes.deals import get_all_deals
+from datetime import datetime
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def home():
-    return render_template('index.html')
+    dato_dia = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    return render_template('index.html', date=dato_dia)
 
-@app.route('/deals', methods=['GET'])
-def get_deals():
-    # Aquí puedes agregar la lógica para generar o recuperar tus datos
-    result = get_all_deals()
-    return jsonify(result)
-@app.route('/coti')
-def home_coti():
-    return render_template('coti.html')
 
-@app.route('/cotizaciones', methods=['POST'])
+@app.route('/consulta-cotizacion')
+def cotizacion():
+    return render_template('consultaCoti.html')
+
+
+@app.route('/cotizaciones', methods=['GET', 'POST'])
 def cotizaciones():
-    paises = request.form.getlist('paises')
-    results = {}
+    if request.is_json:
+        data = request.get_json()
+        DocNum = data.get('numero1')
+        DocEntry = data.get('numero2')
+        # Aquí puedes procesar los valores como necesites, por ejemplo, guardarlos en una base de datos
+        data_cotizacion = Cotizaciones('SV').datos_de_la_cotizacion(DocNum, DocEntry)
 
-    for row in paises:
-        ct = IngresoDeCotizaciones(row)
-        result = ct.cotizaciones_diarias(1)
-        result_act = ct.cotizaciones_actualizadas()
-        save_json(result, f'Cotizaciones_diarias_{row}')
-        save_json(result_act, f'Cotizaciones_actualizadas_{row}')
-        results[row] = {
-            'cotizaciones_diarias': result,
-            'cotizaciones_actualizadas': result_act
-        }
+        # Devuelve la respuesta en formato JSON
+        return jsonify(data_cotizacion)
 
-    return render_template('result.html', results=results)
+    return jsonify({"error": "Invalid request"}), 400
 
 
 if __name__ == '__main__':
