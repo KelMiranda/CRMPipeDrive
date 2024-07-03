@@ -57,6 +57,12 @@ form input[type="number"] {
     text-align: center
 }
 
+form input[type="text"] {
+    width: 25%
+    margin-right: 10px;
+    text-align: center
+}
+
 form button {
     padding: 10px;
     background-color: #007bff;

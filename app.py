@@ -30,8 +30,10 @@ def cotizaciones():
         data = request.get_json()
         DocNum = data.get('numero1')
         DocEntry = data.get('numero2')
+        pais = data.get('pais')
+        print(pais)
         # Aquí puedes procesar los valores como necesites, por ejemplo, guardarlos en una base de datos
-        data_cotizacion = Cotizaciones('SV').datos_de_la_cotizacion(DocNum, DocEntry)
+        data_cotizacion = Cotizaciones(pais).datos_de_la_cotizacion(DocNum, DocEntry)
 
         # Devuelve la respuesta en formato JSON
         return jsonify(data_cotizacion)

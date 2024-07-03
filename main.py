@@ -25,11 +25,13 @@ if __name__ == '__main__':
 
     #print(OrganizationTable('DatosClientes', 'SV').get_all_values_of_assigned_salesperson())
     #print(Cotizaciones('SV').data_vendedor(64, 'VEND30', 'ESAU OSEGUEDA - CONTRATISTA'))
-    print(Cotizaciones('SV').datos_de_la_cotizacion(475737,617157))
+    print(Cotizaciones('GT').datos_de_la_cotizacion(38698,52019))
     #print(Cotizaciones('SV').datos_cliente('C1230125').get('Status'))
     #print(DealTable('DatosProyectos_PipeDrive', 'SV').nombres_vendedor_cotizado())
     #print(DealTable('DatosProyectos_PipeDrive', 'SV').nombres_vendedor_asignado())
     #Cliente('SV').ingresar_o_actualizar_cliente_pipedrive('C2893405')
+    #print(Cotizaciones('SV').validador_vendedor_asignado(55))
+    #print(Cotizaciones('GT').validador_vendedor_cotizado('VENGT39'))
 
 
 
