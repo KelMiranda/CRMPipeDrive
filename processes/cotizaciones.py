@@ -522,7 +522,8 @@ class Cotizaciones:
     def data_vendedor(self, SlpCode, UserCode, Sector):
 
         if Sector == 'BERNARDO SALAZAR - ING':
-            pass
+            print("Es de lineas la cotizacion")
+            print(SlpCode, UserCode, Sector)
         else:
             pass
         def seguidores(Sector):

@@ -15,16 +15,16 @@ if __name__ == '__main__':
     #result = IngresoDeCotizaciones('SV').validacion_cliente(0)
     #print(result)
 
-    for row in pais:
+    '''for row in pais:
         ct = IngresoDeCotizaciones(f'{row}')
         result = ct.cotizaciones_diarias(1)
         result_act = ct.cotizaciones_actualizadas()
         save_json(result, f'Cotizaciones_diarias_{row}')
-        save_json(result_act, f'Cotizaciones_actualizadas_{row}')
+        save_json(result_act, f'Cotizaciones_actualizadas_{row}')'''
 
     #print(OrganizationTable('DatosClientes', 'SV').get_all_values_of_assigned_salesperson())
     #print(Cotizaciones('SV').data_vendedor(64, 'VEND30', 'ESAU OSEGUEDA - CONTRATISTA'))
-    #print(Cotizaciones('GT').datos_de_la_cotizacion(38698,52019))
+    print(Cotizaciones('SV').datos_de_la_cotizacion(355696,445068))
     #print(Cotizaciones('SV').datos_cliente('C1230125').get('Status'))
     #print(DealTable('DatosProyectos_PipeDrive', 'SV').nombres_vendedor_cotizado())
     #print(DealTable('DatosProyectos_PipeDrive', 'SV').nombres_vendedor_asignado())
