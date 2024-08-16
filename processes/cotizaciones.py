@@ -598,3 +598,10 @@ class Cotizaciones:
             return False
         finally:
             self.db.disconnect()
+
+    def vendedor_cartera(self, cardcode):
+        self.db.connect()
+        query = f"Select CardCode from DatosClientes Where Pais = '{self.pais}' AND Validador = '{cardcode}'"
+        self.db.execute_query(query)
+
+

@@ -45,6 +45,7 @@ class Cliente:
 
     def validadorCliente(self, CardCode):
         query = f"[dbo].[SP_VALIDADOR_DE_CLIENTE] '{CardCode}', '{self.pais}'"
+        print(query)
         errores = []
         result = {}
 
@@ -179,6 +180,8 @@ class Cliente:
             status = resultado.get('Status')
             diferencia_pos_pipedrive = resultado.get('Diferencia de datos entre POS y pipeDrive')
             diferencia_pos_vwpos = resultado.get('Diferencia de datos entre POS y VW_POS')
+
+            print(status, diferencia_pos_pipedrive, diferencia_pos_vwpos, resultado)
 
             # Ejecutar el procedimiento almacenado para validar o fusionar cliente
             def ejecutar_procedimiento_merge():
