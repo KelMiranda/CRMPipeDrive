@@ -310,8 +310,6 @@ class Cotizaciones:
                 f"{datos_cotizacion.get('CardName')}": valores[18]
             }
             familias_padres = self.familia_padre_de_la_cotizacion(DocNum, DocEntry)
-            datos_vendedor = self.data_vendedor(valores[20], valores[21], valores[22])
-            print(datos_vendedor)
 
             if valores[4] == 'Closed':
                 datos_coti.update(
@@ -327,11 +325,7 @@ class Cotizaciones:
                 "familias_padres": familias_padres,
                 "datos_pipe": datos_pipe,
                 "dato_cliente": datosClientes,
-                "datos_vendedor": datos_vendedor
             })
-            # Procesa los resultados de la consulta
-
-            #self.data_vendedor()
 
             return data, {'id_deal': valores[19]}
         except Exception as e:
@@ -518,56 +512,6 @@ class Cotizaciones:
                 return {"currency": currency, "value": valor_facturado, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32': porcentaje, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32_currency':currency}
             else:
                 return {"currency": currency, "value": valor_facturado, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32': porcentaje, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32_currency':currency}
-
-    def data_vendedor(self, SlpCode, UserCode, Sector):
-
-        if Sector == 'BERNARDO SALAZAR - ING':
-            print("Es de lineas la cotizacion")
-            print(SlpCode, UserCode, Sector)
-        else:
-            pass
-        def seguidores(Sector):
-            seguidores = []
-            match (self.pais):
-                case 'SV':
-                    gerente_general = 13092377
-                    jefe_lineas = 13046551
-                    seguidores = [config[f'{Sector}']['PipedriveID']]
-                    seguidores.append(gerente_general)
-                    seguidores.append(jefe_lineas)
-                    return seguidores
-
-        vendedor_asignado = self.validador_vendedor_asignado(SlpCode)
-        id_pipedrive_ven_as = vendedor_asignado[1]
-        print(id_pipedrive_ven_as)
-        vendedor_cotizado = self.validador_vendedor_cotizado(UserCode)
-        id_pipedrive_ven_cot = vendedor_cotizado[1]
-        print(id_pipedrive_ven_cot)
-        if id_pipedrive_ven_as == id_pipedrive_ven_cot:
-            variable = seguidores(Sector)
-            data = {
-                "Status": "Igual",
-                "user_id": id_pipedrive_ven_as,
-                "Seguidores": variable
-
-            }
-            return data
-        elif len(id_pipedrive_ven_as) == 0 or len(id_pipedrive_ven_cot) == 0:
-            variable = seguidores(Sector)
-            data = {
-                "Status": "No CRM",
-                "user_id": variable[0],
-                "Seguidores": variable[1:]
-            }
-            return data
-        else:
-            variable = seguidores(Sector)
-            data = {
-                "Status": "Diferentes",
-                "user_id": id_pipedrive_ven_as,
-                "Seguidor": variable.append(id_pipedrive_ven_cot[0][2])
-            }
-            return data
 
     def validador_vendedor_asignado(self, SlpCode):
         try:
