@@ -18,11 +18,9 @@ def home():
     dato_dia = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     return render_template('index.html', date=dato_dia)
 
-
 @app.route('/consulta-cotizacion')
 def cotizacion():
     return render_template('consultaCoti.html')
-
 
 @app.route('/cotizaciones', methods=['GET', 'POST'])
 def cotizaciones():
@@ -40,6 +38,11 @@ def cotizaciones():
 
     return jsonify({"error": "Invalid request"}), 400
 
+@app.route('/deals', methods=['GET'])
+def get_deals():
+    # Aquí puedes agregar la lógica para generar o recuperar tus datos
+    result = get_all_deals()
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
