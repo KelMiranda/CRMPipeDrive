@@ -173,6 +173,7 @@ class Cotizaciones:
         result = []
         query = f"EXEC [dbo].[SP_Cotizaciones_Dia_{self.pais}]'{fecha}'"
         print(query)
+        print('Estoy aqui')
         try:
             self.db.connect()
             result = self.db.execute_query(query)

@@ -1,4 +1,5 @@
 from unittest import result
+import pandas as pd
 from processes.cotizaciones import Cotizaciones
 from processes.proceso_cliente import Cliente
 import datetime as dt
@@ -71,6 +72,24 @@ class IngresoDeCotizaciones:
             'errores': errores,
         }
         return output
+
+    #Esta es la Linea donde cambie. Ten en cuenta que solo habia problemas con el documento E
+    def cotizacionesDiarias(self):
+        today = dt.date.today()
+        ct = Cotizaciones(f'{self.pais}')
+        result = ct.cotizaciones_del_dia(f'{today}')[0]
+        '''Convertir la lista plana en una lista de tuplas'''
+        result_list = [list(tup) for tup in result]
+        columnas = ['Serie', 'DocNum', 'CardCode', 'ORD', 'DocEntry']
+        dataFrame = pd.DataFrame(result_list, columns=columnas)
+        print(dataFrame)
+
+
+
+
+
+
+
 
 
 
