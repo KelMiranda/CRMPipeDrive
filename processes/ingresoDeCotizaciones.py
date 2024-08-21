@@ -73,16 +73,43 @@ class IngresoDeCotizaciones:
         }
         return output
 
-    #Esta es la Linea donde cambie. Ten en cuenta que solo habia problemas con el documento E
+    #Esta funcion traera todas las cotizaciones del dia.
     def cotizacionesDiarias(self):
-        today = dt.date.today()
-        ct = Cotizaciones(f'{self.pais}')
-        result = ct.cotizaciones_del_dia(f'{today}')[0]
-        '''Convertir la lista plana en una lista de tuplas'''
-        result_list = [list(tup) for tup in result]
-        columnas = ['Serie', 'DocNum', 'CardCode', 'ORD', 'DocEntry']
-        dataFrame = pd.DataFrame(result_list, columns=columnas)
-        print(dataFrame)
+        try:
+            today = dt.date.today()
+            result = self.ct.cotizaciones_del_dia(f'{today}')[0]
+
+            # Convertir la lista plana en una lista de tuplas
+            result_list = [list(tup) for tup in result]
+            columnas = ['Serie', 'DocNum', 'CardCode', 'ORD', 'DocEntry']
+            dataFrame = pd.DataFrame(result_list, columns=columnas)
+
+            # Verificación en la base de datos
+            resultados = []
+
+            for index, row in dataFrame.iterrows():
+                query = f"""
+                    SELECT COUNT(*)
+                    FROM DatosProyectos_PipeDrive
+                    WHERE Serie = '{row['Serie']}'
+                    AND DocNum = {row['DocNum']}
+                    AND ORD = '{row['ORD']}'
+                """
+                #self.db.connect()
+                #count = self.db.execute_query(query)[0][0]
+
+                #resultados.append(count > 0)
+                print(query)
+
+            # Agregar los resultados al DataFrame
+            dataFrame['Existe'] = resultados
+
+            print(dataFrame)
+            return dataFrame
+
+        except Exception as e:
+            print(f"Error al ejecutar cotizacionesDiarias: {e}")
+            return None
 
 
 
