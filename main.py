@@ -11,11 +11,13 @@ from processes.proceso_cliente import Cliente
 
 if __name__ == '__main__':
 
-    pais = ['SV', 'GT']
-    '''for row in pais:
+    '''pais = ['SV', 'GT']
+    for row in pais:
         ct = IngresoDeCotizaciones(f'{row}')
         result = ct.cotizaciones_diarias(1)
         result_act = ct.cotizaciones_actualizadas()
         save_json(result, f'Cotizaciones_diarias_{row}')'''
 
-    ct = IngresoDeCotizaciones('SV').cotizacionesDiarias()
+    ct = IngresoDeCotizaciones('SV')
+    print(ct.cotizacionesDiarias())
+    #print(ct.comparar_registros_clientes('C219380'))

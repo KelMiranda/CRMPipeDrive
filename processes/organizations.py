@@ -14,7 +14,6 @@ def get_all_option_for_fields_in_get_all_organization(id_field_organization):
         my_dictionary[f"{row}"] = PipedriveAPI('Token').get_organization_field_id(row)
     return my_dictionary
 
-
 def get_all_organization():
     data = {
         "company_domain": "grupopelsa",
@@ -23,7 +22,6 @@ def get_all_organization():
     }
     result = PipedriveAPI('Token').get_records('organizations', data)
     return result
-
 
 class OrganizationTable:
     def __init__(self, table=None, country=None):
@@ -107,15 +105,7 @@ class OrganizationTable:
                 else:
                     print(f'el vendedor:{row}, deja de seguir a este cliente')
                     print(self.pipe.delete_followers_in_organization(id_organization, id_follower).get('success'))
-    
-    def get_the_customers(self, fecha):
-        #query = f"Select distinct A.CardCode from {self.table} AS A INNER JOIN DatosClientes AS B ON(A.SlpName != B.Vendedor_Asignado) Where B.Pais = '{self.country}' "
-        query = f"Select * from [dbo].[VW_DATOS_CLIENTES_SV] Where CardCode like 'C%' AND CONVERT(DATE, UpdateDate) >= '{fecha}'"
-        self.db.connect()
-        result = self.db.execute_query(query)
-        self.db.disconnect()
-        return result
-    
+
     def validador_de_clientes(self):
         client = get_all_organization()
         self.db.connect()

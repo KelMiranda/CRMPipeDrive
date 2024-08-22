@@ -16,6 +16,41 @@ class IngresoDeCotizaciones:
         self.ct = Cotizaciones(f'{self.pais}')
         self.cliente = Cliente(f'{self.pais}')
 
+    def comparar_registros_clientes(self, card_code):
+        """
+        Ejecuta el procedimiento almacenado CompararRegistrosClientes_SV para comparar los registros de un cliente.
+
+        Parámetros:
+        - card_code (str): Código único del cliente a comparar.
+
+        Retorna:
+        - None: Si no se encontraron registros para el cliente.
+        - True: Si los registros son diferentes.
+        - False: Si no hay cambios en los registros.
+        """
+        try:
+            # Crear la consulta SQL para ejecutar el procedimiento almacenado
+            query = f"EXEC CompararRegistrosClientes_{self.pais} @CardCode = '{card_code}'"
+
+            # Ejecutar el procedimiento almacenado y obtener el resultado
+            result = self.db.execute_query(query)
+
+            # Interpretar el resultado
+            if result:
+                resultado_comparacion = result[0][0]
+                if resultado_comparacion is None:
+                    return None  # No se encontraron registros
+                elif resultado_comparacion == 1:
+                    return True  # Registros diferentes
+                elif resultado_comparacion == 0:
+                    return False  # No hay cambios
+            else:
+                return None  # En caso de que no haya resultados
+
+        except Exception as e:
+            print(f"Error al ejecutar comparar_registros_clientes: {e}")
+            return None
+
     def cotizaciones_diarias(self, days):
         errores = []
         result = []
@@ -73,10 +108,23 @@ class IngresoDeCotizaciones:
         }
         return output
 
-    #Esta funcion traera todas las cotizaciones del dia.
     def cotizacionesDiarias(self):
+        """
+        Esta función trae todas las cotizaciones del día y verifica si el cliente y la cotización existen en la base de datos.
+        Crea un DataFrame con la información de las cotizaciones y añade dos columnas adicionales:
+        - CT_E: Indica si la cotización ya existe en la base de datos (True o False).
+        - C_E: Indica si el cliente ya existe en la base de datos (True o False).
+        - C_M: Indica si hay cambios en los datos del cliente (True, False, o None).
+        """
         try:
+            # Verifica si la conexión ya está abierta
+            already_connected = self.db.is_connected()
+
+            if not already_connected:
+                self.db.connect()
+
             today = dt.date.today()
+            one_day = dt.timedelta(days=1)
             result = self.ct.cotizaciones_del_dia(f'{today}')[0]
 
             # Convertir la lista plana en una lista de tuplas
@@ -85,38 +133,57 @@ class IngresoDeCotizaciones:
             dataFrame = pd.DataFrame(result_list, columns=columnas)
 
             # Verificación en la base de datos
-            resultados = []
+            resultados_cotizacion = []
+            resultados_cliente = []
+            resultados_comparacion = []
 
             for index, row in dataFrame.iterrows():
-                query = f"""
+                card_code = row['CardCode']
+
+                # Verificar si los datos del cliente han cambiado
+                resultado_comparacion = self.comparar_registros_clientes(card_code)
+                resultados_comparacion.append(resultado_comparacion)
+
+                # Verificar si la cotización ya existe en la base de datos
+                query_cotizacion = f"""
                     SELECT COUNT(*)
                     FROM DatosProyectos_PipeDrive
                     WHERE Serie = '{row['Serie']}'
                     AND DocNum = {row['DocNum']}
-                    AND ORD = '{row['ORD']}'
+                    AND ORD = '{row['ORD']}' 
+                    AND PAIS = '{self.pais}'
                 """
-                #self.db.connect()
-                #count = self.db.execute_query(query)[0][0]
+                count_cotizacion = self.db.execute_query(query_cotizacion)
+                if count_cotizacion:
+                    resultados_cotizacion.append(count_cotizacion[0][0] > 0)
+                else:
+                    resultados_cotizacion.append(False)
 
-                #resultados.append(count > 0)
-                print(query)
+                # Verificar si el cliente ya existe en la base de datos
+                query_cliente = f"""
+                    SELECT COUNT(*)
+                    FROM DatosClientes
+                    WHERE CardCode = '{row['CardCode']}' 
+                    AND PAIS = '{self.pais}'
+                """
+                count_cliente = self.db.execute_query(query_cliente)
+                if count_cliente:
+                    resultados_cliente.append(count_cliente[0][0] > 0)
+                else:
+                    resultados_cliente.append(False)
 
             # Agregar los resultados al DataFrame
-            dataFrame['Existe'] = resultados
+            dataFrame['CT_E'] = resultados_cotizacion
+            dataFrame['C_E'] = resultados_cliente
+            dataFrame['C_M'] = resultados_comparacion
 
-            print(dataFrame)
             return dataFrame
 
         except Exception as e:
             print(f"Error al ejecutar cotizacionesDiarias: {e}")
             return None
 
-
-
-
-
-
-
-
-
-
+        finally:
+            # Desconectar solo si la conexión no estaba ya abierta antes
+            if not already_connected:
+                self.db.disconnect()

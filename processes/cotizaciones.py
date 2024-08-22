@@ -67,7 +67,6 @@ class Cotizaciones:
         self.db = SQLServerDatabase('SERVER', 'DATABASE', 'USERNAME_', 'PASSWORD')
         self.pipe = PipedriveAPI('Token')
 
-
     def cierre_de_cotizaciones(self):
         errores = []
         result = []
@@ -173,12 +172,11 @@ class Cotizaciones:
         result = []
         query = f"EXEC [dbo].[SP_Cotizaciones_Dia_{self.pais}]'{fecha}'"
         print(query)
-        print('Estoy aqui')
         try:
             self.db.connect()
             result = self.db.execute_query(query)
         except Exception as e:
-            error_message = f"Error al ejecutar la consulta el error es: {str(e)}"
+            error_message = f"Error al ejecutar cotizaciones_del_dia el error es: {str(e)}"
             errores.append(error_message)
         finally:
             self.db.disconnect()
