@@ -6,7 +6,32 @@ from processes.deals import get_all_option_for_fields_in_deals
 from processes.deals import dictionary_invert
 from processes.deals import save_json
 from pipedrive.users_pipedrive import GetIdUser
+import hashlib
+import pandas as pd
 
+
+def generar_hash_sha256(data):
+    """
+    Genera un hash SHA-256 a partir de los datos proporcionados.
+
+    Parámetros:
+    data (iterable): Un conjunto de datos (como una fila de un DataFrame).
+                     Convierte cada valor en una cadena, manejando valores None de manera específica.
+
+    Retorna:
+    str: El hash SHA-256 generado como una cadena hexadecimal.
+    """
+    # Convertir cada valor a una cadena, manejando valores None como 'NULL'
+    data_str = '|'.join([str(valor) if valor is not None else 'NULL' for valor in data])
+
+    # Crear un objeto hash SHA-256
+    hash_obj = hashlib.sha256()
+
+    # Actualizar el objeto hash con los datos en formato de bytes
+    hash_obj.update(data_str.encode('utf-8'))
+
+    # Devolver el hash como una cadena hexadecimal
+    return hash_obj.hexdigest()
 
 def get_all_option_for_fields_in_get_all_organization(id_field_organization):
     my_dictionary = {}
@@ -194,3 +219,56 @@ class OrganizationTable:
         output = {'Si Existen': si_existe,
                   'No Existe': no_existe}
         return output
+
+    def hashTablaClientes(self, codigoCliente, tabla):
+        """
+        Genera hashes para los registros de la tabla de clientes según el código del cliente y la tabla especificada.
+
+        Parámetros:
+        codigoCliente (str): El código del cliente que deseas consultar.
+        tabla (str): El nombre de la tabla que deseas consultar.
+
+        Retorna:
+        pd.DataFrame: Un DataFrame con los datos del cliente y sus hashes generados.
+        """
+        # Establecemos la conexión a la base de datos
+        self.db.connect()
+
+        # Verificamos el nombre de la tabla y construimos el query SQL adecuado
+        if tabla == 'DatosClientes':
+            # Consulta SQL para la tabla 'DatosClientes'
+            query = f"""
+            Select CardCode, CardName, Address, Phone1, Municipio, Departamento, E_Mail, 
+                   CONVERT(date, fecha_registro) AS CreateDate, 
+                   CONVERT(DATE, Fecha_Modificacion) AS UpdateDate, 
+                   Sector, Coordenadas, Vendedor_Asignado as SlpName, CodigoSAP as SlpCode 
+            from {tabla} 
+            where CardCode = '{codigoCliente}' AND Pais = '{self.country}'
+            """
+        elif tabla == '[dbo].[VW_DATOS_CLIENTES_SV]' or '[dbo].[VW_DATOS_CLIENTES_GT]' or '[dbo].[VW_DATOS_CLIENTES_HN]':
+            # Consulta SQL para la vista 'VW_DATOS_CLIENTES_SV'
+            query = f"""
+            SELECT CardCode, CardName, Address, Phone1, Municipio, Departamento, E_Mail, 
+                   CreateDate, UpdateDate, Sector, Coordenadas, SlpName, SlpCode 
+            FROM {tabla} 
+            where CardCode = '{codigoCliente}'
+            """
+        else:
+            # Si la tabla no es ninguna de las anteriores, lanzamos un error
+            raise ValueError("Tabla no soportada.")
+
+        # Ejecutamos la consulta SQL
+        result = self.db.execute_query(query)
+
+        # Convertimos el resultado en un DataFrame
+        df = pd.DataFrame(result)
+
+        # Verificamos si el DataFrame tiene datos antes de aplicar el hash
+        if not df.empty:
+            # Aplicamos la función de hashing a cada fila del DataFrame
+            df['hash'] = df.apply(lambda row: generar_hash_sha256(row), axis=1)
+        else:
+            print("No se encontraron datos para el cliente especificado.")
+
+        # Devolvemos el DataFrame con los datos y la columna de hash generada
+        return df
