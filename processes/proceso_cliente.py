@@ -156,7 +156,7 @@ class Cliente:
         return lista.get(key).get(f"{datos_POS.get(campo)}")
 
     def datos_cliente_existente(self, codigo_cliente, clienteTabla=True):
-        resultado = self.ct.datos_cliente(codigo_cliente)
+        resultado = self.ct.datos_cliente_vw_table_pipedrive(codigo_cliente)
         if resultado.get('id_pipedrive') is not None:
             return self.construir_datos_cliente(resultado)
         elif not clienteTabla:
@@ -170,54 +170,10 @@ class Cliente:
         self.db.disconnect()
         return "-----------------idPipeDrive ingresado-------------------"
 
-    def ingresar_o_actualizar_cliente_pipedrive(self, codigo_cliente):
-        try:
-            # Conectar a la base de datos
-            self.db.connect()
-
-            # Obtener los datos del cliente
-            resultado = self.ct.datos_cliente(codigo_cliente)
-            status = resultado.get('Status')
-            diferencia_pos_pipedrive = resultado.get('Diferencia de datos entre POS y pipeDrive')
-            diferencia_pos_vwpos = resultado.get('Diferencia de datos entre POS y VW_POS')
-
-            print(status, diferencia_pos_pipedrive, diferencia_pos_vwpos, resultado)
-
-            # Ejecutar el procedimiento almacenado para validar o fusionar cliente
-            def ejecutar_procedimiento_merge():
-                query = f"EXEC [CRM].[dbo].[SP_VALIDADOR_CLIENTE_MERGE_{self.pais}] '{codigo_cliente}'"
-                self.db.execute_query(query, False)
-                print("merge ejecutado")
-
-            # Verificar el estado del cliente y actuar en consecuencia
-            if status == 'Si existe en pipedrive y tambien en la tabla':
-                # Debo de volver a ejecutar el resultad, porque es la misma respuesta la que estoy actualizando
-                if diferencia_pos_pipedrive or diferencia_pos_vwpos:
-                    #print(diferencia_pos_pipedrive, diferencia_pos_vwpos)
-                    ejecutar_procedimiento_merge()
-                    datos = self.actualizarCliente(codigo_cliente)
-                    return "Cliente Actualizado", datos
-
-                return "Cliente no tiene cambios"
-
-            elif status == 'No existe en pipedrive, pero si en la tabla':
-                ejecutar_procedimiento_merge()
-                result = self.ingresandoCliente(codigo_cliente)
-                return'Cliente ingresado en pipedrive', result
-
-            else:
-                ejecutar_procedimiento_merge()
-                result = self.ingresandoCliente(codigo_cliente)
-                return 'Cliente ingresado en la tabla y en pipedrive', result
-        except Exception as e:
-            return {"error": f"Error al procesar el cliente: {str(e)}"}
-        finally:
-            self.db.disconnect()
-
     def actualizarCliente(self, codigo_cliente):
         try:
             # Obtener los datos del cliente
-            resultado = self.ct.datos_cliente(codigo_cliente)
+            resultado = self.ct.datos_cliente_vw_table_pipedrive(codigo_cliente)
             id_registro = resultado.get('id_registro')
             id_pipedrive = resultado.get('id_pipedrive')
 
@@ -241,7 +197,7 @@ class Cliente:
     def ingresandoCliente(self, codigo_cliente):
         try:
             # Obtener los datos del cliente
-            resultado = self.ct.datos_cliente(codigo_cliente)
+            resultado = self.ct.datos_cliente_vw_table_pipedrive(codigo_cliente)
 
             # Verificar si el cliente existe en la base de datos
             if resultado.get('Status') == 'No Existe Cliente en la tabla':

@@ -272,3 +272,4 @@ class OrganizationTable:
 
         # Devolvemos el DataFrame con los datos y la columna de hash generada
         return df
+

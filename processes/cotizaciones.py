@@ -55,6 +55,18 @@ datos_cotizacion = {
     'CardName': '060d979042413ee06230b755710f42901b6b0a92'
 }
 
+datos_cliente = {
+    'CardCode': 'bd4aa325c2375edc367c1d510faf509422f71a5b',  # Código del cliente
+    'CardName': 'name',  # Nombre del cliente
+    'address': 'address',  # Dirección del cliente
+    'Municipio': '99daf5439284d6a809aee36c4d52a53c9826300b',  # Municipio del cliente
+    'Departamento': 'deca3dd694894b2ca93df56db39f66468cb3885d',  # Departamento del cliente
+    'Pais': '2d4edef00aec72dcc0fd1a240f7897fb0eb34465',  # País del cliente
+    'Sector': '8b8121d03ef920b724ffa68b0f6177fdf281ad3f',  # Sector del cliente
+    'Coordenadas': '3ed19788ef9c8ebeaf0f24f58394f67ac784684c',  # Coordenadas del cliente
+    'Vendedor_Asignado': 'fd0f15b9338615a55ca56a3cada567919ec33306'  # Vendedor asignado al cliente
+}
+
 
 def notificar_errores(errores):
     # Aquí puedes implementar la lógica para enviar notificaciones con la lista de errores
@@ -282,7 +294,7 @@ class Cotizaciones:
                             "lost_reason": values.get('12531').get(valores[8])
                         }
                     return data1
-            cliente = self.datos_cliente(valores[18])
+            cliente = self.datos_cliente_vw_table_pipedrive(valores[18])
             datosClientes = {
                 "Status": cliente.get('Status'),
                 "POS != Pipedrive": cliente.get('Diferencia de datos entre POS y pipeDrive'),
@@ -380,98 +392,218 @@ class Cotizaciones:
             self.db.disconnect()
         return result, errores
 
-    def datos_cliente(self, codigoCliente):
+    def obtener_datos_pos(self, codigoCliente):
+        """
+            Función para obtener los datos del cliente desde la tabla 'DatosClientes' (POS).
+
+            Entradas:
+            - codigoCliente: Código del cliente que se quiere buscar en la tabla 'DatosClientes'.
+
+            Salidas:
+            - datos_POS: Diccionario con los datos del cliente desde la tabla 'DatosClientes'.
+            - id_pipedrive: ID del cliente en Pipedrive (si existe).
+            - id_registro: ID del registro en la tabla 'DatosClientes'.
+            """
+        # Construir la consulta SQL para obtener los datos del cliente desde la tabla 'DatosClientes'
+        query = f"SELECT * FROM DatosClientes WHERE CardCode = '{codigoCliente}' AND Pais = '{self.pais}'"
+
+        # Conectar a la base de datos
+        self.db.connect()
         try:
-            # Consulta para validar la existencia del cliente
-            queryv = f"DECLARE @resultado NVARCHAR(10); EXEC [PipeDrive].[dbo].[sp_ValidadorCliente_{self.pais}] '{codigoCliente}', @resultado OUTPUT; SELECT @resultado AS Resultado;"
-            self.db.connect()
-            validador = self.db.execute_query(queryv)[0][0]
+            # Ejecutar la consulta y obtener el primer registro (asumiendo que solo hay un resultado)
+            result = self.db.execute_query(query)[0]
 
-            if validador == 'Existe':
-                # Consultas para obtener los datos del cliente
-                query = f"SELECT * FROM DatosClientes WHERE CardCode = '{codigoCliente}' AND Pais = '{self.pais}'"
-                query2 = f"SELECT * FROM [dbo].[VW_DATOS_CLIENTES_{self.pais}] WHERE CardCode = '{codigoCliente}'"
-                result = self.db.execute_query(query)[0]
-                id_pipedrive = result[8]
-                id_registro = result[0]
-                result2 = self.db.execute_query(query2)[0]
+            # Crear un diccionario que contenga los datos relevantes del cliente extraídos de la tabla 'DatosClientes'
+            datos_POS = {
+                'CardCode': result[1],  # Código del cliente
+                'CardName': result[2],  # Nombre del cliente
+                'address': result[3],  # Dirección del cliente
+                'Municipio': result[5],  # Municipio del cliente
+                'Departamento': result[6],  # Departamento del cliente
+                'Pais': result[14],  # País del cliente
+                'Sector': result[11],  # Sector del cliente
+                'Coordenadas': result[13],  # Coordenadas del cliente
+                'Vendedor_Asignado': result[15]  # Vendedor asignado al cliente
+            }
 
-                # Obtención de las listas de opciones
-                lista = get_all_option_for_fields_in_get_all_organization([4025, 4024, 4023, 4028, 4026])
+            # Obtener el ID de Pipedrive y el ID del registro para futuras referencias
+            id_pipedrive = result[8]  # ID del cliente en Pipedrive
+            id_registro = result[0]  # ID del registro en la tabla 'DatosClientes'
 
-                # Datos del cliente en diferentes fuentes
-                datos_POS = {
-                    'CardCode': result[1],
-                    'CardName': result[2],
-                    'address': result[3],
-                    'Municipio': result[5],
-                    'Departamento': result[6],
-                    'Pais': result[14],
-                    'Sector': result[11],
-                    'Coordenadas': result[13],
-                    'Vendedor_Asignado': result[15]
-                }
+            # Devolver los datos del cliente y los identificadores
+            return datos_POS, id_pipedrive, id_registro
 
-                datos_vw_pos = {
-                    'CardCode': result2[0],
-                    'CardName': result2[1],
-                    'address': result2[2],
-                    'Municipio': result2[4],
-                    'Departamento': result2[5],
-                    'Pais': result2[13],
-                    'Sector': result2[10],
-                    'Coordenadas': result2[12],
-                    'Vendedor_Asignado': result2[14]
-                }
-
-                if id_pipedrive is None:
-                    output = {
-                        'Status': 'No existe en pipedrive, pero si en la tabla',
-                        'Diferencia de datos entre POS y VW_POS': datos_vw_pos != datos_POS,
-                        'datos_POS': datos_POS,
-                        'datos_vw_pos': datos_vw_pos,
-                        'id_registro': id_registro,
-                        'lista': lista
-                    }
-                else:
-                    result_pipe = self.pipe.get_organization_id(id_pipedrive).get('data')
-                    datos_pipe = {
-                        'CardCode': result_pipe.get('bd4aa325c2375edc367c1d510faf509422f71a5b'),
-                        'CardName': result_pipe.get('name'),
-                        'address': result_pipe.get('address'),
-                        'Municipio': dictionary_invert(lista.get('4025'),
-                                                       result_pipe.get('99daf5439284d6a809aee36c4d52a53c9826300b')),
-                        'Departamento': dictionary_invert(lista.get('4024'),
-                                                          result_pipe.get('deca3dd694894b2ca93df56db39f66468cb3885d')),
-                        'Sector': dictionary_invert(lista.get('4023'),
-                                                    result_pipe.get('8b8121d03ef920b724ffa68b0f6177fdf281ad3f')),
-                        'Coordenadas': result_pipe.get('3ed19788ef9c8ebeaf0f24f58394f67ac784684c'),
-                        'Vendedor_Asignado': dictionary_invert(lista.get('4028'), result_pipe.get(
-                            'fd0f15b9338615a55ca56a3cada567919ec33306')),
-                        'Pais': dictionary_invert(lista.get('4026'),
-                                                  result_pipe.get('2d4edef00aec72dcc0fd1a240f7897fb0eb34465'))
-                    }
-                    output = {
-                        'Status': 'Si existe en pipedrive y tambien en la tabla',
-                        'Diferencia de datos entre POS y pipeDrive': datos_POS != datos_pipe,
-                        'Diferencia de datos entre POS y VW_POS': datos_vw_pos != datos_POS,
-                        'datos_POS': datos_POS,
-                        'datos_vw_pos': datos_vw_pos,
-                        'datos_pipe': datos_pipe,
-                        'lista': lista,
-                        'id_pipedrive': id_pipedrive,
-                        'id_registro': id_registro
-                    }
-                return output
-            else:
-                return {
-                    'Status': 'No Existe Cliente en la tabla',
-                    'Codigo Del Cliente': codigoCliente,
-                    'Pais': self.pais,
-                }
         except Exception as e:
-            return {f"El cliente: {codigoCliente} tiene el siguiente error: ": str(e)}
+            # En caso de error, devolver un mensaje con la descripción del problema
+            return f"Error al obtener datos de POS: {str(e)}"
+
         finally:
+            # Desconectar de la base de datos, independientemente de si hubo un error o no
+            self.db.disconnect()
+
+    def obtener_datos_vw(self, codigoCliente):
+        """
+            Función para obtener los datos del cliente desde la vista 'VW_DATOS_CLIENTES' (VW_POS).
+
+            Entradas:
+            - codigoCliente: Código del cliente que se quiere buscar en la vista 'VW_DATOS_CLIENTES'.
+
+            Salidas:
+            - datos_vw_pos: Diccionario con los datos del cliente desde la vista 'VW_DATOS_CLIENTES'.
+            """
+        # Construir la consulta SQL para obtener los datos del cliente desde la vista 'VW_DATOS_CLIENTES'
+        query2 = f"SELECT * FROM [dbo].[VW_DATOS_CLIENTES_{self.pais}] WHERE CardCode = '{codigoCliente}'"
+
+        # Conectar a la base de datos
+        self.db.connect()
+        try:
+            # Ejecutar la consulta y obtener el primer registro (asumiendo que solo hay un resultado)
+            result2 = self.db.execute_query(query2)[0]
+
+            # Crear un diccionario que contenga los datos relevantes del cliente extraídos de la vista
+            datos_vw_pos = {
+                'CardCode': result2[0],  # Código del cliente
+                'CardName': result2[1],  # Nombre del cliente
+                'address': result2[2],  # Dirección del cliente
+                'Municipio': result2[4],  # Municipio del cliente
+                'Departamento': result2[5],  # Departamento del cliente
+                'Pais': result2[13],  # País del cliente
+                'Sector': result2[10],  # Sector del cliente
+                'Coordenadas': result2[12],  # Coordenadas del cliente
+                'Vendedor_Asignado': result2[14]  # Vendedor asignado al cliente
+            }
+
+            # Devolver los datos obtenidos desde la vista
+            return datos_vw_pos
+
+        except Exception as e:
+            # En caso de error, devolver un mensaje con la descripción del problema
+            return f"Error al obtener datos de VW: {str(e)}"
+
+        finally:
+            # Desconectar de la base de datos, independientemente de si hubo un error o no
+            self.db.disconnect()
+
+    def obtener_datos_pipedrive(self, id_pipedrive, lista):
+        """
+            Función para obtener los datos del cliente desde Pipedrive si el cliente existe.
+
+            Entradas:
+            - id_pipedrive: ID del cliente en Pipedrive.
+            - lista: Diccionario de opciones para la conversión de valores desde Pipedrive.
+
+            Salidas:
+            - datos_pipe: Diccionario con los datos del cliente desde Pipedrive.
+            """
+        try:
+            # Obtener los datos de la organización desde Pipedrive utilizando el ID de Pipedrive
+            result_pipe = self.pipe.get_organization_id(id_pipedrive).get('data')
+
+            # Crear un diccionario que contenga los datos relevantes del cliente extraídos de Pipedrive
+            datos_pipe = {
+                'CardCode': result_pipe.get('bd4aa325c2375edc367c1d510faf509422f71a5b'),
+                # Código del cliente en Pipedrive
+                'CardName': result_pipe.get('name'),  # Nombre del cliente en Pipedrive
+                'address': result_pipe.get('address'),  # Dirección del cliente en Pipedrive
+                'Municipio': dictionary_invert(lista.get('4025'),
+                                               result_pipe.get('99daf5439284d6a809aee36c4d52a53c9826300b')),
+                # Municipio del cliente en Pipedrive
+                'Departamento': dictionary_invert(lista.get('4024'),
+                                                  result_pipe.get('deca3dd694894b2ca93df56db39f66468cb3885d')),
+                # Departamento del cliente en Pipedrive
+                'Sector': dictionary_invert(lista.get('4023'),
+                                            result_pipe.get('8b8121d03ef920b724ffa68b0f6177fdf281ad3f')),
+                # Sector del cliente en Pipedrive
+                'Coordenadas': result_pipe.get('3ed19788ef9c8ebeaf0f24f58394f67ac784684c'),
+                # Coordenadas del cliente en Pipedrive
+                'Vendedor_Asignado': dictionary_invert(lista.get('4028'),
+                                                       result_pipe.get('fd0f15b9338615a55ca56a3cada567919ec33306')),
+                # Vendedor asignado al cliente en Pipedrive
+                'Pais': dictionary_invert(lista.get('4026'),
+                                          result_pipe.get('2d4edef00aec72dcc0fd1a240f7897fb0eb34465'))
+                # País del cliente en Pipedrive
+            }
+
+            # Devolver los datos obtenidos desde Pipedrive
+            return datos_pipe
+
+        except Exception as e:
+            # En caso de error, devolver un mensaje con la descripción del problema
+            return f"Error al obtener datos de Pipedrive: {str(e)}"
+
+    def datos_cliente_vw_table_pipedrive(self, codigoCliente):
+        """
+            Función principal que coordina la obtención y comparación de datos entre POS, VW_POS, y Pipedrive.
+
+            Entradas:
+            - codigoCliente: Código del cliente que se quiere validar y obtener datos.
+
+            Salidas:
+            - output: Diccionario con el estado del cliente y diferencias entre los datos de POS, VW_POS y Pipedrive (si aplica).
+            """
+        try:
+                # Construir la consulta SQL para validar la existencia del cliente en la tabla
+                queryv = f"DECLARE @resultado NVARCHAR(10); EXEC [PipeDrive].[dbo].[sp_ValidadorCliente_{self.pais}] '{codigoCliente}', @resultado OUTPUT; SELECT @resultado AS Resultado;"
+                print(queryv)
+                # Conectar a la base de datos y ejecutar la consulta de validación
+                self.db.connect()
+                validador = self.db.execute_query(queryv)[0][0]
+
+                # Verificar si el cliente existe en la tabla
+                if validador == 'Existe':
+                    # Obtener datos del cliente desde la tabla 'DatosClientes' (POS)
+                    datos_POS, id_pipedrive, id_registro = self.obtener_datos_pos(codigoCliente)
+
+                    # Obtener datos del cliente desde la vista 'VW_DATOS_CLIENTES' (VW_POS)
+                    datos_vw_pos = self.obtener_datos_vw(codigoCliente)
+
+                    # Obtener la lista de opciones para la conversión de valores desde una fuente externa
+                    lista = get_all_option_for_fields_in_get_all_organization([4025, 4024, 4023, 4028, 4026])
+
+                    # Verificar si el cliente tiene un ID en Pipedrive
+                    if id_pipedrive is None:
+                        # Si el cliente no existe en Pipedrive, pero sí en la tabla
+                        return {
+                            'Status': 'No existe en pipedrive, pero si en la tabla',
+                            'Diferencia de datos entre POS y VW_POS': datos_vw_pos != datos_POS,
+                            # Comparar datos entre POS y VW_POS
+                            'datos_POS': datos_POS,  # Datos del cliente desde POS
+                            'datos_vw_pos': datos_vw_pos,  # Datos del cliente desde VW_POS
+                            'id_registro': id_registro,  # ID del registro en la tabla
+                            'lista': lista  # Lista de opciones para la conversión de valores
+                        }
+                    else:
+                        # Si el cliente existe en Pipedrive, obtener los datos desde Pipedrive
+                        datos_pipe = self.obtener_datos_pipedrive(id_pipedrive, lista)
+
+                        # Devolver un resumen de las diferencias entre los datos en diferentes fuentes (POS, VW_POS, Pipedrive)
+                        return {
+                            'Status': 'Si existe en pipedrive y tambien en la tabla',
+                            'Diferencia de datos entre POS y pipeDrive': datos_POS != datos_pipe,
+                            # Comparar datos entre POS y Pipedrive
+                            'Diferencia de datos entre POS y VW_POS': datos_vw_pos != datos_POS,
+                            # Comparar datos entre POS y VW_POS
+                            'datos_POS': datos_POS,  # Datos del cliente desde POS
+                            'datos_vw_pos': datos_vw_pos,  # Datos del cliente desde VW_POS
+                            'datos_pipe': datos_pipe,  # Datos del cliente desde Pipedrive
+                            'lista': lista,  # Lista de opciones para la conversión de valores
+                            'id_pipedrive': id_pipedrive,  # ID del cliente en Pipedrive
+                            'id_registro': id_registro  # ID del registro en la tabla
+                        }
+                else:
+                    # Si el cliente no existe en la tabla, devolver un mensaje indicando que no se encontró
+                    return {
+                        'Status': 'No Existe Cliente en la tabla',
+                        'Codigo Del Cliente': codigoCliente,  # Código del cliente
+                        'Pais': self.pais  # País del cliente
+                    }
+
+        except Exception as e:
+            # Manejo de errores generales durante el proceso y devolución de un mensaje con el error
+            return {f"El cliente: {codigoCliente} tiene el siguiente error: ": str(e)}
+
+        finally:
+            # Desconectar de la base de datos al finalizar la operación
             self.db.disconnect()
 
     def clientes_por_sector_validador(self, Validador):
@@ -546,5 +678,16 @@ class Cotizaciones:
         self.db.connect()
         query = f"Select CardCode from DatosClientes Where Pais = '{self.pais}' AND Validador = '{cardcode}'"
         self.db.execute_query(query)
+
+    def cliente_con_keys_pipedrive(self, valores):
+        datos = {}
+        lista = get_all_option_for_fields_in_get_all_organization([4025, 4024, 4023, 4028, 4026])
+        print(lista)
+        valor_no_existe = lista.get('4025').get('TuPutaMadre')
+        print(valor_no_existe)
+        for row in valores:
+            valor = valores.get(f'{row}')
+            keys = datos_cliente.get(f'{row}')
+            print(keys, valor)
 
 
