@@ -22,6 +22,6 @@ if __name__ == '__main__':
 
     ct = Cotizaciones('SV')
     valores = ct.obtener_datos_vw('C1413250')
-    ct.cliente_con_keys_pipedrive(valores)
+    print(ct.cliente_con_keys_pipedrive(valores))
 
 

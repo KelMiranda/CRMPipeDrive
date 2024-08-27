@@ -5,6 +5,7 @@ from pipedrive.pipedrive_api_conecction import PipedriveAPI
 from processes.organizations import get_all_option_for_fields_in_get_all_organization
 from processes.deals import dictionary_invert
 import configparser
+import os as cd
 
 
 config = configparser.ConfigParser()
@@ -67,7 +68,13 @@ datos_cliente = {
     'Vendedor_Asignado': 'fd0f15b9338615a55ca56a3cada567919ec33306'  # Vendedor asignado al cliente
 }
 
-
+def manejar_no_existencia_campo(field_id, value, valores_no_existe_campo, metodo):
+    valores_no_existe_campo.update({
+        'Para el campo': field_id,
+        'No existe el valor': value,
+        'ruta del archivo': cd.path.abspath(__file__),
+        'metodo': metodo
+    })
 def notificar_errores(errores):
     # Aquí puedes implementar la lógica para enviar notificaciones con la lista de errores
     print("Enviando notificación de errores:", errores)
@@ -680,14 +687,88 @@ class Cotizaciones:
         self.db.execute_query(query)
 
     def cliente_con_keys_pipedrive(self, valores):
+        """
+        Esta función procesa los valores de un cliente y mapea las claves correspondientes a los campos de Pipedrive.
+
+        Entrada:
+        - valores: Un diccionario que contiene los valores asociados a cada campo del cliente.
+
+        Salida:
+        - datos: Un diccionario que contiene los datos mapeados con las claves correspondientes a los campos de Pipedrive.
+        """
+
+        # Inicializa el diccionario de datos y el diccionario de valores que no existen en Pipedrive
         datos = {}
+        valoresNoExisteCampo = {}
+
+        # Obtiene todas las opciones para los campos específicos en Pipedrive
         lista = get_all_option_for_fields_in_get_all_organization([4025, 4024, 4023, 4028, 4026])
-        print(lista)
-        valor_no_existe = lista.get('4025').get('TuPutaMadre')
-        print(valor_no_existe)
+
+        # Itera sobre cada valor en el diccionario `valores`
         for row in valores:
-            valor = valores.get(f'{row}')
-            keys = datos_cliente.get(f'{row}')
-            print(keys, valor)
+            valor = valores.get(f'{row}')  # Obtiene el valor asociado a la clave `row`
+            keys = datos_cliente.get(f'{row}')  # Obtiene la clave correspondiente del cliente
+            datos.update({
+                'label': 1
+            })
+
+            # Utiliza `match-case` para identificar el campo correspondiente
+            match row:
+                case "Sector":
+                    id_selecto_pipedrive  = lista.get('4023').get(f'{valor}')  # Obtiene el ID del sector en Pipedrive
+                    if id_selecto_pipedrive  is None:  # Si el valor no existe en Pipedrive
+                        manejar_no_existencia_campo('4023', valor, valoresNoExisteCampo, 'cliente_con_keys_pipedrive')
+                    else:  # Si el valor existe, actualiza el diccionario `datos`
+                        datos.update({
+                            f'{keys}': id_selecto_pipedrive 
+                        })
+
+                case "Departamento":
+                    id_selecto_pipedrive  = lista.get('4024').get(
+                        f'{valor}')  # Obtiene el ID del departamento en Pipedrive
+                    if id_selecto_pipedrive  is None:  # Si el valor no existe en Pipedrive
+                        manejar_no_existencia_campo('4024', valor, valoresNoExisteCampo, 'cliente_con_keys_pipedrive')
+                    else:  # Si el valor existe, actualiza el diccionario `datos`
+                        datos.update({
+                            f'{keys}': id_selecto_pipedrive 
+                        })
+
+                case "Municipio":
+                    id_selecto_pipedrive  = lista.get('4025').get(f'{valor}')  # Obtiene el ID del municipio en Pipedrive
+                    if id_selecto_pipedrive  is None:  # Si el valor no existe en Pipedrive
+                        manejar_no_existencia_campo('4025', valor, valoresNoExisteCampo, 'cliente_con_keys_pipedrive')
+                    else:  # Si el valor existe, actualiza el diccionario `datos`
+                        datos.update({
+                            f'{keys}': id_selecto_pipedrive 
+                        })
+
+                case "Vendedor asignado":
+                    id_selecto_pipedrive  = lista.get('4028').get(
+                        f'{valor}')  # Obtiene el ID del vendedor asignado en Pipedrive
+                    if id_selecto_pipedrive  is None:  # Si el valor no existe en Pipedrive
+                        manejar_no_existencia_campo('4028', valor, valoresNoExisteCampo, 'cliente_con_keys_pipedrive')
+                    else:  # Si el valor existe, actualiza el diccionario `datos`
+                        datos.update({
+                            f'{keys}': id_selecto_pipedrive 
+                        })
+
+                case "Pais":
+                    id_selecto_pipedrive  = lista.get('4026').get(f'{valor}')  # Obtiene el ID del país en Pipedrive
+                    if id_selecto_pipedrive  is None:  # Si el valor no existe en Pipedrive
+                        manejar_no_existencia_campo('4026', valor, valoresNoExisteCampo, 'cliente_con_keys_pipedrive')
+                    else:  # Si el valor existe, actualiza el diccionario `datos`
+                        datos.update({
+                            f'{keys}': id_selecto_pipedrive 
+                        })
+
+                case _:  # Caso por defecto para cualquier otro campo
+                    datos.update({
+                        f'{keys}': f'{valor}'  # Actualiza el diccionario `datos` con el valor tal cual
+                    })
+
+        # Retorna el diccionario `datos` actualizado
+        return datos, valoresNoExisteCampo
+
+
 
 
