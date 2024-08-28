@@ -20,8 +20,11 @@ if __name__ == '__main__':
         save_json(result, f'Cotizaciones_diarias_{row}')'''
 
 
-    ct = Cotizaciones('SV')
-    valores = ct.obtener_datos_vw('C1413250')
-    print(ct.cliente_con_keys_pipedrive(valores))
+    ct_sv = Cotizaciones('SV')
+    ct_gt = Cotizaciones('GT')
+    #valores = ct.obtener_datos_vw('C1413250')
+    #print(ct.cliente_con_keys_pipedrive(valores))
+    print(ct_sv.obtener_id_vendedor('JOSE MENA..', 'IGO'))
+    print(ct_gt.obtener_id_vendedor('33 - MYNOR GARCIA.', 'GT'))
 
 

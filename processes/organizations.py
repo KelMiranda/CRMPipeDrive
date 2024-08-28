@@ -8,6 +8,7 @@ from processes.deals import save_json
 from pipedrive.users_pipedrive import GetIdUser
 import hashlib
 import pandas as pd
+import configparser
 
 
 def generar_hash_sha256(data):

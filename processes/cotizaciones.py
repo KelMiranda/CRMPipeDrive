@@ -8,10 +8,6 @@ import configparser
 import os as cd
 
 
-config = configparser.ConfigParser()
-config.read('sector.ini')
-
-
 familias_padres = {
     'CAJAS TERMICAS, BRK': 'c97bd1f994dce3b891f1189965c06ef775b53757',
     'CANALIZ Y ACC MONTAJ': 'd8b5d8cdff3533b40d7374a4f9cfbfd0584f2037',
@@ -32,7 +28,6 @@ familias_padres = {
     'SERVICIO EXTERNO': '6065a5cb51451f337f93c2cf910bbaf52b1f2b69',
     'TRANSFORM Y ACC': 'b88c83c134b66846b742619004c6163b94c63024'
 }
-
 datos_cotizacion = {
     'vendedor_asignado': 'bdc9870365278bf245effd816618a8a9bff8fad9',
     'vendedor_cot': 'c0af428ccdb6d8605a475372986995a0a6ed0a69',
@@ -55,7 +50,6 @@ datos_cotizacion = {
     'obtener_tipo_cotizacion': '6840b183ea0a8dd8a55b4f7cd773a4d1f73e442a',
     'CardName': '060d979042413ee06230b755710f42901b6b0a92'
 }
-
 datos_cliente = {
     'CardCode': 'bd4aa325c2375edc367c1d510faf509422f71a5b',  # Código del cliente
     'CardName': 'name',  # Nombre del cliente
@@ -67,6 +61,20 @@ datos_cliente = {
     'Coordenadas': '3ed19788ef9c8ebeaf0f24f58394f67ac784684c',  # Coordenadas del cliente
     'Vendedor_Asignado': 'fd0f15b9338615a55ca56a3cada567919ec33306'  # Vendedor asignado al cliente
 }
+id_jefes_sector_sv = {
+    'CONTRA': 13042899,
+    'IGO': 13045165,
+    'RETAIL - AV': 13091607,
+    'RETAIL - FB': 13091607,
+    'RETAIL- SM': 13091607,
+    'MAYO': 13060961,
+    'ING': 13046551,
+    'UTIL': 12806795
+}
+id_jefes_sector_gt = {
+    'GT': 12992629
+}
+
 
 def manejar_no_existencia_campo(field_id, value, valores_no_existe_campo, metodo):
     valores_no_existe_campo.update({
@@ -78,7 +86,6 @@ def manejar_no_existencia_campo(field_id, value, valores_no_existe_campo, metodo
 def notificar_errores(errores):
     # Aquí puedes implementar la lógica para enviar notificaciones con la lista de errores
     print("Enviando notificación de errores:", errores)
-
 
 class Cotizaciones:
     def __init__(self, pais):
@@ -769,6 +776,30 @@ class Cotizaciones:
         # Retorna el diccionario `datos` actualizado
         return datos, valoresNoExisteCampo
 
+    def obtener_id_vendedor(self,nombre, seccion=None):
+        # Crear un objeto ConfigParser
+        config = configparser.ConfigParser()
+        # Leer el archivo Sectores_SV.ini
+        config.read(f'Sectores_{self.pais}.ini')
 
+        # Verificar si existe la sección especificada
+        if seccion in config:
+            # Buscar el ID del vendedor en la sección específica
+            vendedores = config[seccion]
+            if nombre in vendedores:
+                return vendedores[nombre]
+            else:
+                match self.pais:
+                    case "SV":
+                        valor = id_jefes_sector_sv.get(f"{seccion}")
+                        print(valor)
+                    case "GT":
+                        valor = id_jefes_sector_gt.get(f"{seccion}")
+                        print(valor)
+
+
+                return f"El nombre '{nombre}' no se encontró en la sección '{seccion}'."
+        else:
+            return f"La sección '{seccion}' no se encontró en el archivo."
 
 
