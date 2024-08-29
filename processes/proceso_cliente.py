@@ -221,3 +221,12 @@ class Cliente:
 
         except Exception as e:
             return {"error": f"Error al ingresar el cliente: {str(e)}"}
+
+    def ingresando_cliente(self, codigo_cliente):
+        self.db.connect()
+        query = f"EXEC [dbo].[SP_VALIDADOR_DE_CLIENTE] '{codigo_cliente}', '{self.pais}'"
+        result = self.db.execute_query(query)
+        print(result)
+
+
+

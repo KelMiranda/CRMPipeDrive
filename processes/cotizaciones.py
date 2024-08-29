@@ -1,3 +1,5 @@
+from stringprep import in_table_d1
+
 from database.sql_server_connection import SQLServerDatabase
 from time import sleep, time
 from processes.deals import get_all_option_for_fields_in_deals
@@ -74,7 +76,9 @@ id_jefes_sector_sv = {
 id_jefes_sector_gt = {
     'GT': 12992629
 }
-
+id_jefes_sector_hn = {
+    'HN': 21968289
+}
 
 def manejar_no_existencia_campo(field_id, value, valores_no_existe_campo, metodo):
     valores_no_existe_campo.update({
@@ -707,10 +711,21 @@ class Cotizaciones:
         # Inicializa el diccionario de datos y el diccionario de valores que no existen en Pipedrive
         datos = {}
         valoresNoExisteCampo = {}
+        self.db.connect()
+        match self.pais:
+            case "SV":
+                query = (f" Select SlpName, U_Jefe AS SECTOR from [dbo].[vw_RepresentantesVentas_{self.pais}] Where SlpName = '{valores.get('Vendedor_Asignado')}'")
+                result = self.db.execute_query(query)[0]
+                id_dueño = self.obtener_id_vendedor(result[0], result[1])
+                datos.update(id_dueño)
+            case _:
+                query = (f" Select SlpName from [dbo].[vw_RepresentantesVentas_{self.pais}] Where SlpName = '{valores.get('Vendedor_Asignado')}'")
+                result = self.db.execute_query(query)[0]
+                id_dueño = self.obtener_id_vendedor(result[0], self.pais)
+                datos.update(id_dueño)
 
         # Obtiene todas las opciones para los campos específicos en Pipedrive
         lista = get_all_option_for_fields_in_get_all_organization([4025, 4024, 4023, 4028, 4026])
-
         # Itera sobre cada valor en el diccionario `valores`
         for row in valores:
             valor = valores.get(f'{row}')  # Obtiene el valor asociado a la clave `row`
@@ -776,10 +791,31 @@ class Cotizaciones:
         # Retorna el diccionario `datos` actualizado
         return datos, valoresNoExisteCampo
 
-    def obtener_id_vendedor(self,nombre, seccion=None):
-        # Crear un objeto ConfigParser
+    def obtener_id_vendedor(self, nombre, seccion=None):
+        """
+        Obtiene el ID del vendedor asociado con un nombre y, opcionalmente, una sección específica.
+
+        Parámetros:
+        - nombre (str): El nombre del vendedor cuyo ID se desea obtener.
+        - seccion (str, opcional): La sección en el archivo de configuración donde se buscará el vendedor.
+          Si no se especifica, se considerará que puede buscarse en cualquier sección relevante para el país.
+
+        Retorno:
+        - dict: Un diccionario con la clave 'owner_id' y el valor correspondiente al ID del vendedor.
+        - str: Mensaje de error si la sección especificada no se encuentra en el archivo de configuración.
+
+        Ejemplo de uso:
+        >>> obtener_id_vendedor('Juan Perez', 'RETAIL - AV')
+        {'owner_id': '123456'}
+
+        >>> obtener_id_vendedor('Juan Perez')
+        'La sección 'RETAIL - AV' no se encontró en el archivo.'
+        """
+
+        data = {}
+        # Crear un objeto ConfigParser para leer el archivo de configuración
         config = configparser.ConfigParser()
-        # Leer el archivo Sectores_SV.ini
+        # Leer el archivo de configuración Sectores_SV.ini (dependiendo del país)
         config.read(f'Sectores_{self.pais}.ini')
 
         # Verificar si existe la sección especificada
@@ -787,19 +823,29 @@ class Cotizaciones:
             # Buscar el ID del vendedor en la sección específica
             vendedores = config[seccion]
             if nombre in vendedores:
-                return vendedores[nombre]
+                # Si el nombre del vendedor existe en la sección, se retorna su ID
+                data.update({
+                    'owner_id': vendedores[nombre]
+                })
+                return data
             else:
+                # Si el nombre no se encuentra, se retorna el ID del jefe de sector correspondiente según el país
                 match self.pais:
                     case "SV":
-                        valor = id_jefes_sector_sv.get(f"{seccion}")
-                        print(valor)
+                        data.update({
+                            'owner_id': id_jefes_sector_sv.get(f"{seccion}")
+                        })
+                        return data
                     case "GT":
-                        valor = id_jefes_sector_gt.get(f"{seccion}")
-                        print(valor)
-
-
-                return f"El nombre '{nombre}' no se encontró en la sección '{seccion}'."
+                        data.update({
+                            'owner_id': id_jefes_sector_gt.get(f"{seccion}")
+                        })
+                        return data
+                    case "HN":
+                        data.update({
+                            'owner_id': id_jefes_sector_hn.get(f"{seccion}")
+                        })
+                        return data
         else:
+            # Si la sección especificada no existe, se retorna un mensaje de error
             return f"La sección '{seccion}' no se encontró en el archivo."
-
-

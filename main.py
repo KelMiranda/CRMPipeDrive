@@ -19,12 +19,9 @@ if __name__ == '__main__':
         result_act = ct.cotizaciones_actualizadas()
         save_json(result, f'Cotizaciones_diarias_{row}')'''
 
-
-    ct_sv = Cotizaciones('SV')
-    ct_gt = Cotizaciones('GT')
-    #valores = ct.obtener_datos_vw('C1413250')
-    #print(ct.cliente_con_keys_pipedrive(valores))
-    print(ct_sv.obtener_id_vendedor('JOSE MENA..', 'IGO'))
-    print(ct_gt.obtener_id_vendedor('33 - MYNOR GARCIA.', 'GT'))
-
-
+    print(Cliente('SV').ingresando_cliente('C000091857'))
+    '''ct_sv = Cotizaciones('GT')
+    va = ct_sv.datos_cliente_vw_table_pipedrive('C1065')
+    print(va)
+    valores = ct_sv.obtener_datos_vw('C1581')
+    print(ct_sv.cliente_con_keys_pipedrive(valores))'''
