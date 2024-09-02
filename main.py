@@ -19,9 +19,5 @@ if __name__ == '__main__':
         result_act = ct.cotizaciones_actualizadas()
         save_json(result, f'Cotizaciones_diarias_{row}')'''
 
-    #print(Cliente('GT').ingresando_cliente('C2538'))
-    ct_sv = Cotizaciones('GT')
-    va = ct_sv.datos_de_la_cotizacion(46325, 63083)
-    print(va)
-    #valores = ct_sv.obtener_datos_vw('C1581')
-    #print(ct_sv.cliente_con_keys_pipedrive(valores))
+    ct = IngresoDeCotizaciones('SV')
+    ct.proceso_clientes_dias(7)

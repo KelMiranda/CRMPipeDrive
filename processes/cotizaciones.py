@@ -282,7 +282,6 @@ class Cotizaciones:
             print(query)
             valores = self.db.execute_query(query)[0]
             self.obtener_y_actualizar_datos_pais({'Vendedor_Asignado': valores[0]}, data)
-            print(valores)
             def actualizar_data1(valores, values, docstatus):
                 # Casos especiales donde se necesita un "stage_id"
                 casos_especiales = ["Presupuesto", "Recotización", "Cierre por cambio de cotizacion"]
@@ -360,14 +359,11 @@ class Cotizaciones:
                     }
                 )
             datos_pipe = actualizar_data1(valores, values, valores[4])
-            data.update({
-                "datos_coti": datos_coti,
-                "familias_padres": familias_padres,
-                "datos_pipe": datos_pipe,
-                "dato_cliente": datosClientes,
-            })
+            data.update(datos_coti)
+            data.update(familias_padres)
+            data.update(datos_pipe)
+            return data
 
-            return data, {'id_deal': valores[19]}
         except Exception as e:
             # Maneja cualquier excepción que ocurra durante la conexión a la base de datos o la ejecución de la consulta
             errores.append({'DocNum': DocNum, 'msg_error': str(e)})
@@ -573,7 +569,6 @@ class Cotizaciones:
         try:
                 # Construir la consulta SQL para validar la existencia del cliente en la tabla
                 queryv = f"DECLARE @resultado NVARCHAR(10); EXEC [PipeDrive].[dbo].[sp_ValidadorCliente_{self.pais}] '{codigoCliente}', @resultado OUTPUT; SELECT @resultado AS Resultado;"
-                print(queryv)
                 # Conectar a la base de datos y ejecutar la consulta de validación
                 self.db.connect()
                 validador = self.db.execute_query(queryv)[0][0]

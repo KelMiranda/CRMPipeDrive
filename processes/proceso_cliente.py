@@ -223,25 +223,31 @@ class Cliente:
             return {"error": error_message}
 
     def ingresando_cliente(self, codigo_cliente):
-        self.db.connect()
-        query = f"EXEC [dbo].[SP_VALIDADOR_DE_CLIENTE] '{codigo_cliente}', '{self.pais}'"
-        result = self.db.execute_query(query)[0]
-        id_pipedrive = result[0]
-        validador = result[1]
-        id_registro = result[2]
-
-        if id_pipedrive is None and validador == 'R':
-            return self.insertar_en_pipedrive_y_actualizar(codigo_cliente, id_registro)
-        elif id_pipedrive is None and validador is None and id_registro is None:
-            query = f"EXEC SP_VALIDADOR_CLIENTE_MERGE_{self.pais} '{codigo_cliente}'"
-            self.db.execute_query(query, False)
+        try:
+            self.db.connect()
             query = f"EXEC [dbo].[SP_VALIDADOR_DE_CLIENTE] '{codigo_cliente}', '{self.pais}'"
-            result = self.db.execute_query(query)[0]
+            try:
+                result = self.db.execute_query(query)[0]
+            except Exception as e:
+                error_message = f"Error al ejecutar la consulta para el cliente '{codigo_cliente}': {e}"
+                print(error_message)
+                log_error(error_message)
+                return {"error": "Error al ejecutar la consulta en la base de datos."}
+
             id_pipedrive = result[0]
-            validador = result[1]
             id_registro = result[2]
 
-            if id_pipedrive is None and validador == 'C':
-                return self.insertar_en_pipedrive_y_actualizar(codigo_cliente, id_registro)
+            if id_pipedrive is None:
+                try:
+                    return self.insertar_en_pipedrive_y_actualizar(codigo_cliente, id_registro)
+                except Exception as e:
+                    error_message = f"Error al insertar o actualizar el cliente '{codigo_cliente}': {e}"
+                    log_error(error_message)
+                    return {"error": "Error al insertar o actualizar el cliente en Pipedrive."}
 
-        return {"message": "El cliente ya tiene un ID de Pipedrive o no está en estado de reserva."}
+            return {"message": "El cliente ya tiene un ID de Pipedrive o no está en estado de reserva."}
+
+        except Exception as e:
+            error_message = f"Error general al procesar el cliente '{codigo_cliente}': {e}"
+            log_error(error_message)
+            return {"error": "Error general al procesar el cliente."}

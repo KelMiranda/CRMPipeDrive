@@ -7,6 +7,7 @@ from database.sql_server_connection import SQLServerDatabase
 from processes.cotizaciones import Cotizaciones
 import time
 import json
+from processes.proceso_cliente import log_error
 
 
 class IngresoDeCotizaciones:
@@ -108,7 +109,7 @@ class IngresoDeCotizaciones:
         }
         return output
 
-    def cotizacionesDiarias(self):
+    def cotizaciones_este_dia(self, days):
         """
         Esta función trae todas las cotizaciones del día y verifica si el cliente y la cotización existen en la base de datos.
         Crea un DataFrame con la información de las cotizaciones y añade dos columnas adicionales:
@@ -119,13 +120,13 @@ class IngresoDeCotizaciones:
         try:
             # Verifica si la conexión ya está abierta
             already_connected = self.db.is_connected()
-
             if not already_connected:
                 self.db.connect()
 
             today = dt.date.today()
-            one_day = dt.timedelta(days=1)
-            result = self.ct.cotizaciones_del_dia(f'{today}')[0]
+            one_day = dt.timedelta(days=days)
+            yesterday = today-one_day
+            result = self.ct.cotizaciones_del_dia(f'{yesterday}')[0]
 
             # Convertir la lista plana en una lista de tuplas
             result_list = [list(tup) for tup in result]
@@ -187,3 +188,39 @@ class IngresoDeCotizaciones:
             # Desconectar solo si la conexión no estaba ya abierta antes
             if not already_connected:
                 self.db.disconnect()
+
+    def proceso_clientes_dias(self, days):
+        try:
+            dt = self.cotizaciones_este_dia(days)
+
+            if dt is not None:
+                # Filtrar las filas donde C_M es True o C_E es False
+                dt_filtered = dt[(dt['C_M'] == True) | (dt['C_E'] == False)]
+                try:
+                    self.db.connect()
+                    for index, row in dt_filtered.iterrows():
+                        query = f"exec [dbo].[SP_VALIDADOR_CLIENTE_MERGE_SV] '{row['CardCode']}'"
+                        try:
+                            self.db.execute_query(query, False)
+                        except Exception as e:
+                            error_message = f"Error al ejecutar la consulta para CardCode '{row['CardCode']}': {e}"
+                            log_error(error_message)
+                        try:
+                            self.cliente.ingresando_cliente(row['CardCode'])
+                        except Exception as e:
+                            error_message = f"Error al ejecutar la funcion ingresando cliente para CardCode '{row['CardCode']}': {e}"
+                            log_error(error_message)
+                except Exception as e:
+                    error_message = f"Error al conectar a la base de datos: {e}"
+                    log_error(error_message)
+                finally:
+                    self.db.disconnect()
+
+                # Mostrar el DataFrame filtrado
+                print(dt_filtered)
+            else:
+                error_message = "No se pudo obtener las cotizaciones para el día especificado."
+                log_error(error_message)
+        except Exception as e:
+            error_message = f"Error en el proceso de cotizaciones del día: {e}"
+            log_error(error_message)
