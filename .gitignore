@@ -4,6 +4,7 @@ __pycache__/
 .env
 /2023/
 config.ini
+errores.log
 /processes/gesto_de_contraseña.py
 /2024/
 

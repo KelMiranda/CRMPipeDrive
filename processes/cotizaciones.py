@@ -8,6 +8,7 @@ from processes.organizations import get_all_option_for_fields_in_get_all_organiz
 from processes.deals import dictionary_invert
 import configparser
 import os as cd
+import datetime
 
 
 familias_padres = {
@@ -80,16 +81,27 @@ id_jefes_sector_hn = {
     'HN': 21968289
 }
 
-def manejar_no_existencia_campo(field_id, value, valores_no_existe_campo, metodo):
-    valores_no_existe_campo.update({
-        'Para el campo': field_id,
-        'No existe el valor': value,
-        'ruta del archivo': cd.path.abspath(__file__),
-        'metodo': metodo
-    })
+
+def manejar_no_existencia_campo(field_id, value, metodo):
+    error_message = (
+        f"Para el campo '{field_id}', no existe el valor '{value}'. "
+        f"Ruta del archivo: {os.path.abspath(__file__)}, "
+        f"Método: {metodo}"
+    )
+
+    # Aquí se registra el error en el archivo de log
+    log_error_campos(error_message)
+
+    # También puedes retornar el mensaje de error si necesitas manejarlo en otro lugar
+    return {"error": error_message}
 def notificar_errores(errores):
     # Aquí puedes implementar la lógica para enviar notificaciones con la lista de errores
     print("Enviando notificación de errores:", errores)
+
+def log_error_campos(mensaje):
+    with open("errores_de_selection.log", "a") as file:
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        file.write(f"{timestamp} - {mensaje}\n")
 
 class Cotizaciones:
     def __init__(self, pais):
@@ -269,6 +281,7 @@ class Cotizaciones:
             query = f"EXEC [dbo].[SP_COTIZACIONES_{self.pais}_PYTHON]  {DocNum}, {DocEntry}"
             print(query)
             valores = self.db.execute_query(query)[0]
+            self.obtener_y_actualizar_datos_pais({'Vendedor_Asignado': valores[0]}, data)
             print(valores)
             def actualizar_data1(valores, values, docstatus):
                 # Casos especiales donde se necesita un "stage_id"
@@ -339,7 +352,6 @@ class Cotizaciones:
                 f"{datos_cotizacion.get('CardName')}": valores[18]
             }
             familias_padres = self.familia_padre_de_la_cotizacion(DocNum, DocEntry)
-
             if valores[4] == 'Closed':
                 datos_coti.update(
                     {
@@ -347,7 +359,6 @@ class Cotizaciones:
                         f"{datos_cotizacion.get('Descripcion_Pos')}": values.get('12531').get(f'{valores[8]}'),
                     }
                 )
-
             datos_pipe = actualizar_data1(valores, values, valores[4])
             data.update({
                 "datos_coti": datos_coti,
@@ -697,6 +708,28 @@ class Cotizaciones:
         query = f"Select CardCode from DatosClientes Where Pais = '{self.pais}' AND Validador = '{cardcode}'"
         self.db.execute_query(query)
 
+    def obtener_y_actualizar_datos_pais(self, valores, datos):
+        """
+        Función que obtiene y actualiza los datos basados en el país del vendedor asignado.
+
+        Args:
+            valores (dict): Diccionario con valores relevantes como el 'Vendedor_Asignado'.
+            datos (dict): Diccionario que será actualizado con los datos obtenidos.
+        """
+        match self.pais:
+            case "SV":
+                query = (f"SELECT SlpName, U_Jefe AS SECTOR FROM [dbo].[vw_RepresentantesVentas_{self.pais}] "
+                         f"WHERE SlpName = '{valores.get('Vendedor_Asignado')}'")
+                result = self.db.execute_query(query)[0]
+                id_dueño = self.obtener_id_vendedor(result[0], result[1])
+                datos.update(id_dueño)
+            case _:
+                query = (f"SELECT SlpName FROM [dbo].[vw_RepresentantesVentas_{self.pais}] "
+                         f"WHERE SlpName = '{valores.get('Vendedor_Asignado')}'")
+                result = self.db.execute_query(query)[0]
+                id_dueño = self.obtener_id_vendedor(result[0], self.pais)
+                datos.update(id_dueño)
+
     def cliente_con_keys_pipedrive(self, valores):
         """
         Esta función procesa los valores de un cliente y mapea las claves correspondientes a los campos de Pipedrive.
@@ -712,17 +745,7 @@ class Cotizaciones:
         datos = {}
         valoresNoExisteCampo = {}
         self.db.connect()
-        match self.pais:
-            case "SV":
-                query = (f" Select SlpName, U_Jefe AS SECTOR from [dbo].[vw_RepresentantesVentas_{self.pais}] Where SlpName = '{valores.get('Vendedor_Asignado')}'")
-                result = self.db.execute_query(query)[0]
-                id_dueño = self.obtener_id_vendedor(result[0], result[1])
-                datos.update(id_dueño)
-            case _:
-                query = (f" Select SlpName from [dbo].[vw_RepresentantesVentas_{self.pais}] Where SlpName = '{valores.get('Vendedor_Asignado')}'")
-                result = self.db.execute_query(query)[0]
-                id_dueño = self.obtener_id_vendedor(result[0], self.pais)
-                datos.update(id_dueño)
+        self.obtener_y_actualizar_datos_pais(valores, datos)
 
         # Obtiene todas las opciones para los campos específicos en Pipedrive
         lista = get_all_option_for_fields_in_get_all_organization([4025, 4024, 4023, 4028, 4026])
@@ -733,7 +756,6 @@ class Cotizaciones:
             datos.update({
                 'label': 1
             })
-
             # Utiliza `match-case` para identificar el campo correspondiente
             match row:
                 case "Sector":
@@ -745,6 +767,7 @@ class Cotizaciones:
                             f'{keys}': id_selecto_pipedrive 
                         })
 
+
                 case "Departamento":
                     id_selecto_pipedrive  = lista.get('4024').get(
                         f'{valor}')  # Obtiene el ID del departamento en Pipedrive
@@ -755,6 +778,7 @@ class Cotizaciones:
                             f'{keys}': id_selecto_pipedrive 
                         })
 
+
                 case "Municipio":
                     id_selecto_pipedrive  = lista.get('4025').get(f'{valor}')  # Obtiene el ID del municipio en Pipedrive
                     if id_selecto_pipedrive  is None:  # Si el valor no existe en Pipedrive
@@ -764,15 +788,18 @@ class Cotizaciones:
                             f'{keys}': id_selecto_pipedrive 
                         })
 
-                case "Vendedor asignado":
+
+                case "Vendedor_Asignado":
                     id_selecto_pipedrive  = lista.get('4028').get(
-                        f'{valor}')  # Obtiene el ID del vendedor asignado en Pipedrive
+                        f'{valor}')
+                    # Obtiene el ID del vendedor asignado en Pipedrive
                     if id_selecto_pipedrive  is None:  # Si el valor no existe en Pipedrive
                         manejar_no_existencia_campo('4028', valor, valoresNoExisteCampo, 'cliente_con_keys_pipedrive')
                     else:  # Si el valor existe, actualiza el diccionario `datos`
                         datos.update({
                             f'{keys}': id_selecto_pipedrive 
                         })
+
 
                 case "Pais":
                     id_selecto_pipedrive  = lista.get('4026').get(f'{valor}')  # Obtiene el ID del país en Pipedrive
@@ -783,13 +810,14 @@ class Cotizaciones:
                             f'{keys}': id_selecto_pipedrive 
                         })
 
+
                 case _:  # Caso por defecto para cualquier otro campo
                     datos.update({
                         f'{keys}': f'{valor}'  # Actualiza el diccionario `datos` con el valor tal cual
                     })
 
         # Retorna el diccionario `datos` actualizado
-        return datos, valoresNoExisteCampo
+        return datos
 
     def obtener_id_vendedor(self, nombre, seccion=None):
         """
@@ -797,19 +825,13 @@ class Cotizaciones:
 
         Parámetros:
         - nombre (str): El nombre del vendedor cuyo ID se desea obtener.
-        - seccion (str, opcional): La sección en el archivo de configuración donde se buscará el vendedor.
+        - section (str, opcional): La sección en el archivo de configuración donde se buscará el vendedor.
           Si no se especifica, se considerará que puede buscarse en cualquier sección relevante para el país.
 
         Retorno:
         - dict: Un diccionario con la clave 'owner_id' y el valor correspondiente al ID del vendedor.
         - str: Mensaje de error si la sección especificada no se encuentra en el archivo de configuración.
 
-        Ejemplo de uso:
-        >>> obtener_id_vendedor('Juan Perez', 'RETAIL - AV')
-        {'owner_id': '123456'}
-
-        >>> obtener_id_vendedor('Juan Perez')
-        'La sección 'RETAIL - AV' no se encontró en el archivo.'
         """
 
         data = {}
