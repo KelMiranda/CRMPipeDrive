@@ -52,37 +52,6 @@ class IngresoDeCotizaciones:
             print(f"Error al ejecutar comparar_registros_clientes: {e}")
             return None
 
-    def cotizaciones_diarias(self, days):
-        errores = []
-        result = []
-        today = dt.date.today()
-        one_day = dt.timedelta(days=days)
-        yesterday = today-one_day
-        ct = Cotizaciones(f'{self.pais}')
-        self.db.connect()
-        for row in ct.cotizaciones_del_dia(f"{yesterday}")[0]:
-            time.sleep(5)
-            print(row)
-            query = f"EXEC [dbo].[SP_VALIDADOR_PROYECTO_MERGE_{self.pais}]'{row[3]}', {row[1]}, '{row[0]}', '{row[2]}'"
-            try:
-                #print(query)
-                #print(self.cliente.ingresar_o_actualizar_cliente_pipedrive(f'{row[2]}'))
-                self.db.execute_query(query, False)
-                result.append({'DocNum': row[1], 'Codigo Del Cliente': f"{row[2]}"})
-
-            except Exception as e:
-                errores.append({'DocNum': row[1], 'Codigo Del Cliente': f"{row[2]}", 'msg_error': str(e)})
-            finally:
-                print(
-                    f"##########################Terminando el analisis#####################################################")
-
-        self.db.disconnect()
-        output = {
-            'resultados': result,
-            'errores': errores,
-        }
-        return output
-
     def cotizaciones_actualizadas(self):
         errores = []
         result = []
@@ -191,15 +160,16 @@ class IngresoDeCotizaciones:
 
     def proceso_clientes_dias(self, days):
         try:
+            count = 0
             dt = self.cotizaciones_este_dia(days)
-
             if dt is not None:
                 # Filtrar las filas donde C_M es True o C_E es False
                 dt_filtered = dt[(dt['C_M'] == True) | (dt['C_E'] == False)]
                 try:
                     self.db.connect()
                     for index, row in dt_filtered.iterrows():
-                        query = f"exec [dbo].[SP_VALIDADOR_CLIENTE_MERGE_SV] '{row['CardCode']}'"
+                        count = count + 1
+                        query = f"exec [dbo].[SP_VALIDADOR_CLIENTE_MERGE_{self.pais}] '{row['CardCode']}'"
                         try:
                             self.db.execute_query(query, False)
                         except Exception as e:
@@ -224,3 +194,114 @@ class IngresoDeCotizaciones:
         except Exception as e:
             error_message = f"Error en el proceso de cotizaciones del día: {e}"
             log_error(error_message)
+
+    def proceso_cotizaciones_dia(self, days):
+        count = 0
+        try:
+            dt = self.cotizaciones_este_dia(days)
+            if dt is not None:
+                dt_filtered = dt[(dt['CT_E'] == False)]
+                try:
+                    self.db.connect()
+                    for index, row in dt_filtered.iterrows():
+                        time.sleep(3)
+                        count = count + 1
+                        query = f"[dbo].[SP_VALIDADOR_PROYECTO_MERGE_{self.pais}] '{row['ORD']}', '{row['DocNum']}', '{row['Serie']}', '{row['CardCode']}'"
+                        try:
+                            self.db.execute_query(query, False)
+                        except Exception as e:
+                            error_message = f"Error al ejecutar la consulta para CardCode '{row['CardCode']}': {e}"
+                            log_error(error_message)
+                        try:
+                            print(f"-------------------------------Cotizacion #{count}--------------------------------")
+                            #self.cliente.ingresando_cliente(row['CardCode'])
+                        except Exception as e:
+                            error_message = f"Error al ejecutar la funcion ingresando cliente para CardCode '{row['CardCode']}': {e}"
+                            log_error(error_message)
+                except Exception as e:
+                    error_message = f"Error al conectar a la base de datos: {e}"
+                    log_error(error_message)
+                finally:
+                    self.db.disconnect()
+
+                # Mostrar el DataFrame filtrado
+                print(dt_filtered)
+            else:
+                error_message = "No se pudo obtener las cotizaciones para el día especificado."
+                log_error(error_message)
+        except Exception as e:
+            error_message = f"Error en el proceso de cotizaciones del día: {e}"
+            log_error(error_message)
+
+    def proceso_cotizacion_validador(self):
+        try:
+            self.db.connect()
+
+            # Realizamos una sola consulta para ambos validadores 'C' y 'U'
+            query = f"""
+                Select DocNum, DocEntry, id_proyecto, Validador, id_deal 
+                from DatosProyectos_PipeDrive 
+                Where Validador IN ('C', 'U') 
+                AND Pais = '{self.pais}'"""
+
+            result = self.db.execute_query(query)
+
+            # Convertimos los resultados en una lista de listas
+            result_list = [list(tup) for tup in result]
+
+            # Definimos las columnas, incluyendo la nueva columna 'Validador'
+            columnas = ['DocNum', 'DocEntry', 'id_proyecto', 'Validador', 'id_deal']
+
+            # Creamos el DataFrame con los resultados
+            dataFrame = pd.DataFrame(result_list, columns=columnas)
+
+            # Mostramos el DataFrame
+            return dataFrame
+
+        except Exception as e:
+            # Si ocurre un error, lo registramos en el archivo error.log
+            log_error(f"Error en proceso_cotizacion_validador: {str(e)}")
+
+    def proceso_cotizaciones_pipedrive(self):
+        try:
+            dt = self.proceso_cotizacion_validador()
+            if dt is not None:
+                dt_filtered = dt[(dt['Validador'] == 'C')]
+                try:
+                    self.db.connect()
+                    for index, row in dt_filtered.iterrows():
+                        time.sleep(3)
+                        count = count + 1
+                        datos = self.ct.datos_de_la_cotizacion()
+                        try:
+                            print(datos)
+                        except Exception as e:
+                            error_message = f"Error al ejecutar la consulta para CardCode '{row['CardCode']}': {e}"
+                            log_error(error_message)
+                        try:
+                            print(f"-------------------------------Cotizacion #{count}--------------------------------")
+                            # self.cliente.ingresando_cliente(row['CardCode'])
+                        except Exception as e:
+                            error_message = f"Error al ejecutar la funcion ingresando cliente para CardCode '{row['CardCode']}': {e}"
+                            log_error(error_message)
+                except Exception as e:
+                    error_message = f"Error al conectar a la base de datos: {e}"
+                    log_error(error_message)
+                finally:
+                    self.db.disconnect()
+
+                # Mostrar el DataFrame filtrado
+                print(dt_filtered)
+            else:
+                error_message = "No se pudo obtener las cotizaciones para el día especificado."
+                log_error(error_message)
+        except Exception as e:
+            error_message = f"Error en el proceso de cotizaciones del día: {e}"
+            log_error(error_message)
+
+
+
+
+
+
+

@@ -1,5 +1,4 @@
 from stringprep import in_table_d1
-
 from database.sql_server_connection import SQLServerDatabase
 from time import sleep, time
 from processes.deals import get_all_option_for_fields_in_deals
@@ -9,6 +8,7 @@ from processes.deals import dictionary_invert
 import configparser
 import os as cd
 import datetime
+
 
 
 familias_padres = {
@@ -85,7 +85,7 @@ id_jefes_sector_hn = {
 def manejar_no_existencia_campo(field_id, value, metodo):
     error_message = (
         f"Para el campo '{field_id}', no existe el valor '{value}'. "
-        f"Ruta del archivo: {os.path.abspath(__file__)}, "
+        f"Ruta del archivo: {cd.path.abspath(__file__)}, "
         f"Método: {metodo}"
     )
 
@@ -285,45 +285,45 @@ class Cotizaciones:
             def actualizar_data1(valores, values, docstatus):
                 # Casos especiales donde se necesita un "stage_id"
                 casos_especiales = ["Presupuesto", "Recotización", "Cierre por cambio de cotizacion"]
-                if docstatus == 'Closed':
                 # Configura "data1" según el motivo de pérdida
-                    if valores[8] in casos_especiales:
+                if valores[8] in casos_especiales:
+                    data1 = {
+                        "status": "lost",
+                        "lost_reason": values.get('12531').get(valores[8]),
+                        "stage_id": 21
+                    }
+                elif valores[8] == "Venta":
+                    validador = self.consulta_factura(DocNum, DocEntry)
+                    if validador == 'Sin Factura':
                         data1 = {
                             "status": "lost",
-                            "lost_reason": values.get('12531').get(valores[8]),
-                            "stage_id": 21
+                            "lost_reason": "Cotización mal cerrada en pos"
                         }
-                    elif valores[8] == "Venta":
-                        validador = self.consulta_factura(DocNum, DocEntry)
-                        if validador == 'Sin Factura':
-                            data1 = {
-                                "status": "lost",
-                                "lost_reason": "Cotización mal cerrada en pos"
-                            }
-                        else:
-                            data1 = {
-                                "status": "won"
-                            }
-                            data1.update(validador)
-                    elif valores[8] == "Venta Parcial":
-                        validador = self.consulta_factura(DocNum, DocEntry)
-                        if validador == 'Sin Factura':
-                            data1 = {
-                                "status": "lost",
-                                "lost_reason": "Cotización mal cerrada en pos"
-                            }
-                        else:
-                            data1 = {
-                                "status": "won"
-                            }
-                            data1.update(validador)
                     else:
-                        # Configuración general para los casos de pérdida
+                        data1 = {
+                            "status": "won"
+                        }
+                        data1.update(validador)
+                elif valores[8] == "Venta Parcial":
+                    validador = self.consulta_factura(DocNum, DocEntry)
+                    if validador == 'Sin Factura':
                         data1 = {
                             "status": "lost",
-                            "lost_reason": values.get('12531').get(valores[8])
+                            "lost_reason": "Cotización mal cerrada en pos"
                         }
-                    return data1
+                    else:
+                        data1 = {
+                            "status": "won"
+                        }
+                        data1.update(validador)
+                else:
+                    # Configuración general para los casos de pérdida
+                    data1 = {
+                        "status": "lost",
+                        "lost_reason": values.get('12531').get(valores[8])
+                    }
+                return data1
+
             cliente = self.datos_cliente_vw_table_pipedrive(valores[18])
             datosClientes = {
                 "Status": cliente.get('Status'),
@@ -358,10 +358,12 @@ class Cotizaciones:
                         f"{datos_cotizacion.get('Descripcion_Pos')}": values.get('12531').get(f'{valores[8]}'),
                     }
                 )
-            datos_pipe = actualizar_data1(valores, values, valores[4])
+
+            if valores[4] == 'Closed':
+                datos_pipe = actualizar_data1(valores, values, valores[4])
+                data.update(datos_pipe)
             data.update(datos_coti)
             data.update(familias_padres)
-            data.update(datos_pipe)
             return data
 
         except Exception as e:

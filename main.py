@@ -12,12 +12,23 @@ import pandas as pd
 
 if __name__ == '__main__':
 
-    '''pais = ['SV', 'GT']
-    for row in pais:
+    pais = ['SV', 'GT', 'HN']
+    '''for row in pais:
         ct = IngresoDeCotizaciones(f'{row}')
         result = ct.cotizaciones_diarias(3)
         result_act = ct.cotizaciones_actualizadas()
         save_json(result, f'Cotizaciones_diarias_{row}')'''
 
+    ct = Cotizaciones('HN')
+    cotizacion = ct.datos_de_la_cotizacion(5939,8950)
+    print(cotizacion)
+    '''for row in pais:
+        ct = IngresoDeCotizaciones(f'{row}')
+        print(ct.proceso_clientes_dias(1))
+        print(ct.proceso_cotizaciones_dia(1))'''
+
+    '''cliente = Cliente('SV')
+    cliente.ingresando_cliente('C057239870')'''
+
     ct = IngresoDeCotizaciones('SV')
-    ct.proceso_clientes_dias(7)
+    print(ct.proceso_cotizacion_validador())

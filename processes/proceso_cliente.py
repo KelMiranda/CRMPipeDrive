@@ -228,6 +228,7 @@ class Cliente:
             query = f"EXEC [dbo].[SP_VALIDADOR_DE_CLIENTE] '{codigo_cliente}', '{self.pais}'"
             try:
                 result = self.db.execute_query(query)[0]
+                print(result)
             except Exception as e:
                 error_message = f"Error al ejecutar la consulta para el cliente '{codigo_cliente}': {e}"
                 print(error_message)
