@@ -8,6 +8,7 @@ from processes.cotizaciones import Cotizaciones
 import time
 import json
 from processes.proceso_cliente import log_error
+from pipedrive.pipedrive_api_conecction import PipedriveAPI
 
 
 class IngresoDeCotizaciones:
@@ -16,6 +17,7 @@ class IngresoDeCotizaciones:
         self.db = SQLServerDatabase('SERVER', 'DATABASE', 'USERNAME_', 'PASSWORD')
         self.ct = Cotizaciones(f'{self.pais}')
         self.cliente = Cliente(f'{self.pais}')
+        self.pipe = PipedriveAPI('Token')
 
     def comparar_registros_clientes(self, card_code):
         """
@@ -239,10 +241,11 @@ class IngresoDeCotizaciones:
 
             # Realizamos una sola consulta para ambos validadores 'C' y 'U'
             query = f"""
-                Select DocNum, DocEntry, id_proyecto, Validador, id_deal 
+                Select  DocNum, DocEntry, id_proyecto, Validador, id_deal 
                 from DatosProyectos_PipeDrive 
-                Where Validador IN ('C', 'U') 
+                Where Validador IN ('U') 
                 AND Pais = '{self.pais}'"""
+            print(query)
 
             result = self.db.execute_query(query)
 
@@ -262,42 +265,113 @@ class IngresoDeCotizaciones:
             # Si ocurre un error, lo registramos en el archivo error.log
             log_error(f"Error en proceso_cotizacion_validador: {str(e)}")
 
+    def actualizar_tablas(self, id_pipedrive, id_registro, estado, validado):
+        if validado == 'C':
+            query = f"UPDATE [CRM].[dbo].[DatosProyectos_PipeDrive] SET id_deal = {id_pipedrive}, Validador = 'XP' WHERE id_proyecto = {id_registro}" if estado is None else f"UPDATE [CRM].[dbo].[DatosProyectos_PipeDrive] SET id_deal = {id_pipedrive}, Validador = 'XS' WHERE id_proyecto = {id_registro}"
+            print(query)
+            self.db.execute_query(query, False)
+            return f"-----------------idPipeDrive ingresado como {'XP' if estado is None else 'XS'}-------------------"
+
+        elif validado == 'U' and (estado == 'won' or estado == 'lost'):
+            query = f"UPDATE [CRM].[dbo].[DatosProyectos_PipeDrive] SET Validador = 'XS' WHERE id_proyecto = {id_registro}"
+            self.db.execute_query(query, False)
+            return "-----------------Validador ingresado como XS-------------------"
+
     def proceso_cotizaciones_pipedrive(self):
         try:
             dt = self.proceso_cotizacion_validador()
-            if dt is not None:
-                dt_filtered = dt[(dt['Validador'] == 'C')]
-                try:
-                    self.db.connect()
-                    for index, row in dt_filtered.iterrows():
-                        time.sleep(3)
-                        count = count + 1
-                        datos = self.ct.datos_de_la_cotizacion()
-                        try:
-                            print(datos)
-                        except Exception as e:
-                            error_message = f"Error al ejecutar la consulta para CardCode '{row['CardCode']}': {e}"
-                            log_error(error_message)
-                        try:
-                            print(f"-------------------------------Cotizacion #{count}--------------------------------")
-                            # self.cliente.ingresando_cliente(row['CardCode'])
-                        except Exception as e:
-                            error_message = f"Error al ejecutar la funcion ingresando cliente para CardCode '{row['CardCode']}': {e}"
-                            log_error(error_message)
-                except Exception as e:
-                    error_message = f"Error al conectar a la base de datos: {e}"
-                    log_error(error_message)
-                finally:
-                    self.db.disconnect()
-
-                # Mostrar el DataFrame filtrado
-                print(dt_filtered)
-            else:
+            if dt is None:
                 error_message = "No se pudo obtener las cotizaciones para el día especificado."
                 log_error(error_message)
+                return
+
+            self.db.connect()  # Abrimos la conexión una vez para ambos casos
+
+            # Procesar cotizaciones con Validador 'C'
+            dt_filtered_c = dt[(dt['Validador'] == 'C')]
+            if not dt_filtered_c.empty:
+                total_registros_c = len(dt_filtered_c)
+                print(f"Total de cotizaciones a procesar para 'C': {total_registros_c}")
+
+                for index, row in dt_filtered_c.iterrows():
+                    time.sleep(3)
+                    datos = self.ct.datos_de_la_cotizacion(row['DocNum'], row['DocEntry'])
+                    try:
+                        print(f"Datos de la cotización: {datos}")
+                        datos.update(
+                            {
+                                'pipeline_id': 2,
+                                'stage_id': 6
+                            }
+                        )
+                        if 'owner_id' in datos:
+                            datos['user_id'] = datos.pop('owner_id')
+                        print(datos)
+                        # Insertar el deal en Pipedrive
+                        deal_id = self.pipe.post_deals(datos)
+                        if deal_id is None:
+                            error_message = "No se pudo insertar el deal en Pipedrive."
+                            log_error(error_message)
+                            return {"error": error_message}
+
+                        # Actualizar la tabla si el deal fue insertado
+                        print(
+                            self.actualizar_tablas(deal_id, row['id_proyecto'], datos.get('status'), row['Validador']))
+
+                    except Exception as e:
+                        error_message = f"Error en el proceso de inserción de deal y actualización de tablas: {e}"
+                        log_error(error_message)
+                        return {"error": error_message}
+
+                    print(f"----------------------Cotización #{index + 1}/{total_registros_c}-----------------------")
+
+            # Procesar cotizaciones con Validador 'U'
+            dt_filtered_u = dt[(dt['Validador'] == 'U')]
+            if not dt_filtered_u.empty:
+                total_registros_u = len(dt_filtered_u)
+                print(f"Total de cotizaciones a procesar para 'U': {total_registros_u}")
+
+                for index, row in dt_filtered_u.iterrows():
+                    time.sleep(3)
+                    datos = self.ct.datos_de_la_cotizacion(row['DocNum'], row['DocEntry'])
+                    try:
+                        print(f"Datos de la cotización: {datos}")
+                        datos.update(
+                            {
+                                'pipeline_id': 2,
+                                'stage_id': 6
+                            }
+                        )
+                        if 'owner_id' in datos:
+                            datos['user_id'] = datos.pop('owner_id')
+
+                        # Actualizar el deal en Pipedrive
+                        updated_deal_id = self.pipe.put_deals(row['id_deal'], datos)
+                        if updated_deal_id is None:
+                            error_message = f"No se pudo actualizar el deal con ID {row['id_deal']} en Pipedrive."
+                            log_error(error_message)
+                            return {"error": error_message}
+
+                        # Actualizar las tablas si la actualización fue exitosa
+                        print(self.actualizar_tablas(updated_deal_id, row['id_proyecto'], datos.get('status'),
+                                                     row['Validador']))
+
+                    except Exception as e:
+                        error_message = f"Error al intentar actualizar el deal y las tablas para ID {row['id_deal']}: {e}"
+                        log_error(error_message)
+                        return {"error": error_message}
+
+                    print(f"----------------------Cotización #{index + 1}/{total_registros_u}-----------------------")
+
         except Exception as e:
             error_message = f"Error en el proceso de cotizaciones del día: {e}"
             log_error(error_message)
+        finally:
+            self.db.disconnect()  # Cerramos la conexión una vez después de ambos casos
+
+
+
+
 
 
 

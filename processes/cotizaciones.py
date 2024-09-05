@@ -644,7 +644,7 @@ class Cotizaciones:
 
         # Consulta para obtener información de la factura
         query = (f"SELECT DocNum, Serie, ORD, DetailSum, id_deal, CancelComments, CancelReason, CDESCRIPCION, SlpName "
-                 f"FROM DatosProyectos_PipeDrive WHERE DocNum = {docnum} AND DocEntry = {docentry}")
+                 f"FROM DatosProyectos_PipeDrive WHERE DocNum = {docnum} AND DocEntry = {docentry} AND Pais = '{self.pais}'")
         row = self.db.execute_query(query)[0]
 
         # Construir el número de orden y el tipo de referencia
@@ -652,7 +652,7 @@ class Cotizaciones:
         ref_type = row[2]
 
         # Ejecutar el procedimiento almacenado para consultar la factura
-        query1 = f"EXEC sp_consulta_factura {order_number}, {ref_type}"
+        query1 = f"EXEC sp_consulta_factura_{self.pais} {order_number}, {ref_type}"
         resultado = self.db.execute_query(query1)[0][0]
         if resultado == 'Sin Factura':
             return resultado
@@ -666,9 +666,9 @@ class Cotizaciones:
             porcentaje = round(valor_facturado * 100 / valor_cotizacion, 2)
             # Crear y devolver el resultado solo si los valores coinciden
             if valor_facturado == valor_cotizacion:
-                return {"currency": currency, "value": valor_facturado, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32': porcentaje, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32_currency':currency}
+                return {"currency": currency, "value": valor_facturado, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32': porcentaje}
             else:
-                return {"currency": currency, "value": valor_facturado, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32': porcentaje, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32_currency':currency}
+                return {"currency": currency, "value": valor_facturado, 'e98fda1c30bf99bce1876a34e6caa56c540a4e32': porcentaje}
 
     def validador_vendedor_asignado(self, SlpCode):
         try:

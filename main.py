@@ -19,10 +19,10 @@ if __name__ == '__main__':
         result_act = ct.cotizaciones_actualizadas()
         save_json(result, f'Cotizaciones_diarias_{row}')'''
 
-    ct = Cotizaciones('HN')
+    '''ct = Cotizaciones('HN')
     cotizacion = ct.datos_de_la_cotizacion(5939,8950)
     print(cotizacion)
-    '''for row in pais:
+    for row in pais:
         ct = IngresoDeCotizaciones(f'{row}')
         print(ct.proceso_clientes_dias(1))
         print(ct.proceso_cotizaciones_dia(1))'''
@@ -31,4 +31,4 @@ if __name__ == '__main__':
     cliente.ingresando_cliente('C057239870')'''
 
     ct = IngresoDeCotizaciones('SV')
-    print(ct.proceso_cotizacion_validador())
+    print(ct.proceso_cotizaciones_pipedrive())
