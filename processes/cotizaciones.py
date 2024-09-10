@@ -80,7 +80,7 @@ id_jefes_sector_gt = {
 id_jefes_sector_hn = {
     'HN': 21968289
 }
-
+currency_mapping = {'SV': 'USD', 'GT': 'GTQ', 'HN': 'HNL'}
 
 def manejar_no_existencia_campo(field_id, value, metodo):
     error_message = (
@@ -120,7 +120,7 @@ class Cotizaciones:
 
         except Exception as e:
             error_message = f"Error al ejecutar la consulta dicho error es: {str(e)}"
-            errores.append(error_message)
+            log_error_campos(error_message)
 
         finally:
             self.db.disconnect()
@@ -282,7 +282,7 @@ class Cotizaciones:
             print(query)
             valores = self.db.execute_query(query)[0]
             self.obtener_y_actualizar_datos_pais({'Vendedor_Asignado': valores[0]}, data)
-            def actualizar_data1(valores, values, docstatus):
+            def actualizar_data1(valores, values):
                 # Casos especiales donde se necesita un "stage_id"
                 casos_especiales = ["Presupuesto", "Recotización", "Cierre por cambio de cotizacion"]
                 # Configura "data1" según el motivo de pérdida
@@ -350,18 +350,19 @@ class Cotizaciones:
                 f"{datos_cotizacion.get('obtener_tipo_cotizacion')}": values.get('12546').get(f'{valores[17]}'),
                 f"{datos_cotizacion.get('CardName')}": valores[18]
             }
+            currency = currency_mapping.get(self.pais, 'USD')
+            datos_coti.update({"currency": currency})
             familias_padres = self.familia_padre_de_la_cotizacion(DocNum, DocEntry)
-            if valores[4] == 'Closed':
+            if valores[4] == 'Closed' or valores[4] == 'Process':
                 datos_coti.update(
                     {
                         f"{datos_cotizacion.get('Comentario_POS')}": valores[7],
                         f"{datos_cotizacion.get('Descripcion_Pos')}": values.get('12531').get(f'{valores[8]}'),
                     }
                 )
+                dato_cierre = actualizar_data1(valores, values)
+                data.update(dato_cierre)
 
-            if valores[4] == 'Closed':
-                datos_pipe = actualizar_data1(valores, values, valores[4])
-                data.update(datos_pipe)
             data.update(datos_coti)
             data.update(familias_padres)
             return data
@@ -661,7 +662,6 @@ class Cotizaciones:
             valor_cotizacion = float(row[3])
 
             # Establecer la moneda según el país, asumiendo USD por defecto
-            currency_mapping = {'SV': 'USD', 'GT': 'GTQ', 'HN': 'HNL'}
             currency = currency_mapping.get(self.pais, 'USD')
             porcentaje = round(valor_facturado * 100 / valor_cotizacion, 2)
             # Crear y devolver el resultado solo si los valores coinciden

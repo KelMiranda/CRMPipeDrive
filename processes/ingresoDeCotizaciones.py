@@ -63,12 +63,18 @@ class IngresoDeCotizaciones:
             time.sleep(5)
             try:
                 ultima_version = self.ct.ultima_version(row[3], row[2], row[6])[0]
-                query = f"EXEC [dbo].[SP_VALIDADOR_PROYECTO_MERGE_{self.pais}] '{ultima_version[0][0]}', {ultima_version[0][1]}, '{ultima_version[0][2]}', '{ultima_version[0][3]}'"
+                ORD = ultima_version[0][0]
+                DocNum = ultima_version[0][1]
+                Serie = ultima_version[0][2]
+                CardCode = ultima_version[0][3]
+                query = f"EXEC [dbo].[SP_VALIDADOR_PROYECTO_MERGE_{self.pais}] '{ORD}', {DocNum}, '{Serie}', '{CardCode}'"
                 self.db.execute_query(query, False)
                 result.append(
                     {'DocNum': row[3], 'Codigo Del Cliente': f"{row[6]}", 'msg': 'Se ha actualizado el documento'})
+
             except Exception as e:
                 errores.append({'DocNum': row[3], 'Codigo Del Cliente': f"{row[6]}", 'msg_error': str(e)})
+                log_error(f"Error al ejecutar cotizaciones con DocNum: {row[3]} y DocEntry: {row[6]}: {e}")
             finally:
                 print(
                     f"##########################Terminando el analisis#####################################################")
@@ -243,9 +249,8 @@ class IngresoDeCotizaciones:
             query = f"""
                 Select  DocNum, DocEntry, id_proyecto, Validador, id_deal 
                 from DatosProyectos_PipeDrive 
-                Where Validador IN ('U') 
+                Where Validador IN ('C', 'U') 
                 AND Pais = '{self.pais}'"""
-            print(query)
 
             result = self.db.execute_query(query)
 
@@ -266,16 +271,19 @@ class IngresoDeCotizaciones:
             log_error(f"Error en proceso_cotizacion_validador: {str(e)}")
 
     def actualizar_tablas(self, id_pipedrive, id_registro, estado, validado):
-        if validado == 'C':
-            query = f"UPDATE [CRM].[dbo].[DatosProyectos_PipeDrive] SET id_deal = {id_pipedrive}, Validador = 'XP' WHERE id_proyecto = {id_registro}" if estado is None else f"UPDATE [CRM].[dbo].[DatosProyectos_PipeDrive] SET id_deal = {id_pipedrive}, Validador = 'XS' WHERE id_proyecto = {id_registro}"
-            print(query)
-            self.db.execute_query(query, False)
-            return f"-----------------idPipeDrive ingresado como {'XP' if estado is None else 'XS'}-------------------"
+        validador = 'XP' if estado is None else 'XS'
 
-        elif validado == 'U' and (estado == 'won' or estado == 'lost'):
-            query = f"UPDATE [CRM].[dbo].[DatosProyectos_PipeDrive] SET Validador = 'XS' WHERE id_proyecto = {id_registro}"
+        if validado == 'C':
+            query = f"UPDATE [CRM].[dbo].[DatosProyectos_PipeDrive] SET id_deal = {id_pipedrive}, Validador = '{validador}' WHERE id_proyecto = {id_registro}"
             self.db.execute_query(query, False)
-            return "-----------------Validador ingresado como XS-------------------"
+            return f"-----------------idPipeDrive ingresado como {validador}-------------------"
+
+        elif validado == 'U':
+            if estado in ['won', 'lost']:
+                validador = 'XS'
+            query = f"UPDATE [CRM].[dbo].[DatosProyectos_PipeDrive] SET Validador = '{validador}' WHERE id_proyecto = {id_registro}"
+            self.db.execute_query(query, False)
+            return f"-----------------Validador ingresado como {validador}-------------------"
 
     def proceso_cotizaciones_pipedrive(self):
         try:
@@ -297,7 +305,6 @@ class IngresoDeCotizaciones:
                     time.sleep(3)
                     datos = self.ct.datos_de_la_cotizacion(row['DocNum'], row['DocEntry'])
                     try:
-                        print(f"Datos de la cotización: {datos}")
                         datos.update(
                             {
                                 'pipeline_id': 2,
@@ -306,7 +313,7 @@ class IngresoDeCotizaciones:
                         )
                         if 'owner_id' in datos:
                             datos['user_id'] = datos.pop('owner_id')
-                        print(datos)
+                        print(f"Datos de la cotización: {datos}")
                         # Insertar el deal en Pipedrive
                         deal_id = self.pipe.post_deals(datos)
                         if deal_id is None:
@@ -335,15 +342,9 @@ class IngresoDeCotizaciones:
                     time.sleep(3)
                     datos = self.ct.datos_de_la_cotizacion(row['DocNum'], row['DocEntry'])
                     try:
-                        print(f"Datos de la cotización: {datos}")
-                        datos.update(
-                            {
-                                'pipeline_id': 2,
-                                'stage_id': 6
-                            }
-                        )
                         if 'owner_id' in datos:
                             datos['user_id'] = datos.pop('owner_id')
+                        print(f"Datos de la cotización: {datos}")
 
                         # Actualizar el deal en Pipedrive
                         updated_deal_id = self.pipe.put_deals(row['id_deal'], datos)
@@ -368,14 +369,3 @@ class IngresoDeCotizaciones:
             log_error(error_message)
         finally:
             self.db.disconnect()  # Cerramos la conexión una vez después de ambos casos
-
-
-
-
-
-
-
-
-
-
-
