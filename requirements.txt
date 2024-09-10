@@ -1,0 +1,6 @@
+Jinja2==3.1.2
+pyodbc==5.0.1
+Requests==2.32.3
+xhtml2pdf==0.2.16
+Flask==3.0.3
+pandas==2.2.2
