@@ -70,3 +70,22 @@ class SQLServerDatabase:
         except Exception as e:
             print(f"Ocurrió un error al ejecutar la consulta: {e}")
             return None
+
+    # Nueva función para registrar errores
+    def log_error(self, process_name, error_message, additional_info=None, path=None):
+        try:
+            if not self.is_connected():
+                print("No active connection to log the error.")
+                return
+
+            query = "{CALL InsertErrorLog (?, ?, ?, ?)}"
+            params = (process_name, error_message, additional_info, path)
+
+            with self.connection.cursor() as cursor:
+                cursor.execute(query, params)
+                self.connection.commit()
+                print("Error logged successfully.")
+
+        except pyodbc.Error as ex:
+            print(f"Error logging the error: {ex}")
+

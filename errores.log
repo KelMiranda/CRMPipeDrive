@@ -1,0 +1,2 @@
+2024-09-11 09:36:52 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13545.0?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2024-09-11 09:36:52 - No se pudo actualizar el deal con ID 13545.0 en Pipedrive.

@@ -14,8 +14,13 @@ if __name__ == '__main__':
 
     pais = ['SV', 'GT', 'HN']
     for row in pais:
-        ct = IngresoDeCotizaciones(f'{row}')
-        print(ct.proceso_clientes_dias(1))
-        print(ct.cotizaciones_actualizadas())
-        print(ct.proceso_cotizaciones_dia(1))
-        print(ct.proceso_cotizaciones_pipedrive())
+        try:
+            ct = IngresoDeCotizaciones(f'{row}')
+            print(ct.proceso_clientes_dias(1))
+            print(ct.cotizaciones_actualizadas())
+            print(ct.proceso_cotizaciones_dia(1))
+            print(ct.proceso_cotizaciones_pipedrive())
+        except Exception as e:
+            print(f'Ocurrió un error con el país {row}: {e}')
+
+
