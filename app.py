@@ -1,48 +1,49 @@
-from flask import Flask, render_template, request, redirect, url_for,jsonify
-from processes.ingresoDeCotizaciones import IngresoDeCotizaciones
-from processes.deals import save_json
-from processes.deals import DealTable
-from pipedrive.users_pipedrive import GetIdUser
-from processes.organizations import OrganizationTable
-from processes.cotizaciones import Cotizaciones
-from database.sql_server_connection import SQLServerDatabase
-from processes.proceso_cliente import Cliente
-from processes.deals import get_all_deals
-from datetime import datetime
+from flask import Flask, render_template
+from apscheduler.schedulers.background import BackgroundScheduler
+import atexit
 
 app = Flask(__name__)
 
+# Variable global para almacenar el estado
+ultimo_estado = None
+
+def ejecutar_proceso_cotizaciones():
+    global ultimo_estado
+    print("Simulación de proceso de cotizaciones ejecutado.")
+    # Simula un resultado exitoso o fallido
+    resultado = True  # Cambia a True o False para simular el comportamiento
+    if resultado:
+        ultimo_estado = 'success'
+        print("Proceso exitoso.")
+    else:
+        ultimo_estado = 'error'
+        print("Ocurrió un error en el proceso.")
+    return resultado
 
 @app.route('/')
-def home():
-    dato_dia = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    return render_template('index.html', date=dato_dia)
+def ver_estado():
+    # Mostrar la última página de éxito o error según el último estado
+    if ultimo_estado == 'success':
+        return render_template('success.html')
+    elif ultimo_estado == 'error':
+        return render_template('error.html')
+    else:
+        return "No hay un resultado de ejecución aún."
 
-@app.route('/consulta-cotizacion')
-def cotizacion():
-    return render_template('consultaCoti.html')
+# Función que será ejecutada cada minuto por el scheduler para pruebas
+def tarea_diaria():
+    ejecutar_proceso_cotizaciones()
 
-@app.route('/cotizaciones', methods=['GET', 'POST'])
-def cotizaciones():
-    if request.is_json:
-        data = request.get_json()
-        DocNum = data.get('numero1')
-        DocEntry = data.get('numero2')
-        pais = data.get('pais')
-        print(pais)
-        # Aquí puedes procesar los valores como necesites, por ejemplo, guardarlos en una base de datos
-        data_cotizacion = Cotizaciones(pais).datos_de_la_cotizacion(DocNum, DocEntry)
+# Configurar APScheduler para ejecutar cada minuto (solo para prueba)
+scheduler = BackgroundScheduler()
+scheduler.add_job(func=tarea_diaria, trigger="interval", minutes=30, id='tarea_diaria')
 
-        # Devuelve la respuesta en formato JSON
-        return jsonify(data_cotizacion)
+# Iniciar el scheduler
+scheduler.start()
 
-    return jsonify({"error": "Invalid request"}), 400
+# Cerrar el scheduler cuando la aplicación termine
+atexit.register(lambda: scheduler.shutdown())
 
-@app.route('/deals', methods=['GET'])
-def get_deals():
-    # Aquí puedes agregar la lógica para generar o recuperar tus datos
-    result = get_all_deals()
-    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

@@ -4,3 +4,4 @@ Requests==2.32.3
 xhtml2pdf==0.2.16
 Flask==3.0.3
 pandas==2.2.2
+APScheduler==3.10.4

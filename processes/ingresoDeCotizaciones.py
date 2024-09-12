@@ -9,7 +9,9 @@ import time
 import json
 from processes.proceso_cliente import log_error
 from pipedrive.pipedrive_api_conecction import PipedriveAPI
+import os
 
+ruta_directorio_actual = os.getcwd()
 
 class IngresoDeCotizaciones:
     def __init__(self, pais):
@@ -182,18 +184,22 @@ class IngresoDeCotizaciones:
                             self.db.execute_query(query, False)
                         except Exception as e:
                             error_message = f"Error al ejecutar la consulta para CardCode '{row['CardCode']}': {e}"
+                            self.db.log_error('proceso_clientes_dias',error_message, 'Merge Cliente', ruta_directorio_actual)
                             log_error(error_message)
                         try:
                             self.cliente.ingresando_cliente(row['CardCode'])
                         except Exception as e:
                             error_message = f"Error al ejecutar la funcion ingresando cliente para CardCode '{row['CardCode']}': {e}"
+                            self.db.log_error('proceso_clientes_dias', error_message, 'Ingresando Cliente Pipedrive',
+                                              ruta_directorio_actual)
                             log_error(error_message)
                 except Exception as e:
                     error_message = f"Error al conectar a la base de datos: {e}"
+                    self.db.log_error('proceso_clientes_dias', error_message, None,
+                                      ruta_directorio_actual)
                     log_error(error_message)
                 finally:
                     self.db.disconnect()
-
                 # Mostrar el DataFrame filtrado
                 print(dt_filtered)
             else:
@@ -201,6 +207,8 @@ class IngresoDeCotizaciones:
                 log_error(error_message)
         except Exception as e:
             error_message = f"Error en el proceso de cotizaciones del día: {e}"
+            self.db.log_error('proceso_clientes_dias', error_message, None,
+                              ruta_directorio_actual)
             log_error(error_message)
 
     def proceso_cotizaciones_dia(self, days):
@@ -216,22 +224,20 @@ class IngresoDeCotizaciones:
                         count = count + 1
                         query = f"[dbo].[SP_VALIDADOR_PROYECTO_MERGE_{self.pais}] '{row['ORD']}', '{row['DocNum']}', '{row['Serie']}', '{row['CardCode']}'"
                         try:
+                            print(f"-------------------------------Cotizacion #{count}--------------------------------")
                             self.db.execute_query(query, False)
                         except Exception as e:
                             error_message = f"Error al ejecutar la consulta para CardCode '{row['CardCode']}': {e}"
-                            log_error(error_message)
-                        try:
-                            print(f"-------------------------------Cotizacion #{count}--------------------------------")
-                            #self.cliente.ingresando_cliente(row['CardCode'])
-                        except Exception as e:
-                            error_message = f"Error al ejecutar la funcion ingresando cliente para CardCode '{row['CardCode']}': {e}"
+                            self.db.log_error('proceso_cotizaciones_dia', error_message, 'Error con el Merge Cotizacion',
+                                              ruta_directorio_actual)
                             log_error(error_message)
                 except Exception as e:
                     error_message = f"Error al conectar a la base de datos: {e}"
+                    self.db.log_error('proceso_cotizaciones_dia', error_message, None,
+                                      ruta_directorio_actual)
                     log_error(error_message)
                 finally:
                     self.db.disconnect()
-
                 # Mostrar el DataFrame filtrado
                 print(dt_filtered)
             else:
@@ -239,6 +245,8 @@ class IngresoDeCotizaciones:
                 log_error(error_message)
         except Exception as e:
             error_message = f"Error en el proceso de cotizaciones del día: {e}"
+            self.db.log_error('proceso_cotizaciones_dia', error_message, None,
+                              ruta_directorio_actual)
             log_error(error_message)
 
     def proceso_cotizacion_validador(self):
@@ -268,22 +276,34 @@ class IngresoDeCotizaciones:
 
         except Exception as e:
             # Si ocurre un error, lo registramos en el archivo error.log
-            log_error(f"Error en proceso_cotizacion_validador: {str(e)}")
+            error_message = 'Error en proceso_cotizacion_validador'
+            self.db.log_error('proceso_cotizacion_validador', error_message, None,
+                              ruta_directorio_actual)
+            log_error(f"{error_message}: {str(e)}")
 
     def actualizar_tablas(self, id_pipedrive, id_registro, estado, validado):
         validador = 'XP' if estado is None else 'XS'
+        proceso = ''
+        try:
+            if validado == 'C':
+                proceso = "Proceso C"
+                query = f"UPDATE [CRM].[dbo].[DatosProyectos_PipeDrive] SET id_deal = {id_pipedrive}, Validador = '{validador}' WHERE id_proyecto = {id_registro}"
+                self.db.execute_query(query, False)
+                return f"-----------------idPipeDrive ingresado como {validador}-------------------"
 
-        if validado == 'C':
-            query = f"UPDATE [CRM].[dbo].[DatosProyectos_PipeDrive] SET id_deal = {id_pipedrive}, Validador = '{validador}' WHERE id_proyecto = {id_registro}"
-            self.db.execute_query(query, False)
-            return f"-----------------idPipeDrive ingresado como {validador}-------------------"
+            elif validado == 'U':
+                proceso = "Proceso U"
+                if estado in ['won', 'lost']:
+                    validador = 'XS'
+                query = f"UPDATE [CRM].[dbo].[DatosProyectos_PipeDrive] SET Validador = '{validador}' WHERE id_proyecto = {id_registro}"
+                self.db.execute_query(query, False)
+                return f"-----------------Validador ingresado como {validador}-------------------"
 
-        elif validado == 'U':
-            if estado in ['won', 'lost']:
-                validador = 'XS'
-            query = f"UPDATE [CRM].[dbo].[DatosProyectos_PipeDrive] SET Validador = '{validador}' WHERE id_proyecto = {id_registro}"
-            self.db.execute_query(query, False)
-            return f"-----------------Validador ingresado como {validador}-------------------"
+        except Exception as e:
+            error_message = 'Error while updating the database: {e}'
+            self.db.log_error('actualizar_tablas', error_message, proceso,
+                              ruta_directorio_actual)
+            log_error(f"{error_message}: {str(e)}")
 
     def proceso_cotizaciones_pipedrive(self):
         try:
@@ -318,6 +338,8 @@ class IngresoDeCotizaciones:
                         deal_id = self.pipe.post_deals(datos)
                         if deal_id is None:
                             error_message = "No se pudo insertar el deal en Pipedrive."
+                            self.db.log_error('proceso_cotizaciones_pipedrive', error_message, "Proceso C",
+                                              ruta_directorio_actual)
                             log_error(error_message)
                             return {"error": error_message}
 
@@ -327,6 +349,8 @@ class IngresoDeCotizaciones:
 
                     except Exception as e:
                         error_message = f"Error en el proceso de inserción de deal y actualización de tablas: {e}"
+                        self.db.log_error('proceso_cotizaciones_pipedrive', error_message, None,
+                                          ruta_directorio_actual)
                         log_error(error_message)
                         return {"error": error_message}
 
@@ -350,6 +374,8 @@ class IngresoDeCotizaciones:
                         updated_deal_id = self.pipe.put_deals(row['id_deal'], datos)
                         if updated_deal_id is None:
                             error_message = f"No se pudo actualizar el deal con ID {row['id_deal']} en Pipedrive."
+                            self.db.log_error('proceso_cotizaciones_pipedrive', error_message, "Proceso U",
+                                              ruta_directorio_actual)
                             log_error(error_message)
                             return {"error": error_message}
 
@@ -359,6 +385,8 @@ class IngresoDeCotizaciones:
 
                     except Exception as e:
                         error_message = f"Error al intentar actualizar el deal y las tablas para ID {row['id_deal']}: {e}"
+                        self.db.log_error('proceso_cotizaciones_pipedrive', error_message, None,
+                                          ruta_directorio_actual)
                         log_error(error_message)
                         return {"error": error_message}
 
@@ -366,6 +394,8 @@ class IngresoDeCotizaciones:
 
         except Exception as e:
             error_message = f"Error en el proceso de cotizaciones del día: {e}"
+            self.db.log_error('proceso_cotizaciones_pipedrive', error_message, None,
+                              ruta_directorio_actual)
             log_error(error_message)
         finally:
             self.db.disconnect()  # Cerramos la conexión una vez después de ambos casos
