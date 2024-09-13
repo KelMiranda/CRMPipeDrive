@@ -36,7 +36,7 @@ def tarea_diaria():
 
 # Configurar APScheduler para ejecutar cada minuto (solo para prueba)
 scheduler = BackgroundScheduler()
-scheduler.add_job(func=tarea_diaria, trigger="interval", minutes=30, id='tarea_diaria')
+scheduler.add_job(func=tarea_diaria, trigger="interval", minutes=1, id='tarea_diaria')
 
 # Iniciar el scheduler
 scheduler.start()

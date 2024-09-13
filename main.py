@@ -12,7 +12,7 @@ import pandas as pd
 
 if __name__ == '__main__':
 
-    pais = ['SV', 'GT', 'HN']
+    '''pais = ['SV', 'GT', 'HN']
     for row in pais:
         try:
             ct = IngresoDeCotizaciones(f'{row}')
@@ -21,6 +21,7 @@ if __name__ == '__main__':
             print(ct.proceso_cotizaciones_dia(1))
             print(ct.proceso_cotizaciones_pipedrive())
         except Exception as e:
-            print(f'Ocurrió un error con el país {row}: {e}')
+            print(f'Ocurrió un error con el país {row}: {e}')'''
+
 
 
