@@ -107,6 +107,7 @@ class IngresoDeCotizaciones:
             yesterday = today-one_day
             result = self.ct.cotizaciones_del_dia(f'{yesterday}')[0]
 
+
             # Convertir la lista plana en una lista de tuplas
             result_list = [list(tup) for tup in result]
             columnas = ['Serie', 'DocNum', 'CardCode', 'ORD', 'DocEntry']

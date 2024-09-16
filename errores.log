@@ -6,3 +6,16 @@
 2024-09-13 09:11:54 - No se pudo actualizar el deal con ID 10680.0 en Pipedrive.
 2024-09-13 09:23:10 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13758.0?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
 2024-09-13 09:23:10 - No se pudo actualizar el deal con ID 13758.0 en Pipedrive.
+2024-09-15 20:55:44 - Error al insertar o actualizar el cliente 'C37739517': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-09-15 21:02:09 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/10778.0?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2024-09-15 21:02:09 - No se pudo actualizar el deal con ID 10778.0 en Pipedrive.
+2024-09-15 21:07:20 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/12894.0?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2024-09-15 21:07:20 - No se pudo actualizar el deal con ID 12894.0 en Pipedrive.
+2024-09-16 07:20:04 - Error al insertar o actualizar el cliente 'C37739517': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-09-16 07:20:09 - Error al insertar o actualizar el cliente 'C3452945': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-09-16 07:34:01 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13816.0?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2024-09-16 07:34:01 - No se pudo actualizar el deal con ID 13816.0 en Pipedrive.
+2024-09-16 12:27:11 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13816.0?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2024-09-16 12:27:11 - No se pudo actualizar el deal con ID 13816.0 en Pipedrive.
+2024-09-16 12:33:12 - No se pudo obtener las cotizaciones para el día especificado.
+2024-09-16 12:39:19 - No se pudo obtener las cotizaciones para el día especificado.

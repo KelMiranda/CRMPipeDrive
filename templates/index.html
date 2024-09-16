@@ -1,17 +1,25 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interfaz CRM</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Flask con Tailwind CSS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind-output.css') }}">
 </head>
-<body>
-    <div class="container">
-        <h1>Programa corriendo con Docker</h1>
-        <div>
-            <h5>En este contenedor se enviara la informacion del CRM hacia PowerBi</h5>
-            <p>Fecha y hora del servidor {{date}}</p>
+<body class="bg-gray-100 text-center">
+    <h1 class="text-3xl font-bold text-blue-500">
+        ¡Hola desde Flask y Tailwind CSS!
+    </h1>
+    <div class="max-w-sm rounded overflow-hidden shadow-lg">
+        <img class="w-full" src="/img/card-top.jpg" alt="Imagen de ejemplo">
+         <div class="px-6 py-4">
+             <div class="font-bold text-xl mb-2">Título de la tarjeta</div>
+             <p class="text-gray-700 text-base">
+                Este es un ejemplo de una tarjeta utilizando las clases de Tailwind CSS.
+             </p>
+        </div>
+        <div class="px-6 pt-4 pb-2">
+            <button class="bg-blue-500 text-white px-4 py-2 rounded">Botón</button>
         </div>
     </div>
 </body>

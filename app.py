@@ -21,14 +21,8 @@ def ejecutar_proceso_cotizaciones():
     return resultado
 
 @app.route('/')
-def ver_estado():
-    # Mostrar la última página de éxito o error según el último estado
-    if ultimo_estado == 'success':
-        return render_template('success.html')
-    elif ultimo_estado == 'error':
-        return render_template('error.html')
-    else:
-        return "No hay un resultado de ejecución aún."
+def index():
+    return render_template('index.html')
 
 # Función que será ejecutada cada minuto por el scheduler para pruebas
 def tarea_diaria():

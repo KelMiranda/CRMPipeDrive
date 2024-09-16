@@ -9,10 +9,11 @@ from database.sql_server_connection import SQLServerDatabase
 from processes.deals import DealTable
 from processes.proceso_cliente import Cliente
 import pandas as pd
+from telegram.apitelegram import TelegramBot
 
 if __name__ == '__main__':
 
-    '''pais = ['SV', 'GT', 'HN']
+    pais = ['SV', 'GT', 'HN']
     for row in pais:
         try:
             ct = IngresoDeCotizaciones(f'{row}')
@@ -21,7 +22,8 @@ if __name__ == '__main__':
             print(ct.proceso_cotizaciones_dia(1))
             print(ct.proceso_cotizaciones_pipedrive())
         except Exception as e:
-            print(f'Ocurrió un error con el país {row}: {e}')'''
-
+            print(f'Ocurrió un error con el país {row}: {e}')
+    bot = TelegramBot(None)
+    bot.send_message(1947314689)
 
 

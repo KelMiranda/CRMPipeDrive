@@ -7,3 +7,4 @@ config.ini
 errores.log
 /processes/gesto_de_contraseña.py
 /2024/
+/node_modules
