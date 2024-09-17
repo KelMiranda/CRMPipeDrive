@@ -1,12 +1,17 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request, flash
 from apscheduler.schedulers.background import BackgroundScheduler
 import atexit
 from datetime import datetime
 from processes.ingresoDeCotizaciones import IngresoDeCotizaciones
 from telegram.apitelegram import TelegramBot
+import time
 
 app = Flask(__name__)
+app.secret_key = 'mysecretkey'  # Necesario para usar flash messages
 
+# Simulamos un usuario registrado
+USUARIO_CORRECTO = 'test@example.com'
+PASSWORD_CORRECTA = '1234'
 # Variable global para almacenar la fecha de última ejecución
 ultima_ejecucion = None
 
@@ -34,12 +39,26 @@ def index():
     global ultima_ejecucion
     fecha_ejecucion = ultima_ejecucion.strftime('%Y-%m-%d %H:%M:%S') if ultima_ejecucion else "No ejecutada aún"
     return render_template('index.html', fecha_ejecucion=fecha_ejecucion)
-
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        time.sleep(10)
+        # Verificar credenciales
+        if email == USUARIO_CORRECTO and password == PASSWORD_CORRECTA:
+            return redirect(url_for('index'))
+        else:
+            # Enviar mensaje de error con flash
+            flash('Correo o contraseña incorrecta', 'error')
+            return redirect(url_for('login'))
+    return render_template('login.html')
 # Ruta para ejecutar la función manualmente desde el botón
 @app.route('/ejecutar')
 def ejecutar():
     ejecutar_proceso_cotizaciones()
     return redirect(url_for('index'))
+
 
 # Función que será ejecutada automáticamente a las 3:00 AM
 def tarea_diaria():
