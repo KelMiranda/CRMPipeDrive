@@ -60,9 +60,10 @@ class IngresoDeCotizaciones:
         errores = []
         result = []
         cotizaciones = self.ct.cierre_de_cotizaciones()[0]
+        total_cotizaciones = len(cotizaciones)
         self.db.connect()
-        for row in cotizaciones:
-            time.sleep(5)
+        for index, row in enumerate(cotizaciones, 1):
+            time.sleep(2)
             try:
                 ultima_version = self.ct.ultima_version(row[3], row[2], row[6])[0]
                 ORD = ultima_version[0][0]
@@ -78,8 +79,10 @@ class IngresoDeCotizaciones:
                 errores.append({'DocNum': row[3], 'Codigo Del Cliente': f"{row[6]}", 'msg_error': str(e)})
                 log_error(f"Error al ejecutar cotizaciones con DocNum: {row[3]} y DocEntry: {row[6]}: {e}")
             finally:
+                cotizaciones_restantes = total_cotizaciones - index
+                print(f"Faltan {cotizaciones_restantes} cotizaciones por procesar.")
                 print(
-                    f"##########################Terminando el analisis#####################################################")
+                    "##########################Terminando el análisis#####################################################")
 
         self.db.disconnect()
         output = {
@@ -179,6 +182,7 @@ class IngresoDeCotizaciones:
                 try:
                     self.db.connect()
                     for index, row in dt_filtered.iterrows():
+                        time.sleep(1)
                         count = count + 1
                         query = f"exec [dbo].[SP_VALIDADOR_CLIENTE_MERGE_{self.pais}] '{row['CardCode']}'"
                         try:
@@ -218,14 +222,15 @@ class IngresoDeCotizaciones:
             dt = self.cotizaciones_este_dia(days)
             if dt is not None:
                 dt_filtered = dt[(dt['CT_E'] == False)]
+                cantidad_registros = len(dt_filtered)
                 try:
                     self.db.connect()
                     for index, row in dt_filtered.iterrows():
-                        time.sleep(3)
+                        time.sleep(2)
                         count = count + 1
                         query = f"[dbo].[SP_VALIDADOR_PROYECTO_MERGE_{self.pais}] '{row['ORD']}', '{row['DocNum']}', '{row['Serie']}', '{row['CardCode']}'"
                         try:
-                            print(f"-------------------------------Cotizacion #{count}--------------------------------")
+                            print(f"-------------------------------Cotizacion #{count}/{cantidad_registros}--------------------------------")
                             self.db.execute_query(query, False)
                         except Exception as e:
                             error_message = f"Error al ejecutar la consulta para CardCode '{row['CardCode']}': {e}"
@@ -285,26 +290,58 @@ class IngresoDeCotizaciones:
     def actualizar_tablas(self, id_pipedrive, id_registro, estado, validado):
         validador = 'XP' if estado is None else 'XS'
         proceso = ''
+
         try:
             if validado == 'C':
                 proceso = "Proceso C"
-                query = f"UPDATE [CRM].[dbo].[DatosProyectos_PipeDrive] SET id_deal = {id_pipedrive}, Validador = '{validador}' WHERE id_proyecto = {id_registro}"
-                self.db.execute_query(query, False)
-                return f"-----------------idPipeDrive ingresado como {validador}-------------------"
+                # Si estado no es None, también actualizamos el estado en la columna status_crm
+                if estado is not None:
+                    query = """
+                        UPDATE [CRM].[dbo].[DatosProyectos_PipeDrive] 
+                        SET id_deal = ?, Validador = ?, status_crm = ? 
+                        WHERE id_proyecto = ?
+                    """
+                    params = (id_pipedrive, validador, estado, id_registro)
+                else:
+                    query = """
+                        UPDATE [CRM].[dbo].[DatosProyectos_PipeDrive] 
+                        SET id_deal = ?, Validador = ? 
+                        WHERE id_proyecto = ?
+                    """
+                    params = (id_pipedrive, validador, id_registro)
+
+                # Ejecutar la consulta utilizando execute_query_with_params
+                self.db.execute_query_with_params(query, params, return_results=False)
+                return f"-----------------idPipeDrive {id_pipedrive} ingresado como {validador} con estado {estado if estado else 'N/A'}-------------------"
 
             elif validado == 'U':
                 proceso = "Proceso U"
+                # Si el estado es 'won' o 'lost', mantenemos el validador como 'XS'
                 if estado in ['won', 'lost']:
                     validador = 'XS'
-                query = f"UPDATE [CRM].[dbo].[DatosProyectos_PipeDrive] SET Validador = '{validador}' WHERE id_proyecto = {id_registro}"
-                self.db.execute_query(query, False)
-                return f"-----------------Validador ingresado como {validador}-------------------"
+                # Si estado no es None, también actualizamos el estado en la columna status_crm
+                if estado is not None:
+                    query = """
+                        UPDATE [CRM].[dbo].[DatosProyectos_PipeDrive] 
+                        SET Validador = ?, status_crm = ? 
+                        WHERE id_proyecto = ?
+                    """
+                    params = (validador, estado, id_registro)
+                else:
+                    query = """
+                        UPDATE [CRM].[dbo].[DatosProyectos_PipeDrive] 
+                        SET Validador = ? 
+                        WHERE id_proyecto = ?
+                    """
+                    params = (validador, id_registro)
+
+                # Ejecutar la consulta utilizando execute_query_with_params
+                self.db.execute_query_with_params(query, params, return_results=False)
+                return f"-----------------Validador {validador} ingresado con estado {estado if estado else 'N/A'} para el registro {id_registro}-------------------"
 
         except Exception as e:
-            error_message = 'Error while updating the database: {e}'
-            self.db.log_error('actualizar_tablas', error_message, proceso,
-                              ruta_directorio_actual)
-            log_error(f"{error_message}: {str(e)}")
+            log_error(f"Error en {proceso} para id_registro {id_registro}: {e}")
+            return f"Error al procesar el registro {id_registro}"
 
     def proceso_cotizaciones_pipedrive(self):
         try:
@@ -359,6 +396,7 @@ class IngresoDeCotizaciones:
 
             # Procesar cotizaciones con Validador 'U'
             dt_filtered_u = dt[(dt['Validador'] == 'U')]
+            print(dt_filtered_u)
             if not dt_filtered_u.empty:
                 total_registros_u = len(dt_filtered_u)
                 print(f"Total de cotizaciones a procesar para 'U': {total_registros_u}")
@@ -369,10 +407,8 @@ class IngresoDeCotizaciones:
                     try:
                         if 'owner_id' in datos:
                             datos['user_id'] = datos.pop('owner_id')
-                        print(f"Datos de la cotización: {datos}")
-
                         # Actualizar el deal en Pipedrive
-                        updated_deal_id = self.pipe.put_deals(row['id_deal'], datos)
+                        updated_deal_id = self.pipe.put_deals(int(row['id_deal']), datos)
                         if updated_deal_id is None:
                             error_message = f"No se pudo actualizar el deal con ID {row['id_deal']} en Pipedrive."
                             self.db.log_error('proceso_cotizaciones_pipedrive', error_message, "Proceso U",

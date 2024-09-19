@@ -13,14 +13,21 @@ from telegram.apitelegram import TelegramBot
 
 if __name__ == '__main__':
 
-    pais = ['SV', 'GT', 'HN']
+    pais = ['SV']
     for row in pais:
         try:
+            print(f"#############################Inicio de los proceso para {row}###################################")
             ct = IngresoDeCotizaciones(f'{row}')
             print(ct.proceso_clientes_dias(1))
+            print(f"#####################Finalizando proceso clientes dias para {row}###############################")
             print(ct.cotizaciones_actualizadas())
+            print(f"#####################Finalizando cotizaciones actualizadas para {row}###########################")
             print(ct.proceso_cotizaciones_dia(1))
+            print(f"#####################Finalizando proceso cotizaciones dias para {row}###########################")
             print(ct.proceso_cotizaciones_pipedrive())
+            print(f"#####################Finalizando proceso cotizaciones pipedrive para {row}######################")
+            print(f"##############################Finalizando proceso para {row}####################################")
+
         except Exception as e:
             print(f'Ocurrió un error con el país {row}: {e}')
     bot = TelegramBot(None)

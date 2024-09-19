@@ -1,1 +1,23 @@
 
+2024-09-18 11:59:59 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13196.0?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2024-09-18 11:59:59 - No se pudo actualizar el deal con ID 13196.0 en Pipedrive.
+2024-09-18 12:08:01 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13816.0?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2024-09-18 12:08:01 - No se pudo actualizar el deal con ID 13816.0 en Pipedrive.
+2024-09-18 13:40:29 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13196.0?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2024-09-18 13:40:30 - No se pudo actualizar el deal con ID 13196.0 en Pipedrive.
+2024-09-18 13:46:53 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13816.0?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2024-09-18 13:46:53 - No se pudo actualizar el deal con ID 13816.0 en Pipedrive.
+2024-09-18 13:54:18 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13196.0?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2024-09-18 13:54:18 - No se pudo actualizar el deal con ID 13196.0 en Pipedrive.
+2024-09-18 13:56:31 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13196.0?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2024-09-18 13:56:31 - No se pudo actualizar el deal con ID 13196.0 en Pipedrive.
+2024-09-18 13:58:46 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13196.0?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2024-09-18 13:58:46 - No se pudo actualizar el deal con ID 13196.0 en Pipedrive.
+2024-09-18 14:02:25 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-09-18 14:09:15 - Error al intentar actualizar el deal y las tablas para ID None: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+2024-09-18 14:17:35 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-09-19 03:02:12 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-09-19 03:02:14 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-09-19 03:02:58 - Error al intentar actualizar el deal y las tablas para ID None: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+2024-09-19 03:09:58 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-09-19 03:09:59 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
