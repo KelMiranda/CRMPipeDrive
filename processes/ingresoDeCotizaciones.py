@@ -10,7 +10,7 @@ import json
 from processes.proceso_cliente import log_error
 from pipedrive.pipedrive_api_conecction import PipedriveAPI
 import os
-
+import asyncio
 ruta_directorio_actual = os.getcwd()
 
 class IngresoDeCotizaciones:
@@ -182,7 +182,7 @@ class IngresoDeCotizaciones:
                 try:
                     self.db.connect()
                     for index, row in dt_filtered.iterrows():
-                        time.sleep(1)
+                        time.sleep(0.5)
                         count = count + 1
                         query = f"exec [dbo].[SP_VALIDADOR_CLIENTE_MERGE_{self.pais}] '{row['CardCode']}'"
                         try:
@@ -226,7 +226,7 @@ class IngresoDeCotizaciones:
                 try:
                     self.db.connect()
                     for index, row in dt_filtered.iterrows():
-                        time.sleep(2)
+                        time.sleep(0.5)
                         count = count + 1
                         query = f"[dbo].[SP_VALIDADOR_PROYECTO_MERGE_{self.pais}] '{row['ORD']}', '{row['DocNum']}', '{row['Serie']}', '{row['CardCode']}'"
                         try:
@@ -360,7 +360,7 @@ class IngresoDeCotizaciones:
                 print(f"Total de cotizaciones a procesar para 'C': {total_registros_c}")
 
                 for index, row in dt_filtered_c.iterrows():
-                    time.sleep(3)
+                    time.sleep(0.5)
                     datos = self.ct.datos_de_la_cotizacion(row['DocNum'], row['DocEntry'])
                     try:
                         datos.update(
@@ -402,7 +402,7 @@ class IngresoDeCotizaciones:
                 print(f"Total de cotizaciones a procesar para 'U': {total_registros_u}")
 
                 for index, row in dt_filtered_u.iterrows():
-                    time.sleep(3)
+                    time.sleep(0.5)
                     datos = self.ct.datos_de_la_cotizacion(row['DocNum'], row['DocEntry'])
                     try:
                         if 'owner_id' in datos:

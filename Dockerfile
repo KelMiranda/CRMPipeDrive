@@ -10,6 +10,7 @@ RUN apt-get update && \
     gnupg2 \
     unixodbc-dev \
     ca-certificates \
+    cron \
     && rm -rf /var/lib/apt/lists/*
 
 # Instalar el controlador ODBC 17 para SQL Server
@@ -20,15 +21,11 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Instalar Node.js y npm
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
-    apt-get install -y nodejs
-
 # Desactivar el buffering de Python
 ENV PYTHONUNBUFFERED=1
 
-# Instalar Tailwind CSS globalmente
-RUN npm install -g tailwindcss
+# Crear un enlace simbólico de 'python' a 'python3'
+RUN ln -s /usr/local/bin/python3 /usr/bin/python
 
 # Establecer el directorio de trabajo en el contenedor
 WORKDIR /app
@@ -39,23 +36,20 @@ COPY requirements.txt .
 # Instalar las dependencias de Python
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copiar el archivo package.json y package-lock.json para instalar dependencias de Node.js (incluyendo Tailwind)
-COPY package*.json ./
-
-# Instalar las dependencias de Node.js (Tailwind CSS y otras necesarias)
-RUN npm install
-
-# Asegurar permisos de ejecuciÃ³n para los binarios de npm (por si acaso)
-RUN chmod +x ./node_modules/.bin/*
-
-# Copiar el resto del cÃ³digo de la aplicaciÃ³n al directorio de trabajo
+# Copiar el resto del código de la aplicación al directorio de trabajo
 COPY . .
 
-# Compilar Tailwind CSS (compilaciÃ³n de tu archivo de entrada)
-RUN tailwindcss -i ./static/css/styles.css -o ./static/css/tailwind-output.css --minify
+# Crear un archivo cron job que ejecute el script una vez al día
+RUN echo "0 0 * * * python /app/main.py >> /var/log/cron.log 2>&1" > /etc/cron.d/mycron
 
-# Exponer el puerto en el que correrÃ¡ la aplicaciÃ³n Flask
-EXPOSE 5000
+# Dar permisos de ejecución al archivo cron
+RUN chmod 0644 /etc/cron.d/mycron
 
-# Comando para ejecutar tu aplicaciÃ³n Flask
-CMD ["python", "app.py"]
+# Aplicar el cron job
+RUN crontab /etc/cron.d/mycron
+
+# Crear un archivo de log para el cron job
+RUN touch /var/log/cron.log
+
+# Comando para ejecutar cron y mantener el contenedor en ejecución
+CMD ["sh", "-c", "cron && tail -f /var/log/cron.log"]

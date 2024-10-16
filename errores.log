@@ -21,3 +21,60 @@
 2024-09-19 03:02:58 - Error al intentar actualizar el deal y las tablas para ID None: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
 2024-09-19 03:09:58 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
 2024-09-19 03:09:59 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-09-27 08:55:10 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-09-27 08:56:46 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-01 08:41:19 - Error al insertar o actualizar el cliente 'C30864739': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-01 08:41:21 - Error al insertar o actualizar el cliente 'C30864739': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-01 08:41:24 - Error al insertar o actualizar el cliente 'C30864739': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-01 08:48:23 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-01 08:48:30 - Error al insertar o actualizar el cliente 'C2633': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-01 08:50:13 - Error al intentar actualizar el deal y las tablas para ID None: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+2024-10-01 08:59:19 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-01 09:02:59 - Error al insertar o actualizar el cliente 'C30864739': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-01 09:03:01 - Error al insertar o actualizar el cliente 'C30864739': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-01 09:03:03 - Error al insertar o actualizar el cliente 'C30864739': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-01 09:06:41 - Error al insertar o actualizar el cliente 'C2633': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-01 11:03:52 - Error al insertar o actualizar el cliente 'C30864739': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-01 11:03:54 - Error al insertar o actualizar el cliente 'C30864739': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-01 11:03:57 - Error al insertar o actualizar el cliente 'C30864739': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-01 11:06:56 - Error al insertar o actualizar el cliente 'C2633': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-02 10:01:26 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-02 10:01:30 - Error al insertar o actualizar el cliente 'C2633': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-02 10:04:31 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-04 12:11:10 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-04 12:11:17 - Error al insertar o actualizar el cliente 'C2633': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-04 12:11:21 - Error al insertar o actualizar el cliente 'C2633': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-04 12:13:49 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-04 12:21:21 - Error al insertar o actualizar el cliente 'C3452945': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-04 12:25:41 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-04 12:25:47 - Error al insertar o actualizar el cliente 'C2633': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-04 12:26:36 - Error al intentar actualizar el deal y las tablas para ID None: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+2024-10-07 18:43:34 - Error al insertar o actualizar el cliente 'C3452945': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-07 18:45:06 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-07 18:45:14 - Error al insertar o actualizar el cliente 'C2633': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-07 18:46:26 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-07 19:22:49 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-07 19:23:19 - Error al intentar actualizar el deal y las tablas para ID None: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+2024-10-08 07:52:49 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-08 07:52:57 - Error al intentar actualizar el deal y las tablas para ID None: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+2024-10-08 09:52:11 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-08 09:54:33 - Error al intentar actualizar el deal y las tablas para ID None: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+2024-10-09 08:10:34 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-09 08:14:12 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-10 11:57:32 - Error al insertar o actualizar el cliente 'C30864739': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-10 11:57:35 - Error al insertar o actualizar el cliente 'C3013901': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-10 12:04:33 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-10 12:07:33 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-11 08:35:03 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-11 08:35:14 - Error al insertar o actualizar el cliente 'C2633': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-11 08:36:09 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-12 11:38:44 - Error al insertar o actualizar el cliente 'C30864739': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-12 11:42:53 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-12 11:43:40 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-14 09:31:31 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-14 09:32:36 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-14 10:07:24 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-14 10:07:33 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2024-10-15 15:18:54 - Error al insertar o actualizar el cliente 'C3493071': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-15 15:19:02 - Error al insertar o actualizar el cliente 'C3493071': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2024-10-15 15:26:29 - Error al insertar o actualizar el cliente 'C2633': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given

@@ -1,4 +1,5 @@
 import time
+import asyncio
 from processes.ingresoDeCotizaciones import IngresoDeCotizaciones
 from processes.deals import save_json
 from processes.deals import DealTable
@@ -13,7 +14,7 @@ from telegram.apitelegram import TelegramBot
 
 if __name__ == '__main__':
 
-    pais = ['SV']
+    pais = ['SV', 'GT', 'HN']
     for row in pais:
         try:
             print(f"#############################Inicio de los proceso para {row}###################################")
@@ -27,10 +28,9 @@ if __name__ == '__main__':
             print(ct.proceso_cotizaciones_pipedrive())
             print(f"#####################Finalizando proceso cotizaciones pipedrive para {row}######################")
             print(f"##############################Finalizando proceso para {row}####################################")
-
+            # Usar asyncio.sleep en lugar de time.sleep para no bloquear el proceso
         except Exception as e:
             print(f'Ocurrió un error con el país {row}: {e}')
+
     bot = TelegramBot(None)
     bot.send_message(1947314689)
-
-
