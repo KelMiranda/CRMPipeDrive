@@ -209,10 +209,11 @@ class Cotizaciones:
             self.db.disconnect()
         return result, errores
 
-    def cotizaciones_del_dia(self, fecha):
+    def cotizaciones_del_dia(self, fecha=None):
         errores = []
         result = []
         query = f"EXEC [dbo].[SP_Cotizaciones_Dia_{self.pais}]'{fecha}'"
+        #query = f"EXEC [dbo].[SP_Cotizaciones_Dia_{self.pais}]"
         print(query)
         try:
             self.db.connect()

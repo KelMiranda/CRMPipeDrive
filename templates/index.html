@@ -1,18 +1,61 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interfaz CRM</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>PELSA - Lider en Soluciones Electricas</title>
+    <!-- Referencia al CSS compilado por Tailwind -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind-output.css') }}">
 </head>
-<body>
-    <div class="container">
-        <h1>Programa corriendo con Docker</h1>
-        <div>
-            <h5>En este contenedor se enviara la informacion del CRM hacia PowerBi</h5>
-            <p>Fecha y hora del servidor {{date}}</p>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+    <!-- Contenedor principal de la landing -->
+    <div class="text-center max-w-lg mx-auto p-6 bg-white shadow-lg rounded-lg">
+        <!-- Sección del logo -->
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="mx-auto w-48 h-24 mb-6">
+
+        <!-- Título de bienvenida -->
+        <h1 class="text-2xl font-bold text-gray-800 mb-4">
+            ¡Bienvenido a la Plataforma de Integración de Cotizaciones de Pelsa!
+        </h1>
+
+        <!-- Descripción -->
+        <p class="text-lg text-gray-600 mb-6">
+            Nuestra plataforma integra las cotizaciones de Pelsa por encima de un monto específico directamente en el CRM, facilitando la gestión y el seguimiento de oportunidades de negocio.
+        </p>
+
+        <!-- Sección que muestra la hora -->
+        <div class="bg-blue-950 text-white py-3 px-4 rounded-lg mb-4">
+            <span class="text-lg">Hora actual:</span>
+            <span id="time" class="text-2xl font-semibold"></span>
         </div>
+
+        <div class="bg-blue-500 text-white py-3 px-4 rounded-lg mb-4">
+            <span class="text-lg">Última ejecución:</span>
+            <span class="text-1xl font-semibold">{{ fecha_ejecucion }}</span>
+        </div>
+
+        <a href="{{ url_for('ejecutar') }}" class="bg-blue-50 text-black px-4 py-2 rounded-lg mt-4 inline-block hover:bg-yellow-500 transition duration-300">
+            Ejecutar Tarea Manualmente
+        </a>
+
     </div>
+
+    <!-- Script para mostrar la hora -->
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            const timeString = `${hours}:${minutes}:${seconds}`;
+            document.getElementById('time').textContent = timeString;
+        }
+
+        // Actualiza la hora cada segundo
+        setInterval(updateTime, 1000);
+        updateTime();  // Llama a la función inmediatamente para que no haya retraso en la primera ejecución
+    </script>
+
 </body>
 </html>
