@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PELSA - Lider en Soluciones Electricas</title>
-    <!-- Referencia al CSS compilado por Tailwind -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind-output.css') }}">
+    <title>PELSA - Líder en Soluciones Eléctricas</title>
+    <!-- Tailwind CSS desde CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
 
@@ -24,25 +24,22 @@
             Nuestra plataforma integra las cotizaciones de Pelsa por encima de un monto específico directamente en el CRM, facilitando la gestión y el seguimiento de oportunidades de negocio.
         </p>
 
-        <!-- Sección que muestra la hora -->
-        <div class="bg-blue-950 text-white py-3 px-4 rounded-lg mb-4">
-            <span class="text-lg">Hora actual:</span>
-            <span id="time" class="text-2xl font-semibold"></span>
+        <!-- Hora del navegador -->
+        <div class="bg-blue-950 text-black py-3 px-4 rounded-lg mb-4">
+            <span class="text-lg font-semibold">Hora del navegador:</span>
+            <span id="time" class="text-lg font-semibold"></span>
         </div>
 
-        <div class="bg-blue-500 text-white py-3 px-4 rounded-lg mb-4">
-            <span class="text-lg">Última ejecución:</span>
-            <span class="text-1xl font-semibold">{{ fecha_ejecucion }}</span>
+        <!-- Hora del servidor -->
+        <div class="bg-yellow-600 text-white py-3 px-4 rounded-lg mb-4">
+            <span class="text-lg font-semibold">Hora del servidor:</span>
+            <span id="server-time" class="text-lg font-semibold"></span>
         </div>
-
-        <a href="{{ url_for('ejecutar') }}" class="bg-blue-50 text-black px-4 py-2 rounded-lg mt-4 inline-block hover:bg-yellow-500 transition duration-300">
-            Ejecutar Tarea Manualmente
-        </a>
-
     </div>
 
-    <!-- Script para mostrar la hora -->
+    <!-- Script para actualizar la hora -->
     <script>
+        // Función para mostrar la hora del navegador
         function updateTime() {
             const now = new Date();
             const hours = now.getHours().toString().padStart(2, '0');
@@ -52,9 +49,22 @@
             document.getElementById('time').textContent = timeString;
         }
 
-        // Actualiza la hora cada segundo
-        setInterval(updateTime, 1000);
-        updateTime();  // Llama a la función inmediatamente para que no haya retraso en la primera ejecución
+        // Función para obtener la hora del servidor
+        async function updateServerTime() {
+            try {
+                const response = await fetch('/hora-servidor');
+                const data = await response.json();
+                document.getElementById('server-time').textContent = data.hora_servidor;
+            } catch (error) {
+                console.error('Error al obtener la hora del servidor:', error);
+            }
+        }
+
+        // Actualiza la hora del navegador cada 10 minutos (600,000 ms)
+        setInterval(updateTime, 600000);
+
+        // Actualiza la hora del servidor cada 10 minutos (600,000 ms)
+        setInterval(updateServerTime, 600000);
     </script>
 
 </body>

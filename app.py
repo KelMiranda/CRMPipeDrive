@@ -1,104 +1,110 @@
-import asyncio
-from flask import Flask, render_template, redirect, url_for, request, flash, session
+import time
+from time import sleep
+
+from flask import Flask, render_template, jsonify
+from datetime import datetime
+from pipedrive.pipedrive_api_conecction import PipedriveAPI
+from pytz import timezone
+from database.sql_server_connection import SQLServerDatabase
 from apscheduler.schedulers.background import BackgroundScheduler
 import atexit
-from datetime import datetime
-from processes.ingresoDeCotizaciones import IngresoDeCotizaciones
-from telegram.apitelegram import TelegramBot
 
 app = Flask(__name__)
-app.secret_key = 'mysecretkey'  # Necesario para usar flash messages
 
-# Simulamos un usuario registrado
-USUARIO_CORRECTO = 'admin@grupopelsa.com'
-PASSWORD_CORRECTA = 'Soy$pectr02024'
-# Variable global para almacenar la fecha de última ejecución
-ultima_ejecucion = None
+# Configuración de la base de datos
+db = SQLServerDatabase("SERVER", "DATABASE", "USERNAME_", "PASSWORD")
+db.connect()
 
-# Cambiar esta función a asincrónica
-async def ejecutar_proceso_cotizaciones():
-    global ultima_ejecucion
-    pais = ['SV', 'GT', 'HN']
-    for row in pais:
-        try:
-            print(f"#############################Inicio de los proceso para {row}###################################")
-            ct = IngresoDeCotizaciones(f'{row}')
-            print(ct.proceso_clientes_dias(1))
-            print(f"#####################Finalizando proceso clientes dias para {row}###############################")
-            print(ct.cotizaciones_actualizadas())
-            print(f"#####################Finalizando cotizaciones actualizadas para {row}###########################")
-            print(ct.proceso_cotizaciones_dia(1))
-            print(f"#####################Finalizando proceso cotizaciones dias para {row}###########################")
-            print(ct.proceso_cotizaciones_pipedrive())
-            print(f"#####################Finalizando proceso cotizaciones pipedrive para {row}######################")
-            print(f"##############################Finalizando proceso para {row}####################################")
-        except Exception as e:
-            print(f'Ocurrió un error con el país {row}: {e}')
+# Función para ejecutar el procedimiento almacenado
+def ejecutar_procedimiento(id_usuario, fecha):
+    time.sleep(0.5)  # Simula un pequeño retraso
+    try:
+        query = f"EXEC RegistrarConexion @UserId = {id_usuario}, @LastLogin = '{fecha}'"
+        db.execute_query(query, return_results=False)
+        print(f"Procedimiento almacenado ejecutado para usuario {id_usuario}.")
+    except Exception as e:
+        print(f"Error al ejecutar el procedimiento almacenado: {e}")
+    finally:
+        if not db.is_connected():
+            db.connect()
 
-    # Usar asyncio.sleep en lugar de time.sleep para no bloquear el proceso
-    await asyncio.sleep(3)
-    print(f"#####################Enviando Notificacion Telegram######################")
-    bot = TelegramBot(None)
-    bot.send_message(1947314689)
+# Lógica centralizada para procesar usuarios
+def procesar_usuarios():
+    """
+    Consulta usuarios desde Pipedrive, procesa sus datos, y ejecuta el procedimiento almacenado.
+    """
+    print("Procesando usuarios...")
+    usuarios = PipedriveAPI('Token').get_all_user()
 
-    # Actualizar la fecha y hora de la última ejecución
-    ultima_ejecucion = datetime.now()
+    if not usuarios:
+        print("No se encontraron usuarios para procesar.")
+        return []
 
-# Si quieres llamar a esta función en un contexto síncrono (como una vista Flask)
-def ejecutar_proceso_cotizaciones_sync():
-    asyncio.run(ejecutar_proceso_cotizaciones())
+    data = usuarios.get("data", [])
+    utc = timezone('UTC')
+    local_tz = timezone('America/El_Salvador')
+    now_local = datetime.now(local_tz)
 
-# Ruta principal de la landing page
-@app.route('/')
-def index():
-    if not session.get('logged_in'):
-        return redirect(url_for('login'))
+    for usuario in data:
+        time.sleep(1)
+        last_login = usuario.get('last_login')
+        if last_login:
+            # Convertir la hora de UTC a la hora local
+            utc_time = utc.localize(datetime.strptime(last_login, '%Y-%m-%d %H:%M:%S'))
+            local_time = utc_time.astimezone(local_tz)
+            last_login_local = local_time.strftime('%Y-%m-%d %H:%M:%S')
+            usuario['last_login'] = last_login_local
 
-    global ultima_ejecucion
-    fecha_ejecucion = ultima_ejecucion.strftime('%Y-%m-%d %H:%M:%S') if ultima_ejecucion else "No ejecutada aún"
-    return render_template('index.html', fecha_ejecucion=fecha_ejecucion)
+            # Ejecutar procedimiento almacenado
+            ejecutar_procedimiento(usuario.get('id'), last_login_local)
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-        # Verificar credenciales
-        if email == USUARIO_CORRECTO and password == PASSWORD_CORRECTA:
-            session['logged_in'] = True  # Marcar la sesión como iniciada
-            return redirect(url_for('index'))
+            # Calcular los días desde la última conexión
+            days_since_last_login = (now_local - local_time).days
+            usuario['days_since_last_login'] = days_since_last_login
         else:
-            # Enviar mensaje de error con flash
-            flash('Correo o contraseña incorrecta', 'error')
-            return redirect(url_for('login'))
-    return render_template('login.html')
+            usuario['days_since_last_login'] = None
 
-@app.route('/logout')
-def logout():
-    session.pop('logged_in', None)
-    flash('Has cerrado sesión correctamente.', 'success')
-    return redirect(url_for('login'))
+    # Ordenar por última conexión
+    sorted_data = sorted(data, key=lambda x: x.get('last_login', ''), reverse=True)
+    return sorted_data
 
-# Cambiar esta vista para que sea síncrona y llame a la función asincrónica
-@app.route('/ejecutar')
-def ejecutar():
-    ejecutar_proceso_cotizaciones_sync()
-    return redirect(url_for('index'))
-
-# Configuración de tareas programadas
-def tarea_diaria():
-    ejecutar_proceso_cotizaciones_sync()
-
+# Programador de tareas con APScheduler
 scheduler = BackgroundScheduler()
-scheduler.add_job(func=tarea_diaria, trigger="cron", hour=3, minute=0, id='tarea_diaria')
+scheduler.add_job(func=procesar_usuarios, trigger="interval", minutes=10)
 scheduler.start()
 
-# Cerrar el scheduler cuando la aplicación termine
+# Flask routes
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/hora-servidor')
+def hora_servidor():
+    # Retorna la hora actual del servidor en formato JSON
+    return jsonify({'hora_servidor': datetime.now().strftime('%H:%M:%S')})
+
+@app.route('/usuarios', methods=['GET'])
+def get_users():
+    """
+    Endpoint que devuelve los usuarios procesados en formato JSON.
+    """
+    try:
+        usuarios = procesar_usuarios()
+        return jsonify(usuarios)
+    except Exception as e:
+        print(f"Error al procesar usuarios: {e}")
+        return jsonify({"error": "No se pudieron obtener los usuarios."}), 500
+
+@app.route('/usuarios-page')
+def usuarios_page():
+    """
+    Renderiza la página que contiene la tabla de usuarios con AJAX.
+    """
+    return render_template('usuarios.html')
+
+# Asegura el apagado limpio del programador al cerrar la app
 atexit.register(lambda: scheduler.shutdown())
+atexit.register(lambda: db.disconnect())
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=False)
-
-# No necesitas este bloque ya que gunicorn se encargará de ejecutar el servidor
-# if __name__ == '__main__':
-#     app.run(host='0.0.0.0', port=5000, debug=False)
+    app.run(host='0.0.0.0', port=5000, debug=True)

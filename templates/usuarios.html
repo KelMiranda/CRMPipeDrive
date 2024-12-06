@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios de Pipedrive</title>
+    <!-- Tailwind CSS desde CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+    <!-- Contenedor principal -->
+    <div class="text-center max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+        <!-- Título -->
+        <h1 class="text-2xl font-bold text-gray-800 mb-4">Usuarios de Pipedrive</h1>
+
+        <!-- Tabla de usuarios -->
+        <div id="usuarios-list" class="overflow-x-auto">
+            <table class="table-auto w-full text-left border-collapse border border-gray-300">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2 border text-center">ID</th>
+                        <th class="px-4 py-2 border text-center">Nombre</th>
+                        <th class="px-4 py-2 border text-center">Ultima Hora</th>
+                        <th class="px-4 py-2 border text-center">Pais</th>
+                        <th class="px-4 py-2 border text-center">Dias desde la última conexion</th>
+                    </tr>
+                </thead>
+                <tbody id="usuarios-body">
+                    <!-- Aquí se insertarán dinámicamente los usuarios -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Script para actualizar la lista de usuarios -->
+    <script>
+        async function fetchUsuarios() {
+            try {
+                const response = await fetch('/usuarios');
+                const data = await response.json();
+
+                const usuariosBody = document.getElementById('usuarios-body');
+                usuariosBody.innerHTML = ''; // Limpia la tabla antes de actualizarla
+
+                if (Array.isArray(data)) {
+                    data.forEach(usuario => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td class="px-4 py-2 border text-xs">${usuario.id}</td>
+                            <td class="px-4 py-2 border text-sm text-center">${usuario.name}</td>
+                            <td class="px-4 py-2 border text-sm">${usuario.last_login}</td>
+                            <td class="px-4 py-2 border text-sm">${usuario.locale}</td>
+                            <td class="px-4 py-2 border text-sm text-center">${usuario.days_since_last_login} Dias</td>
+                        `;
+                        usuariosBody.appendChild(row);
+                    });
+                } else {
+                    usuariosBody.innerHTML = `
+                        <tr>
+                            <td colspan="3" class="px-4 py-2 text-center border text-red-500">
+                                ${data.error || 'Error al obtener los datos.'}
+                            </td>
+                        </tr>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error al consultar los usuarios:', error);
+                const usuariosBody = document.getElementById('usuarios-body');
+                usuariosBody.innerHTML = `
+                    <tr>
+                        <td colspan="3" class="px-4 py-2 text-center border text-red-500">
+                            Error al consultar los usuarios.
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        // Llama a la función inmediatamente al cargar la página
+        fetchUsuarios();
+
+        // Actualiza la lista cada 10 minutos (600,000 ms)
+        setInterval(fetchUsuarios, 300000);
+    </script>
+</body>
+</html>
