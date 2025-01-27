@@ -14,7 +14,7 @@ from telegram.apitelegram import TelegramBot
 
 if __name__ == '__main__':
 
-    pais = ['HN','GT','SV']
+    pais = ['SV', 'GT', 'HN']
     for row in pais:
         try:
             print(f"#############################Inicio de los proceso para {row}###################################")

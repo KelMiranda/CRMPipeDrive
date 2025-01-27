@@ -31,7 +31,7 @@
         </div>
 
         <!-- Hora del servidor -->
-        <div class="bg-yellow-600 text-white py-3 px-4 rounded-lg mb-4">
+        <div class="bg-black text-white py-3 px-4 rounded-lg mb-4">
             <span class="text-lg font-semibold">Hora del servidor:</span>
             <span id="server-time" class="text-lg font-semibold"></span>
         </div>
@@ -53,18 +53,26 @@
         async function updateServerTime() {
             try {
                 const response = await fetch('/hora-servidor');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
                 const data = await response.json();
                 document.getElementById('server-time').textContent = data.hora_servidor;
             } catch (error) {
                 console.error('Error al obtener la hora del servidor:', error);
+                document.getElementById('server-time').textContent = 'Error al cargar la hora';
             }
         }
 
+        // Actualizar la hora al cargar la página
+        updateServerTime();
+        updateTime();
+
         // Actualiza la hora del navegador cada 10 minutos (600,000 ms)
-        setInterval(updateTime, 600000);
+        setInterval(updateTime, 1000);
 
         // Actualiza la hora del servidor cada 10 minutos (600,000 ms)
-        setInterval(updateServerTime, 600000);
+        setInterval(updateServerTime, 1000);
     </script>
 
 </body>
