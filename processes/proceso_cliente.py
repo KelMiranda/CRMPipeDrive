@@ -201,6 +201,7 @@ class Cliente:
 
     def insertar_en_pipedrive_y_actualizar(self, codigo_cliente, id_registro):
         datos_cliente = self.ct.obtener_datos_vw(codigo_cliente)
+        print(datos_cliente)
         datos = self.ct.cliente_con_keys_pipedrive(datos_cliente)
         try:
             insert = self.pipe.post_organization(datos)

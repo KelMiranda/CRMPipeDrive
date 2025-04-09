@@ -12,6 +12,7 @@ from pipedrive.pipedrive_api_conecction import PipedriveAPI
 import os
 import asyncio
 ruta_directorio_actual = os.getcwd()
+from datetime import datetime
 
 class IngresoDeCotizaciones:
     def __init__(self, pais):
@@ -277,6 +278,17 @@ class IngresoDeCotizaciones:
             # Creamos el DataFrame con los resultados
             dataFrame = pd.DataFrame(result_list, columns=columnas)
 
+            # Obtener la fecha actual en formato YYYY-MM-DD
+            fecha_actual = datetime.now().strftime("%Y-%m-%d")
+
+            # Nombre del archivo con la fecha correspondiente
+            nombre_archivo = f"cotizacion_validador_{fecha_actual}.txt"
+
+            # Guardar el DataFrame en un archivo TXT con formato de tabla
+            dataFrame.to_csv(nombre_archivo, sep='\t', index=False)
+
+            print(f"Archivo guardado correctamente como: {nombre_archivo}")
+
             # Mostramos el DataFrame
             return dataFrame
 
@@ -360,9 +372,9 @@ class IngresoDeCotizaciones:
                 print(f"Total de cotizaciones a procesar para 'C': {total_registros_c}")
 
                 for index, row in dt_filtered_c.iterrows():
-                    time.sleep(0.5)
-                    datos = self.ct.datos_de_la_cotizacion(row['DocNum'], row['DocEntry'])
                     try:
+                        time.sleep(0.5)
+                        datos = self.ct.datos_de_la_cotizacion(row['DocNum'], row['DocEntry'])
                         datos.update(
                             {
                                 'pipeline_id': 2,
@@ -372,6 +384,7 @@ class IngresoDeCotizaciones:
                         if 'owner_id' in datos:
                             datos['user_id'] = datos.pop('owner_id')
                         print(f"Datos de la cotización: {datos}")
+
                         # Insertar el deal en Pipedrive
                         deal_id = self.pipe.post_deals(datos)
                         if deal_id is None:
@@ -379,20 +392,20 @@ class IngresoDeCotizaciones:
                             self.db.log_error('proceso_cotizaciones_pipedrive', error_message, "Proceso C",
                                               ruta_directorio_actual)
                             log_error(error_message)
-                            return {"error": error_message}
+                            continue  # Continuar con la siguiente cotización
 
                         # Actualizar la tabla si el deal fue insertado
                         print(
                             self.actualizar_tablas(deal_id, row['id_proyecto'], datos.get('status'), row['Validador']))
+                        print(
+                            f"----------------------Cotización #{index + 1}/{total_registros_c}-----------------------")
 
                     except Exception as e:
                         error_message = f"Error en el proceso de inserción de deal y actualización de tablas: {e}"
-                        self.db.log_error('proceso_cotizaciones_pipedrive', error_message, None,
+                        self.db.log_error('proceso_cotizaciones_pipedrive', error_message, "Proceso C",
                                           ruta_directorio_actual)
                         log_error(error_message)
-                        return {"error": error_message}
-
-                    print(f"----------------------Cotización #{index + 1}/{total_registros_c}-----------------------")
+                        continue  # Continuar con la siguiente cotización
 
             # Procesar cotizaciones con Validador 'U'
             dt_filtered_u = dt[(dt['Validador'] == 'U')]
@@ -402,11 +415,12 @@ class IngresoDeCotizaciones:
                 print(f"Total de cotizaciones a procesar para 'U': {total_registros_u}")
 
                 for index, row in dt_filtered_u.iterrows():
-                    time.sleep(0.5)
-                    datos = self.ct.datos_de_la_cotizacion(row['DocNum'], row['DocEntry'])
                     try:
+                        time.sleep(0.5)
+                        datos = self.ct.datos_de_la_cotizacion(row['DocNum'], row['DocEntry'])
                         if 'owner_id' in datos:
                             datos['user_id'] = datos.pop('owner_id')
+
                         # Actualizar el deal en Pipedrive
                         updated_deal_id = self.pipe.put_deals(int(row['id_deal']), datos)
                         if updated_deal_id is None:
@@ -414,25 +428,24 @@ class IngresoDeCotizaciones:
                             self.db.log_error('proceso_cotizaciones_pipedrive', error_message, "Proceso U",
                                               ruta_directorio_actual)
                             log_error(error_message)
-                            return {"error": error_message}
+                            continue  # Continuar con la siguiente cotización
 
                         # Actualizar las tablas si la actualización fue exitosa
                         print(self.actualizar_tablas(updated_deal_id, row['id_proyecto'], datos.get('status'),
                                                      row['Validador']))
+                        print(
+                            f"----------------------Cotización #{index + 1}/{total_registros_u}-----------------------")
 
                     except Exception as e:
                         error_message = f"Error al intentar actualizar el deal y las tablas para ID {row['id_deal']}: {e}"
-                        self.db.log_error('proceso_cotizaciones_pipedrive', error_message, None,
+                        self.db.log_error('proceso_cotizaciones_pipedrive', error_message, "Proceso U",
                                           ruta_directorio_actual)
                         log_error(error_message)
-                        return {"error": error_message}
-
-                    print(f"----------------------Cotización #{index + 1}/{total_registros_u}-----------------------")
+                        continue  # Continuar con la siguiente cotización
 
         except Exception as e:
             error_message = f"Error en el proceso de cotizaciones del día: {e}"
-            self.db.log_error('proceso_cotizaciones_pipedrive', error_message, None,
-                              ruta_directorio_actual)
+            self.db.log_error('proceso_cotizaciones_pipedrive', error_message, None, ruta_directorio_actual)
             log_error(error_message)
         finally:
             self.db.disconnect()  # Cerramos la conexión una vez después de ambos casos

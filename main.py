@@ -11,6 +11,7 @@ from processes.deals import DealTable
 from processes.proceso_cliente import Cliente
 import pandas as pd
 from telegram.apitelegram import TelegramBot
+from processes.proceso_cliente import Cliente
 
 if __name__ == '__main__':
 
@@ -34,3 +35,16 @@ if __name__ == '__main__':
 
     bot = TelegramBot(None)
     bot.send_message(1947314689)
+
+    #print(Cliente('SV').ingresando_cliente('C944696'))
+    #print(Cliente('SV').validadorCliente('C1649364'))
+    #print(Cliente('SV').construir_datos_cliente('C1649364'))
+
+
+
+    '''ct = IngresoDeCotizaciones('SV')
+    print(ct.proceso_cotizaciones_pipedrive())'''
+
+    '''ct = IngresoDeCotizaciones('SV')
+    #print(ct.cotizaciones_actualizadas())
+    print(ct.proceso_cotizaciones_pipedrive())'''

@@ -19,11 +19,11 @@
             <table class="table-auto w-full text-left border-collapse border border-gray-300">
                 <thead>
                     <tr>
-                        <th class="px-4 py-2 border text-center">ID</th>
-                        <th class="px-4 py-2 border text-center">Nombre</th>
-                        <th class="px-4 py-2 border text-center">Ultima Hora</th>
-                        <th class="px-4 py-2 border text-center">Pais</th>
-                        <th class="px-4 py-2 border text-center">Dias desde la última conexion</th>
+                        <th class="px-4 py-2 border text-center text-sm">ID</th>
+                        <th class="px-4 py-2 border text-center text-sm">Nombre</th>
+                        <th class="px-4 py-2 border text-center text-sm min-w-[160px]">Ultima Hora</th>
+                        <th class="px-4 py-2 border text-center text-sm">Pais</th>
+                        <th class="px-4 py-2 border text-center text-sm" title="Días desde la última conexión">Últ. conexión</th>
                     </tr>
                 </thead>
                 <tbody id="usuarios-body">
@@ -49,9 +49,9 @@
                         row.innerHTML = `
                             <td class="px-4 py-2 border text-xs">${usuario.id}</td>
                             <td class="px-4 py-2 border text-sm text-center">${usuario.name}</td>
-                            <td class="px-4 py-2 border text-sm">${usuario.last_login}</td>
+                            <td class="px-4 py-2 border text-xs whitespace-nowrap min-w-[160px]">${usuario.last_login}</td>
                             <td class="px-4 py-2 border text-sm">${usuario.locale}</td>
-                            <td class="px-4 py-2 border text-sm text-center">${usuario.days_since_last_login} Dias</td>
+                            <td class="px-4 py-2 border text-sm text-center min-w-[160px]">${usuario.days_since_last_login} Dias</td>
                         `;
                         usuariosBody.appendChild(row);
                     });
