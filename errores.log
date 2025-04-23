@@ -13,3 +13,130 @@
 2025-04-09 08:24:32 - Error al insertar o actualizar el cliente 'C9191': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
 2025-04-09 08:54:37 - Error al insertar o actualizar el cliente 'C1168': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
 2025-04-09 08:54:43 - Error al insertar o actualizar el cliente 'C9191': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-10 10:29:01 - Error al insertar o actualizar el cliente 'C3465847': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-10 10:29:06 - Error al insertar o actualizar el cliente 'C3452945': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-10 10:40:49 - Error al insertar o actualizar el cliente 'C1184': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-11 10:48:14 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-11 10:48:14 - No se pudo insertar el deal en Pipedrive.
+2025-04-11 10:51:00 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-11 10:51:01 - No se pudo insertar el deal en Pipedrive.
+2025-04-11 10:58:58 - Error al insertar o actualizar el cliente 'C9195': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-11 10:59:02 - Error al insertar o actualizar el cliente 'C1183': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-11 14:53:34 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-11 14:53:35 - No se pudo insertar el deal en Pipedrive.
+2025-04-11 14:53:41 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-11 14:53:41 - No se pudo insertar el deal en Pipedrive.
+2025-04-11 14:54:23 - Error al insertar o actualizar el cliente 'C9195': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-11 14:54:26 - Error al insertar o actualizar el cliente 'C1183': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-12 11:03:38 - Error al insertar o actualizar el cliente 'C2709499': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-12 11:06:01 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-12 11:06:01 - No se pudo insertar el deal en Pipedrive.
+2025-04-12 11:06:06 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-12 11:06:06 - No se pudo insertar el deal en Pipedrive.
+2025-04-12 11:06:32 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-12 11:06:32 - No se pudo insertar el deal en Pipedrive.
+2025-04-14 08:20:55 - Error al insertar o actualizar el cliente 'C2709499': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-14 08:24:10 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-14 08:24:10 - No se pudo insertar el deal en Pipedrive.
+2025-04-14 08:24:15 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-14 08:24:15 - No se pudo insertar el deal en Pipedrive.
+2025-04-14 08:24:20 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-14 08:24:20 - No se pudo insertar el deal en Pipedrive.
+2025-04-14 08:58:01 - Error al insertar o actualizar el cliente 'C2709499': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-14 09:02:17 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-14 09:02:17 - No se pudo insertar el deal en Pipedrive.
+2025-04-14 09:02:22 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-14 09:02:22 - No se pudo insertar el deal en Pipedrive.
+2025-04-14 09:02:27 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-14 09:02:27 - No se pudo insertar el deal en Pipedrive.
+2025-04-14 11:04:48 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-14 11:04:48 - No se pudo insertar el deal en Pipedrive.
+2025-04-14 11:04:53 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-14 11:04:53 - No se pudo insertar el deal en Pipedrive.
+2025-04-14 11:04:58 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-14 11:04:58 - No se pudo insertar el deal en Pipedrive.
+2025-04-15 08:47:49 - Error al insertar o actualizar el cliente 'C11991': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-15 08:47:51 - Error al insertar o actualizar el cliente 'C3430943': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-15 08:51:15 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-15 08:51:15 - No se pudo insertar el deal en Pipedrive.
+2025-04-15 08:51:23 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-15 08:51:23 - No se pudo insertar el deal en Pipedrive.
+2025-04-15 08:51:29 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-15 08:51:29 - No se pudo insertar el deal en Pipedrive.
+2025-04-15 08:51:35 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-15 08:51:35 - No se pudo insertar el deal en Pipedrive.
+2025-04-15 08:57:56 - Error al insertar o actualizar el cliente 'C9243': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-15 08:57:58 - Error al insertar o actualizar el cliente 'C9243': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-15 16:03:35 - Error al insertar o actualizar el cliente 'C11991': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-15 16:03:37 - Error al insertar o actualizar el cliente 'C3430943': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-15 16:05:33 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-15 16:05:33 - No se pudo insertar el deal en Pipedrive.
+2025-04-15 16:05:38 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-15 16:05:38 - No se pudo insertar el deal en Pipedrive.
+2025-04-15 16:05:42 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-15 16:05:42 - No se pudo insertar el deal en Pipedrive.
+2025-04-15 16:05:47 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-15 16:05:47 - No se pudo insertar el deal en Pipedrive.
+2025-04-16 07:38:05 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-16 07:38:05 - No se pudo insertar el deal en Pipedrive.
+2025-04-16 07:38:10 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-16 07:38:10 - No se pudo insertar el deal en Pipedrive.
+2025-04-16 07:38:14 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-16 07:38:14 - No se pudo insertar el deal en Pipedrive.
+2025-04-16 07:38:19 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-16 07:38:19 - No se pudo insertar el deal en Pipedrive.
+2025-04-21 08:15:00 - Error al insertar o actualizar el cliente 'C1726040': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-21 08:15:54 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-21 08:15:54 - No se pudo insertar el deal en Pipedrive.
+2025-04-21 08:15:59 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-21 08:15:59 - No se pudo insertar el deal en Pipedrive.
+2025-04-21 08:16:04 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-21 08:16:04 - No se pudo insertar el deal en Pipedrive.
+2025-04-21 08:16:08 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-21 08:16:08 - No se pudo insertar el deal en Pipedrive.
+2025-04-21 08:28:45 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-21 08:28:45 - No se pudo insertar el deal en Pipedrive.
+2025-04-21 08:28:50 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-21 08:28:50 - No se pudo insertar el deal en Pipedrive.
+2025-04-21 08:28:56 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-21 08:28:56 - No se pudo insertar el deal en Pipedrive.
+2025-04-21 08:29:01 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-21 08:29:01 - No se pudo insertar el deal en Pipedrive.
+2025-04-21 08:41:14 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-21 08:41:14 - No se pudo insertar el deal en Pipedrive.
+2025-04-21 08:41:19 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-21 08:41:19 - No se pudo insertar el deal en Pipedrive.
+2025-04-21 08:41:23 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-21 08:41:23 - No se pudo insertar el deal en Pipedrive.
+2025-04-21 08:41:28 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-21 08:41:28 - No se pudo insertar el deal en Pipedrive.
+2025-04-21 09:16:40 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-21 09:16:40 - No se pudo insertar el deal en Pipedrive.
+2025-04-21 09:16:46 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-21 09:16:46 - No se pudo insertar el deal en Pipedrive.
+2025-04-21 09:16:51 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-21 09:16:52 - No se pudo insertar el deal en Pipedrive.
+2025-04-21 09:16:56 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-21 09:16:56 - No se pudo insertar el deal en Pipedrive.
+2025-04-21 09:34:44 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-21 09:34:44 - No se pudo insertar el deal en Pipedrive.
+2025-04-21 09:34:49 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-21 09:34:49 - No se pudo insertar el deal en Pipedrive.
+2025-04-21 09:34:53 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-21 09:34:53 - No se pudo insertar el deal en Pipedrive.
+2025-04-21 09:34:58 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-21 09:34:58 - No se pudo insertar el deal en Pipedrive.
+2025-04-22 08:49:40 - Error al insertar o actualizar el cliente 'C1437890': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-22 08:53:07 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-22 08:53:07 - No se pudo insertar el deal en Pipedrive.
+2025-04-22 08:53:12 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-22 08:53:13 - No se pudo insertar el deal en Pipedrive.
+2025-04-22 08:53:18 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-22 08:53:18 - No se pudo insertar el deal en Pipedrive.
+2025-04-22 08:53:25 - HTTPError in post_request: 403 Client Error: Forbidden for url: https://api.pipedrive.com/v1/deals?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-04-22 08:53:25 - No se pudo insertar el deal en Pipedrive.
+2025-04-22 08:57:06 - Error al insertar o actualizar el cliente 'C2633': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-22 11:08:12 - Error al insertar o actualizar el cliente 'C1437890': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-22 11:10:50 - Error al insertar o actualizar el cliente 'C2633': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-23 09:06:01 - Error al insertar o actualizar el cliente 'C1437890': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-23 09:15:28 - Error al insertar o actualizar el cliente 'C1183': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given

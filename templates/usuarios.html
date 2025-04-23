@@ -10,8 +10,9 @@
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
 
     <!-- Contenedor principal -->
-    <div class="text-center max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+    <div class="text-center max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg">
         <!-- Título -->
+        <img src="../static/img/logo.png" class="mx-auto mb-4 h-20">
         <h1 class="text-2xl font-bold text-gray-800 mb-4">Usuarios de Pipedrive</h1>
 
         <!-- Tabla de usuarios -->
@@ -46,12 +47,25 @@
                 if (Array.isArray(data)) {
                     data.forEach(usuario => {
                         const row = document.createElement('tr');
+
+                        // Lógica de color según los días
+                        let colorClass = '';
+                        const dias = usuario.days_since_last_login;
+
+                        if (dias <= 7) {
+                            colorClass = 'text-green-600 font-semibold'; // 🟢
+                        } else if (dias <= 30) {
+                            colorClass = 'text-yellow-600 font-semibold'; // 🟡
+                        } else {
+                            colorClass = 'text-red-600 font-semibold'; // 🔴
+                        }
+
                         row.innerHTML = `
-                            <td class="px-4 py-2 border text-xs">${usuario.id}</td>
-                            <td class="px-4 py-2 border text-sm text-center">${usuario.name}</td>
-                            <td class="px-4 py-2 border text-xs whitespace-nowrap min-w-[160px]">${usuario.last_login}</td>
-                            <td class="px-4 py-2 border text-sm">${usuario.locale}</td>
-                            <td class="px-4 py-2 border text-sm text-center min-w-[160px]">${usuario.days_since_last_login} Dias</td>
+                            <td class="px-4 py-2 border text-xs ${colorClass}">${usuario.id}</td>
+                            <td class="px-4 py-2 border text-sm text-center ${colorClass}">${usuario.name}</td>
+                            <td class="px-4 py-2 border text-xs whitespace-nowrap min-w-[160px] ${colorClass}">${usuario.last_login}</td>
+                            <td class="px-4 py-2 border text-sm ${colorClass}">${usuario.locale}</td>
+                            <td class="px-4 py-2 border text-sm text-center min-w-[160px] ${colorClass}">${usuario.days_since_last_login} Dias</td>
                         `;
                         usuariosBody.appendChild(row);
                     });

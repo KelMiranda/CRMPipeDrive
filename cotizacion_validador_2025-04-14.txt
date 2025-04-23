@@ -1,0 +1,1 @@
+DocNum	DocEntry	id_proyecto	Validador	id_deal

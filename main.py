@@ -3,6 +3,7 @@ import asyncio
 from processes.ingresoDeCotizaciones import IngresoDeCotizaciones
 from processes.deals import save_json
 from processes.deals import DealTable
+from processes.deals import get_all_deals
 from pipedrive.users_pipedrive import GetIdUser
 from processes.organizations import OrganizationTable, generar_hash_sha256
 from processes.cotizaciones import Cotizaciones
@@ -14,6 +15,10 @@ from telegram.apitelegram import TelegramBot
 from processes.proceso_cliente import Cliente
 
 if __name__ == '__main__':
+
+    #datos= Cotizaciones('SV').datos_de_la_cotizacion(546533,716118)
+    #print(datos)
+
 
     pais = ['SV', 'GT', 'HN']
     for row in pais:
@@ -36,7 +41,9 @@ if __name__ == '__main__':
     bot = TelegramBot(None)
     bot.send_message(1947314689)
 
-    #print(Cliente('SV').ingresando_cliente('C944696'))
+    #print(get_all_deals())
+
+    #print(Cliente('SV').ingresando_cliente('C1809835'))
     #print(Cliente('SV').validadorCliente('C1649364'))
     #print(Cliente('SV').construir_datos_cliente('C1649364'))
 

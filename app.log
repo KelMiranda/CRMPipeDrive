@@ -128,3 +128,690 @@
 2025-04-08 17:05:06,133 - INFO - 127.0.0.1 - - [08/Apr/2025 17:05:06] "GET /usuarios HTTP/1.1" 200 -
 2025-04-08 17:15:06,013 - INFO - 127.0.0.1 - - [08/Apr/2025 17:15:06] "GET /usuarios HTTP/1.1" 200 -
 2025-04-08 17:25:05,947 - INFO - 127.0.0.1 - - [08/Apr/2025 17:25:05] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 10:48:24,261 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.212:5000
+2025-04-10 10:48:24,272 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-10 10:48:24,278 - INFO -  * Restarting with stat
+2025-04-10 10:48:25,785 - WARNING -  * Debugger is active!
+2025-04-10 10:48:25,788 - INFO -  * Debugger PIN: 769-954-314
+2025-04-10 10:48:36,236 - INFO - 127.0.0.1 - - [10/Apr/2025 10:48:36] "GET / HTTP/1.1" 200 -
+2025-04-10 10:48:36,361 - INFO - 127.0.0.1 - - [10/Apr/2025 10:48:36] "GET /static/img/logo.png HTTP/1.1" 200 -
+2025-04-10 10:48:36,578 - INFO - 127.0.0.1 - - [10/Apr/2025 10:48:36] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-10 10:48:36,687 - INFO - 127.0.0.1 - - [10/Apr/2025 10:48:36] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-10 10:48:37,386 - INFO - 127.0.0.1 - - [10/Apr/2025 10:48:37] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-10 10:48:38,696 - INFO - 127.0.0.1 - - [10/Apr/2025 10:48:38] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-10 10:48:39,393 - INFO - 127.0.0.1 - - [10/Apr/2025 10:48:39] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-10 10:48:40,784 - INFO - 127.0.0.1 - - [10/Apr/2025 10:48:40] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-10 10:48:40,820 - INFO - 127.0.0.1 - - [10/Apr/2025 10:48:40] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-10 10:48:41,619 - INFO - 127.0.0.1 - - [10/Apr/2025 10:48:41] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 10:50:09,477 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.212:5000
+2025-04-10 10:50:09,477 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-10 10:50:09,479 - INFO -  * Restarting with stat
+2025-04-10 10:50:10,858 - WARNING -  * Debugger is active!
+2025-04-10 10:50:10,862 - INFO -  * Debugger PIN: 769-954-314
+2025-04-10 10:50:12,913 - INFO - 127.0.0.1 - - [10/Apr/2025 10:50:12] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-10 10:50:13,912 - INFO - 127.0.0.1 - - [10/Apr/2025 10:50:13] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 10:54:42,667 - INFO - 127.0.0.1 - - [10/Apr/2025 10:54:42] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-10 10:54:43,383 - INFO - 127.0.0.1 - - [10/Apr/2025 10:54:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 10:55:17,099 - INFO - 127.0.0.1 - - [10/Apr/2025 10:55:17] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-10 10:55:17,701 - INFO - 127.0.0.1 - - [10/Apr/2025 10:55:17] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 11:00:30,628 - INFO - 127.0.0.1 - - [10/Apr/2025 11:00:30] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-10 11:00:31,229 - INFO - 127.0.0.1 - - [10/Apr/2025 11:00:31] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 11:10:31,517 - INFO - 127.0.0.1 - - [10/Apr/2025 11:10:31] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 11:20:31,539 - INFO - 127.0.0.1 - - [10/Apr/2025 11:20:31] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 11:30:31,551 - INFO - 127.0.0.1 - - [10/Apr/2025 11:30:31] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 11:40:31,570 - INFO - 127.0.0.1 - - [10/Apr/2025 11:40:31] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 11:46:39,565 - INFO - 127.0.0.1 - - [10/Apr/2025 11:46:39] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-10 11:46:40,209 - INFO - 127.0.0.1 - - [10/Apr/2025 11:46:40] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 11:54:08,094 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.212:5000
+2025-04-10 11:54:08,094 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-10 11:54:08,096 - INFO -  * Restarting with stat
+2025-04-10 11:54:09,432 - WARNING -  * Debugger is active!
+2025-04-10 11:54:09,435 - INFO -  * Debugger PIN: 769-954-314
+2025-04-10 11:54:15,308 - INFO - 127.0.0.1 - - [10/Apr/2025 11:54:15] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-10 11:54:50,472 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.212:5000
+2025-04-10 11:54:50,472 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-10 11:54:50,474 - INFO -  * Restarting with stat
+2025-04-10 11:54:51,786 - WARNING -  * Debugger is active!
+2025-04-10 11:54:51,790 - INFO -  * Debugger PIN: 769-954-314
+2025-04-10 11:54:53,649 - INFO - 127.0.0.1 - - [10/Apr/2025 11:54:53] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-10 11:56:08,868 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.212:5000
+2025-04-10 11:56:08,868 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-10 11:56:08,869 - INFO -  * Restarting with stat
+2025-04-10 11:56:10,181 - WARNING -  * Debugger is active!
+2025-04-10 11:56:10,185 - INFO -  * Debugger PIN: 769-954-314
+2025-04-10 11:56:15,141 - INFO - 127.0.0.1 - - [10/Apr/2025 11:56:15] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-10 11:56:48,021 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.212:5000
+2025-04-10 11:56:48,021 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-10 11:56:48,023 - INFO -  * Restarting with stat
+2025-04-10 11:56:49,343 - WARNING -  * Debugger is active!
+2025-04-10 11:56:49,347 - INFO -  * Debugger PIN: 769-954-314
+2025-04-10 11:56:49,513 - INFO - 127.0.0.1 - - [10/Apr/2025 11:56:49] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-10 11:56:50,237 - INFO - 127.0.0.1 - - [10/Apr/2025 11:56:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 12:00:10,714 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.212:5000
+2025-04-10 12:00:10,714 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-10 12:00:10,715 - INFO -  * Restarting with stat
+2025-04-10 12:00:12,064 - WARNING -  * Debugger is active!
+2025-04-10 12:00:12,068 - INFO -  * Debugger PIN: 769-954-314
+2025-04-10 12:00:16,481 - INFO - 127.0.0.1 - - [10/Apr/2025 12:00:16] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-10 12:00:17,269 - INFO - 127.0.0.1 - - [10/Apr/2025 12:00:17] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 12:04:31,885 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.212:5000
+2025-04-10 12:04:31,885 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-10 12:04:31,886 - INFO -  * Restarting with stat
+2025-04-10 12:04:33,234 - WARNING -  * Debugger is active!
+2025-04-10 12:04:33,238 - INFO -  * Debugger PIN: 769-954-314
+2025-04-10 12:04:36,041 - INFO - 127.0.0.1 - - [10/Apr/2025 12:04:36] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-10 12:04:36,890 - INFO - 127.0.0.1 - - [10/Apr/2025 12:04:36] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 12:14:37,574 - INFO - 127.0.0.1 - - [10/Apr/2025 12:14:37] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 12:19:56,490 - INFO - 127.0.0.1 - - [10/Apr/2025 12:19:56] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-10 12:19:57,165 - INFO - 127.0.0.1 - - [10/Apr/2025 12:19:57] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 12:29:57,818 - INFO - 127.0.0.1 - - [10/Apr/2025 12:29:57] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 12:39:57,750 - INFO - 127.0.0.1 - - [10/Apr/2025 12:39:57] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 12:49:57,684 - INFO - 127.0.0.1 - - [10/Apr/2025 12:49:57] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 12:59:57,655 - INFO - 127.0.0.1 - - [10/Apr/2025 12:59:57] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 13:10:46,640 - INFO - 127.0.0.1 - - [10/Apr/2025 13:10:46] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 13:20:09,896 - INFO - 127.0.0.1 - - [10/Apr/2025 13:20:09] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 13:20:44,298 - INFO - 127.0.0.1 - - [10/Apr/2025 13:20:44] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-10 13:20:44,995 - INFO - 127.0.0.1 - - [10/Apr/2025 13:20:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 13:30:45,761 - INFO - 127.0.0.1 - - [10/Apr/2025 13:30:45] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 13:40:45,681 - INFO - 127.0.0.1 - - [10/Apr/2025 13:40:45] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 13:50:45,257 - INFO - 127.0.0.1 - - [10/Apr/2025 13:50:45] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 13:52:17,822 - INFO - 127.0.0.1 - - [10/Apr/2025 13:52:17] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-10 13:52:18,515 - INFO - 127.0.0.1 - - [10/Apr/2025 13:52:18] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 14:02:18,702 - INFO - 127.0.0.1 - - [10/Apr/2025 14:02:18] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 14:05:00,132 - INFO - 127.0.0.1 - - [10/Apr/2025 14:05:00] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-10 14:05:00,804 - INFO - 127.0.0.1 - - [10/Apr/2025 14:05:00] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 14:15:01,648 - INFO - 127.0.0.1 - - [10/Apr/2025 14:15:01] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 14:25:01,545 - INFO - 127.0.0.1 - - [10/Apr/2025 14:25:01] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 14:35:01,549 - INFO - 127.0.0.1 - - [10/Apr/2025 14:35:01] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 14:45:01,867 - INFO - 127.0.0.1 - - [10/Apr/2025 14:45:01] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 14:50:40,275 - INFO - 127.0.0.1 - - [10/Apr/2025 14:50:40] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-10 14:50:40,959 - INFO - 127.0.0.1 - - [10/Apr/2025 14:50:40] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 15:00:41,657 - INFO - 127.0.0.1 - - [10/Apr/2025 15:00:41] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 15:10:41,665 - INFO - 127.0.0.1 - - [10/Apr/2025 15:10:41] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 15:20:41,725 - INFO - 127.0.0.1 - - [10/Apr/2025 15:20:41] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 15:30:41,651 - INFO - 127.0.0.1 - - [10/Apr/2025 15:30:41] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 15:40:46,967 - INFO - 127.0.0.1 - - [10/Apr/2025 15:40:46] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 15:49:37,390 - INFO -  * Detected change in 'D:\\Programas_Pelsa\\CRM-Pipedrive\\CRMPipeDrive\\main.py', reloading
+2025-04-10 15:49:37,649 - INFO -  * Restarting with stat
+2025-04-10 15:49:39,213 - WARNING -  * Debugger is active!
+2025-04-10 15:49:39,217 - INFO -  * Debugger PIN: 769-954-314
+2025-04-10 15:50:47,171 - INFO - 127.0.0.1 - - [10/Apr/2025 15:50:47] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 15:51:52,847 - INFO -  * Detected change in 'D:\\Programas_Pelsa\\CRM-Pipedrive\\CRMPipeDrive\\main.py', reloading
+2025-04-10 15:51:52,946 - INFO -  * Restarting with stat
+2025-04-10 15:51:54,241 - WARNING -  * Debugger is active!
+2025-04-10 15:51:54,245 - INFO -  * Debugger PIN: 769-954-314
+2025-04-10 16:00:46,935 - INFO - 127.0.0.1 - - [10/Apr/2025 16:00:46] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 16:10:46,712 - INFO - 127.0.0.1 - - [10/Apr/2025 16:10:46] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 16:17:35,210 - INFO - 127.0.0.1 - - [10/Apr/2025 16:17:35] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-10 16:17:35,892 - INFO - 127.0.0.1 - - [10/Apr/2025 16:17:35] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 16:22:35,429 - INFO - 127.0.0.1 - - [10/Apr/2025 16:22:35] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-10 16:22:36,076 - INFO - 127.0.0.1 - - [10/Apr/2025 16:22:36] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 16:30:42,154 - INFO - 127.0.0.1 - - [10/Apr/2025 16:30:42] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-10 16:30:42,842 - INFO - 127.0.0.1 - - [10/Apr/2025 16:30:42] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 16:40:43,668 - INFO - 127.0.0.1 - - [10/Apr/2025 16:40:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 16:50:43,661 - INFO - 127.0.0.1 - - [10/Apr/2025 16:50:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 17:00:43,756 - INFO - 127.0.0.1 - - [10/Apr/2025 17:00:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-10 17:10:43,677 - INFO - 127.0.0.1 - - [10/Apr/2025 17:10:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 11:17:21,821 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.212:5000
+2025-04-15 11:17:21,835 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-15 11:17:21,845 - INFO -  * Restarting with stat
+2025-04-15 11:17:23,228 - WARNING -  * Debugger is active!
+2025-04-15 11:17:23,233 - INFO -  * Debugger PIN: 769-954-314
+2025-04-15 11:34:05,658 - INFO - 127.0.0.1 - - [15/Apr/2025 11:34:05] "GET / HTTP/1.1" 200 -
+2025-04-15 11:34:05,924 - INFO - 127.0.0.1 - - [15/Apr/2025 11:34:05] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-04-15 11:34:06,011 - INFO - 127.0.0.1 - - [15/Apr/2025 11:34:06] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-15 11:34:06,166 - INFO - 127.0.0.1 - - [15/Apr/2025 11:34:06] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-15 11:34:06,244 - INFO - 127.0.0.1 - - [15/Apr/2025 11:34:06] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-15 11:34:06,853 - INFO - 127.0.0.1 - - [15/Apr/2025 11:34:06] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-15 11:34:08,368 - INFO - 127.0.0.1 - - [15/Apr/2025 11:34:08] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-15 11:34:08,863 - INFO - 127.0.0.1 - - [15/Apr/2025 11:34:08] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-15 11:34:10,167 - INFO - 127.0.0.1 - - [15/Apr/2025 11:34:10] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-15 11:34:10,854 - INFO - 127.0.0.1 - - [15/Apr/2025 11:34:10] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-15 11:34:11,517 - INFO - 127.0.0.1 - - [15/Apr/2025 11:34:11] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-15 11:34:12,156 - INFO - 127.0.0.1 - - [15/Apr/2025 11:34:12] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 11:44:12,347 - INFO - 127.0.0.1 - - [15/Apr/2025 11:44:12] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 11:54:12,402 - INFO - 127.0.0.1 - - [15/Apr/2025 11:54:12] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 12:04:12,361 - INFO - 127.0.0.1 - - [15/Apr/2025 12:04:12] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 12:14:12,350 - INFO - 127.0.0.1 - - [15/Apr/2025 12:14:12] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 12:24:49,346 - INFO - 127.0.0.1 - - [15/Apr/2025 12:24:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 12:34:49,382 - INFO - 127.0.0.1 - - [15/Apr/2025 12:34:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 12:44:49,342 - INFO - 127.0.0.1 - - [15/Apr/2025 12:44:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 12:54:49,344 - INFO - 127.0.0.1 - - [15/Apr/2025 12:54:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 13:04:49,384 - INFO - 127.0.0.1 - - [15/Apr/2025 13:04:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 13:14:49,411 - INFO - 127.0.0.1 - - [15/Apr/2025 13:14:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 13:24:49,338 - INFO - 127.0.0.1 - - [15/Apr/2025 13:24:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 13:34:49,357 - INFO - 127.0.0.1 - - [15/Apr/2025 13:34:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 13:44:49,353 - INFO - 127.0.0.1 - - [15/Apr/2025 13:44:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 13:54:49,366 - INFO - 127.0.0.1 - - [15/Apr/2025 13:54:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 14:04:49,305 - INFO - 127.0.0.1 - - [15/Apr/2025 14:04:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 14:14:49,325 - INFO - 127.0.0.1 - - [15/Apr/2025 14:14:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 14:24:49,340 - INFO - 127.0.0.1 - - [15/Apr/2025 14:24:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 14:34:49,338 - INFO - 127.0.0.1 - - [15/Apr/2025 14:34:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 14:44:49,419 - INFO - 127.0.0.1 - - [15/Apr/2025 14:44:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 14:54:49,741 - INFO - 127.0.0.1 - - [15/Apr/2025 14:54:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 15:04:49,392 - INFO - 127.0.0.1 - - [15/Apr/2025 15:04:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 15:14:49,380 - INFO - 127.0.0.1 - - [15/Apr/2025 15:14:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 15:24:49,439 - INFO - 127.0.0.1 - - [15/Apr/2025 15:24:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 15:29:15,794 - INFO - 127.0.0.1 - - [15/Apr/2025 15:29:15] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-15 15:29:16,391 - INFO - 127.0.0.1 - - [15/Apr/2025 15:29:16] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 15:33:23,967 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.212:5000
+2025-04-15 15:33:23,967 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-15 15:33:23,969 - INFO -  * Restarting with stat
+2025-04-15 15:33:25,591 - WARNING -  * Debugger is active!
+2025-04-15 15:33:25,595 - INFO -  * Debugger PIN: 769-954-314
+2025-04-15 15:33:37,159 - INFO - 127.0.0.1 - - [15/Apr/2025 15:33:37] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-15 15:33:37,560 - INFO - 127.0.0.1 - - [15/Apr/2025 15:33:37] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-04-15 15:33:37,870 - INFO - 127.0.0.1 - - [15/Apr/2025 15:33:37] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 15:35:01,847 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.212:5000
+2025-04-15 15:35:01,847 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-15 15:35:01,849 - INFO -  * Restarting with stat
+2025-04-15 15:35:03,196 - WARNING -  * Debugger is active!
+2025-04-15 15:35:03,199 - INFO -  * Debugger PIN: 769-954-314
+2025-04-15 15:35:09,253 - INFO - 127.0.0.1 - - [15/Apr/2025 15:35:09] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-15 15:35:09,619 - INFO - 127.0.0.1 - - [15/Apr/2025 15:35:09] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-04-15 15:35:10,048 - INFO - 127.0.0.1 - - [15/Apr/2025 15:35:10] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 15:39:17,311 - INFO - 127.0.0.1 - - [15/Apr/2025 15:39:17] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 15:42:51,480 - INFO - 127.0.0.1 - - [15/Apr/2025 15:42:51] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-15 15:42:51,805 - INFO - 127.0.0.1 - - [15/Apr/2025 15:42:51] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-04-15 15:42:52,274 - INFO - 127.0.0.1 - - [15/Apr/2025 15:42:52] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 15:43:01,535 - INFO - 127.0.0.1 - - [15/Apr/2025 15:43:01] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-15 15:43:01,862 - INFO - 127.0.0.1 - - [15/Apr/2025 15:43:01] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-04-15 15:43:02,101 - INFO - 127.0.0.1 - - [15/Apr/2025 15:43:02] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 15:43:14,622 - INFO - 127.0.0.1 - - [15/Apr/2025 15:43:14] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-15 15:43:14,956 - INFO - 127.0.0.1 - - [15/Apr/2025 15:43:14] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-04-15 15:43:15,283 - INFO - 127.0.0.1 - - [15/Apr/2025 15:43:15] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 15:43:25,369 - INFO - 127.0.0.1 - - [15/Apr/2025 15:43:25] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-15 15:43:25,699 - INFO - 127.0.0.1 - - [15/Apr/2025 15:43:25] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-04-15 15:43:25,944 - INFO - 127.0.0.1 - - [15/Apr/2025 15:43:25] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 15:49:17,328 - INFO - 127.0.0.1 - - [15/Apr/2025 15:49:17] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 15:53:26,308 - INFO - 127.0.0.1 - - [15/Apr/2025 15:53:26] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 15:59:17,247 - INFO - 127.0.0.1 - - [15/Apr/2025 15:59:17] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 16:03:26,442 - INFO - 127.0.0.1 - - [15/Apr/2025 16:03:26] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 16:09:17,206 - INFO - 127.0.0.1 - - [15/Apr/2025 16:09:17] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 16:13:26,187 - INFO - 127.0.0.1 - - [15/Apr/2025 16:13:26] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 16:19:49,565 - INFO - 127.0.0.1 - - [15/Apr/2025 16:19:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 16:23:26,264 - INFO - 127.0.0.1 - - [15/Apr/2025 16:23:26] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 16:29:49,306 - INFO - 127.0.0.1 - - [15/Apr/2025 16:29:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 16:33:49,378 - INFO - 127.0.0.1 - - [15/Apr/2025 16:33:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 16:39:49,307 - INFO - 127.0.0.1 - - [15/Apr/2025 16:39:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 16:43:49,364 - INFO - 127.0.0.1 - - [15/Apr/2025 16:43:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 16:49:49,423 - INFO - 127.0.0.1 - - [15/Apr/2025 16:49:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 16:53:49,421 - INFO - 127.0.0.1 - - [15/Apr/2025 16:53:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 16:59:49,314 - INFO - 127.0.0.1 - - [15/Apr/2025 16:59:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 17:03:49,452 - INFO - 127.0.0.1 - - [15/Apr/2025 17:03:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 17:09:49,432 - INFO - 127.0.0.1 - - [15/Apr/2025 17:09:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 17:19:49,316 - INFO - 127.0.0.1 - - [15/Apr/2025 17:19:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 17:29:49,312 - INFO - 127.0.0.1 - - [15/Apr/2025 17:29:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 17:39:49,322 - INFO - 127.0.0.1 - - [15/Apr/2025 17:39:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 17:49:49,266 - INFO - 127.0.0.1 - - [15/Apr/2025 17:49:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 17:59:49,255 - INFO - 127.0.0.1 - - [15/Apr/2025 17:59:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 18:09:49,272 - INFO - 127.0.0.1 - - [15/Apr/2025 18:09:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 18:19:49,316 - INFO - 127.0.0.1 - - [15/Apr/2025 18:19:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 18:29:49,351 - INFO - 127.0.0.1 - - [15/Apr/2025 18:29:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 18:39:49,296 - INFO - 127.0.0.1 - - [15/Apr/2025 18:39:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 18:49:49,331 - INFO - 127.0.0.1 - - [15/Apr/2025 18:49:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 18:59:49,394 - INFO - 127.0.0.1 - - [15/Apr/2025 18:59:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 19:09:49,243 - INFO - 127.0.0.1 - - [15/Apr/2025 19:09:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 19:19:49,290 - INFO - 127.0.0.1 - - [15/Apr/2025 19:19:49] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 19:29:50,823 - INFO - 127.0.0.1 - - [15/Apr/2025 19:29:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 19:39:50,664 - INFO - 127.0.0.1 - - [15/Apr/2025 19:39:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 19:49:50,642 - INFO - 127.0.0.1 - - [15/Apr/2025 19:49:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 19:59:50,699 - INFO - 127.0.0.1 - - [15/Apr/2025 19:59:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 20:09:50,639 - INFO - 127.0.0.1 - - [15/Apr/2025 20:09:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 20:19:50,723 - INFO - 127.0.0.1 - - [15/Apr/2025 20:19:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 20:29:50,706 - INFO - 127.0.0.1 - - [15/Apr/2025 20:29:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 20:39:50,627 - INFO - 127.0.0.1 - - [15/Apr/2025 20:39:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 20:49:50,627 - INFO - 127.0.0.1 - - [15/Apr/2025 20:49:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 20:59:50,757 - INFO - 127.0.0.1 - - [15/Apr/2025 20:59:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 21:09:50,757 - INFO - 127.0.0.1 - - [15/Apr/2025 21:09:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 21:19:50,645 - INFO - 127.0.0.1 - - [15/Apr/2025 21:19:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 21:29:50,840 - INFO - 127.0.0.1 - - [15/Apr/2025 21:29:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 21:39:50,657 - INFO - 127.0.0.1 - - [15/Apr/2025 21:39:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 21:49:50,709 - INFO - 127.0.0.1 - - [15/Apr/2025 21:49:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 21:59:50,656 - INFO - 127.0.0.1 - - [15/Apr/2025 21:59:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 22:09:50,729 - INFO - 127.0.0.1 - - [15/Apr/2025 22:09:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 22:19:50,646 - INFO - 127.0.0.1 - - [15/Apr/2025 22:19:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 22:29:50,622 - INFO - 127.0.0.1 - - [15/Apr/2025 22:29:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 22:39:50,689 - INFO - 127.0.0.1 - - [15/Apr/2025 22:39:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 22:49:50,634 - INFO - 127.0.0.1 - - [15/Apr/2025 22:49:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 22:59:50,625 - INFO - 127.0.0.1 - - [15/Apr/2025 22:59:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 23:09:50,599 - INFO - 127.0.0.1 - - [15/Apr/2025 23:09:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 23:19:50,622 - INFO - 127.0.0.1 - - [15/Apr/2025 23:19:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 23:29:50,705 - INFO - 127.0.0.1 - - [15/Apr/2025 23:29:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 23:39:50,658 - INFO - 127.0.0.1 - - [15/Apr/2025 23:39:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 23:49:50,632 - INFO - 127.0.0.1 - - [15/Apr/2025 23:49:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-15 23:59:50,771 - INFO - 127.0.0.1 - - [15/Apr/2025 23:59:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 00:09:50,696 - INFO - 127.0.0.1 - - [16/Apr/2025 00:09:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 00:19:50,621 - INFO - 127.0.0.1 - - [16/Apr/2025 00:19:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 00:29:50,785 - INFO - 127.0.0.1 - - [16/Apr/2025 00:29:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 00:39:50,691 - INFO - 127.0.0.1 - - [16/Apr/2025 00:39:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 00:49:50,680 - INFO - 127.0.0.1 - - [16/Apr/2025 00:49:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 00:59:50,798 - INFO - 127.0.0.1 - - [16/Apr/2025 00:59:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 01:09:50,663 - INFO - 127.0.0.1 - - [16/Apr/2025 01:09:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 01:19:50,692 - INFO - 127.0.0.1 - - [16/Apr/2025 01:19:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 01:29:50,678 - INFO - 127.0.0.1 - - [16/Apr/2025 01:29:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 01:39:50,659 - INFO - 127.0.0.1 - - [16/Apr/2025 01:39:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 01:49:50,691 - INFO - 127.0.0.1 - - [16/Apr/2025 01:49:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 01:59:50,668 - INFO - 127.0.0.1 - - [16/Apr/2025 01:59:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 02:09:50,655 - INFO - 127.0.0.1 - - [16/Apr/2025 02:09:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 02:19:50,693 - INFO - 127.0.0.1 - - [16/Apr/2025 02:19:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 02:29:50,662 - INFO - 127.0.0.1 - - [16/Apr/2025 02:29:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 02:39:50,828 - INFO - 127.0.0.1 - - [16/Apr/2025 02:39:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 02:49:50,922 - INFO - 127.0.0.1 - - [16/Apr/2025 02:49:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 02:59:50,767 - INFO - 127.0.0.1 - - [16/Apr/2025 02:59:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 03:09:50,633 - INFO - 127.0.0.1 - - [16/Apr/2025 03:09:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 03:19:50,644 - INFO - 127.0.0.1 - - [16/Apr/2025 03:19:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 03:29:50,739 - INFO - 127.0.0.1 - - [16/Apr/2025 03:29:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 03:39:50,659 - INFO - 127.0.0.1 - - [16/Apr/2025 03:39:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 03:49:50,681 - INFO - 127.0.0.1 - - [16/Apr/2025 03:49:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 03:59:50,636 - INFO - 127.0.0.1 - - [16/Apr/2025 03:59:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 04:09:50,661 - INFO - 127.0.0.1 - - [16/Apr/2025 04:09:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 04:19:50,766 - INFO - 127.0.0.1 - - [16/Apr/2025 04:19:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 04:29:50,781 - INFO - 127.0.0.1 - - [16/Apr/2025 04:29:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 04:39:50,652 - INFO - 127.0.0.1 - - [16/Apr/2025 04:39:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 04:49:50,685 - INFO - 127.0.0.1 - - [16/Apr/2025 04:49:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 04:59:50,648 - INFO - 127.0.0.1 - - [16/Apr/2025 04:59:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 05:09:50,705 - INFO - 127.0.0.1 - - [16/Apr/2025 05:09:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 05:19:50,679 - INFO - 127.0.0.1 - - [16/Apr/2025 05:19:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 05:29:50,642 - INFO - 127.0.0.1 - - [16/Apr/2025 05:29:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 05:39:50,663 - INFO - 127.0.0.1 - - [16/Apr/2025 05:39:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 05:49:50,773 - INFO - 127.0.0.1 - - [16/Apr/2025 05:49:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 05:59:50,637 - INFO - 127.0.0.1 - - [16/Apr/2025 05:59:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 06:09:50,794 - INFO - 127.0.0.1 - - [16/Apr/2025 06:09:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 06:19:50,715 - INFO - 127.0.0.1 - - [16/Apr/2025 06:19:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 06:29:50,656 - INFO - 127.0.0.1 - - [16/Apr/2025 06:29:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 06:39:50,696 - INFO - 127.0.0.1 - - [16/Apr/2025 06:39:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 06:49:50,640 - INFO - 127.0.0.1 - - [16/Apr/2025 06:49:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 06:59:50,724 - INFO - 127.0.0.1 - - [16/Apr/2025 06:59:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 07:09:50,701 - INFO - 127.0.0.1 - - [16/Apr/2025 07:09:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 07:19:50,641 - INFO - 127.0.0.1 - - [16/Apr/2025 07:19:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 07:29:50,768 - INFO - 127.0.0.1 - - [16/Apr/2025 07:29:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 07:39:50,638 - INFO - 127.0.0.1 - - [16/Apr/2025 07:39:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 07:49:50,652 - INFO - 127.0.0.1 - - [16/Apr/2025 07:49:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 07:59:50,668 - INFO - 127.0.0.1 - - [16/Apr/2025 07:59:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 08:09:50,682 - INFO - 127.0.0.1 - - [16/Apr/2025 08:09:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 08:19:50,729 - INFO - 127.0.0.1 - - [16/Apr/2025 08:19:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 08:29:50,683 - INFO - 127.0.0.1 - - [16/Apr/2025 08:29:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 08:39:50,701 - INFO - 127.0.0.1 - - [16/Apr/2025 08:39:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 08:49:50,647 - INFO - 127.0.0.1 - - [16/Apr/2025 08:49:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 08:59:50,643 - INFO - 127.0.0.1 - - [16/Apr/2025 08:59:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 09:09:50,705 - INFO - 127.0.0.1 - - [16/Apr/2025 09:09:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 09:19:50,852 - INFO - 127.0.0.1 - - [16/Apr/2025 09:19:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 09:29:50,710 - INFO - 127.0.0.1 - - [16/Apr/2025 09:29:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 09:39:50,691 - INFO - 127.0.0.1 - - [16/Apr/2025 09:39:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 09:44:44,181 - INFO - 127.0.0.1 - - [16/Apr/2025 09:44:44] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-16 09:44:44,529 - INFO - 127.0.0.1 - - [16/Apr/2025 09:44:44] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-04-16 09:44:44,981 - INFO - 127.0.0.1 - - [16/Apr/2025 09:44:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 09:54:45,751 - INFO - 127.0.0.1 - - [16/Apr/2025 09:54:45] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 10:04:45,816 - INFO - 127.0.0.1 - - [16/Apr/2025 10:04:45] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 10:14:45,787 - INFO - 127.0.0.1 - - [16/Apr/2025 10:14:45] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 10:24:45,755 - INFO - 127.0.0.1 - - [16/Apr/2025 10:24:45] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 10:34:50,733 - INFO - 127.0.0.1 - - [16/Apr/2025 10:34:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 10:44:50,736 - INFO - 127.0.0.1 - - [16/Apr/2025 10:44:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 10:54:50,769 - INFO - 127.0.0.1 - - [16/Apr/2025 10:54:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 11:04:51,207 - INFO - 127.0.0.1 - - [16/Apr/2025 11:04:51] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 11:14:50,720 - INFO - 127.0.0.1 - - [16/Apr/2025 11:14:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 11:24:38,277 - INFO - 127.0.0.1 - - [16/Apr/2025 11:24:38] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-16 11:24:38,616 - INFO - 127.0.0.1 - - [16/Apr/2025 11:24:38] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-04-16 11:24:39,052 - INFO - 127.0.0.1 - - [16/Apr/2025 11:24:39] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 11:25:09,119 - INFO - 127.0.0.1 - - [16/Apr/2025 11:25:09] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-16 11:25:09,456 - INFO - 127.0.0.1 - - [16/Apr/2025 11:25:09] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-04-16 11:25:09,766 - INFO - 127.0.0.1 - - [16/Apr/2025 11:25:09] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 11:35:10,568 - INFO - 127.0.0.1 - - [16/Apr/2025 11:35:10] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 11:45:10,675 - INFO - 127.0.0.1 - - [16/Apr/2025 11:45:10] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 11:55:10,545 - INFO - 127.0.0.1 - - [16/Apr/2025 11:55:10] "GET /usuarios HTTP/1.1" 200 -
+2025-04-16 12:05:10,559 - INFO - 127.0.0.1 - - [16/Apr/2025 12:05:10] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 09:53:31,183 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.212:5000
+2025-04-21 09:53:31,202 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-21 09:53:31,206 - INFO -  * Restarting with stat
+2025-04-21 09:53:32,543 - WARNING -  * Debugger is active!
+2025-04-21 09:53:32,546 - INFO -  * Debugger PIN: 769-954-314
+2025-04-21 09:53:36,197 - INFO - 127.0.0.1 - - [21/Apr/2025 09:53:36] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-21 09:53:36,604 - INFO - 127.0.0.1 - - [21/Apr/2025 09:53:36] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-04-21 09:53:37,065 - INFO - 127.0.0.1 - - [21/Apr/2025 09:53:37] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 10:03:37,811 - INFO - 127.0.0.1 - - [21/Apr/2025 10:03:37] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 10:13:37,965 - INFO - 127.0.0.1 - - [21/Apr/2025 10:13:37] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 10:23:37,846 - INFO - 127.0.0.1 - - [21/Apr/2025 10:23:37] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 10:33:37,840 - INFO - 127.0.0.1 - - [21/Apr/2025 10:33:37] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 10:43:36,918 - INFO - 127.0.0.1 - - [21/Apr/2025 10:43:36] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 10:43:49,786 - INFO - 127.0.0.1 - - [21/Apr/2025 10:43:49] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-21 10:43:50,152 - INFO - 127.0.0.1 - - [21/Apr/2025 10:43:50] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-04-21 10:43:50,400 - INFO - 127.0.0.1 - - [21/Apr/2025 10:43:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 10:53:50,921 - INFO - 127.0.0.1 - - [21/Apr/2025 10:53:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 11:03:50,814 - INFO - 127.0.0.1 - - [21/Apr/2025 11:03:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 11:13:50,801 - INFO - 127.0.0.1 - - [21/Apr/2025 11:13:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 11:23:50,791 - INFO - 127.0.0.1 - - [21/Apr/2025 11:23:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 11:33:50,426 - INFO - 127.0.0.1 - - [21/Apr/2025 11:33:50] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 11:44:43,963 - INFO - 127.0.0.1 - - [21/Apr/2025 11:44:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 11:54:43,995 - INFO - 127.0.0.1 - - [21/Apr/2025 11:54:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 12:04:43,933 - INFO - 127.0.0.1 - - [21/Apr/2025 12:04:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 12:14:43,881 - INFO - 127.0.0.1 - - [21/Apr/2025 12:14:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 12:24:43,919 - INFO - 127.0.0.1 - - [21/Apr/2025 12:24:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 12:34:43,985 - INFO - 127.0.0.1 - - [21/Apr/2025 12:34:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 12:44:43,939 - INFO - 127.0.0.1 - - [21/Apr/2025 12:44:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 12:54:44,034 - INFO - 127.0.0.1 - - [21/Apr/2025 12:54:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 13:04:43,916 - INFO - 127.0.0.1 - - [21/Apr/2025 13:04:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 13:14:43,946 - INFO - 127.0.0.1 - - [21/Apr/2025 13:14:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 13:24:43,981 - INFO - 127.0.0.1 - - [21/Apr/2025 13:24:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 13:34:43,887 - INFO - 127.0.0.1 - - [21/Apr/2025 13:34:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 13:44:44,131 - INFO - 127.0.0.1 - - [21/Apr/2025 13:44:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 13:54:43,943 - INFO - 127.0.0.1 - - [21/Apr/2025 13:54:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 14:04:43,916 - INFO - 127.0.0.1 - - [21/Apr/2025 14:04:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 14:12:08,635 - INFO - 127.0.0.1 - - [21/Apr/2025 14:12:08] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-21 14:12:08,966 - INFO - 127.0.0.1 - - [21/Apr/2025 14:12:08] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-04-21 14:12:09,316 - INFO - 127.0.0.1 - - [21/Apr/2025 14:12:09] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 14:22:10,012 - INFO - 127.0.0.1 - - [21/Apr/2025 14:22:10] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 14:32:10,239 - INFO - 127.0.0.1 - - [21/Apr/2025 14:32:10] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 14:42:10,013 - INFO - 127.0.0.1 - - [21/Apr/2025 14:42:10] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 14:52:10,179 - INFO - 127.0.0.1 - - [21/Apr/2025 14:52:10] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 15:02:44,087 - INFO - 127.0.0.1 - - [21/Apr/2025 15:02:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 15:12:43,959 - INFO - 127.0.0.1 - - [21/Apr/2025 15:12:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 15:22:43,953 - INFO - 127.0.0.1 - - [21/Apr/2025 15:22:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 15:32:43,972 - INFO - 127.0.0.1 - - [21/Apr/2025 15:32:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 15:42:44,039 - INFO - 127.0.0.1 - - [21/Apr/2025 15:42:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 15:52:43,973 - INFO - 127.0.0.1 - - [21/Apr/2025 15:52:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 16:02:43,988 - INFO - 127.0.0.1 - - [21/Apr/2025 16:02:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 16:12:43,972 - INFO - 127.0.0.1 - - [21/Apr/2025 16:12:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 16:22:44,117 - INFO - 127.0.0.1 - - [21/Apr/2025 16:22:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 16:32:43,964 - INFO - 127.0.0.1 - - [21/Apr/2025 16:32:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 16:42:43,937 - INFO - 127.0.0.1 - - [21/Apr/2025 16:42:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 16:52:44,037 - INFO - 127.0.0.1 - - [21/Apr/2025 16:52:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 17:02:43,970 - INFO - 127.0.0.1 - - [21/Apr/2025 17:02:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 17:12:43,990 - INFO - 127.0.0.1 - - [21/Apr/2025 17:12:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 17:22:43,991 - INFO - 127.0.0.1 - - [21/Apr/2025 17:22:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 17:32:43,956 - INFO - 127.0.0.1 - - [21/Apr/2025 17:32:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 17:42:43,972 - INFO - 127.0.0.1 - - [21/Apr/2025 17:42:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 17:52:44,028 - INFO - 127.0.0.1 - - [21/Apr/2025 17:52:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 18:02:44,064 - INFO - 127.0.0.1 - - [21/Apr/2025 18:02:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 18:12:43,969 - INFO - 127.0.0.1 - - [21/Apr/2025 18:12:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 18:22:43,995 - INFO - 127.0.0.1 - - [21/Apr/2025 18:22:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 18:32:43,974 - INFO - 127.0.0.1 - - [21/Apr/2025 18:32:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 18:42:44,016 - INFO - 127.0.0.1 - - [21/Apr/2025 18:42:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 18:52:43,983 - INFO - 127.0.0.1 - - [21/Apr/2025 18:52:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 19:02:44,080 - INFO - 127.0.0.1 - - [21/Apr/2025 19:02:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 19:12:43,972 - INFO - 127.0.0.1 - - [21/Apr/2025 19:12:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 19:22:44,004 - INFO - 127.0.0.1 - - [21/Apr/2025 19:22:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 19:32:44,042 - INFO - 127.0.0.1 - - [21/Apr/2025 19:32:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 19:42:44,072 - INFO - 127.0.0.1 - - [21/Apr/2025 19:42:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 19:52:44,002 - INFO - 127.0.0.1 - - [21/Apr/2025 19:52:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 20:02:43,990 - INFO - 127.0.0.1 - - [21/Apr/2025 20:02:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 20:12:43,950 - INFO - 127.0.0.1 - - [21/Apr/2025 20:12:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 20:22:43,989 - INFO - 127.0.0.1 - - [21/Apr/2025 20:22:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 20:32:43,981 - INFO - 127.0.0.1 - - [21/Apr/2025 20:32:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 20:42:44,995 - INFO - 127.0.0.1 - - [21/Apr/2025 20:42:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 20:52:43,958 - INFO - 127.0.0.1 - - [21/Apr/2025 20:52:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 21:02:44,128 - INFO - 127.0.0.1 - - [21/Apr/2025 21:02:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 21:12:44,015 - INFO - 127.0.0.1 - - [21/Apr/2025 21:12:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 21:22:44,102 - INFO - 127.0.0.1 - - [21/Apr/2025 21:22:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 21:32:43,959 - INFO - 127.0.0.1 - - [21/Apr/2025 21:32:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 21:42:43,991 - INFO - 127.0.0.1 - - [21/Apr/2025 21:42:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 21:52:43,964 - INFO - 127.0.0.1 - - [21/Apr/2025 21:52:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 22:02:43,985 - INFO - 127.0.0.1 - - [21/Apr/2025 22:02:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 22:12:43,961 - INFO - 127.0.0.1 - - [21/Apr/2025 22:12:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 22:22:43,965 - INFO - 127.0.0.1 - - [21/Apr/2025 22:22:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 22:32:43,967 - INFO - 127.0.0.1 - - [21/Apr/2025 22:32:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 22:42:43,972 - INFO - 127.0.0.1 - - [21/Apr/2025 22:42:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 22:52:43,946 - INFO - 127.0.0.1 - - [21/Apr/2025 22:52:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 23:02:43,983 - INFO - 127.0.0.1 - - [21/Apr/2025 23:02:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 23:12:43,968 - INFO - 127.0.0.1 - - [21/Apr/2025 23:12:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 23:22:43,957 - INFO - 127.0.0.1 - - [21/Apr/2025 23:22:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 23:32:44,019 - INFO - 127.0.0.1 - - [21/Apr/2025 23:32:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 23:42:44,003 - INFO - 127.0.0.1 - - [21/Apr/2025 23:42:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-21 23:52:43,963 - INFO - 127.0.0.1 - - [21/Apr/2025 23:52:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 00:02:43,951 - INFO - 127.0.0.1 - - [22/Apr/2025 00:02:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 00:12:44,065 - INFO - 127.0.0.1 - - [22/Apr/2025 00:12:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 00:22:43,919 - INFO - 127.0.0.1 - - [22/Apr/2025 00:22:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 00:32:43,963 - INFO - 127.0.0.1 - - [22/Apr/2025 00:32:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 00:42:43,951 - INFO - 127.0.0.1 - - [22/Apr/2025 00:42:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 00:52:44,097 - INFO - 127.0.0.1 - - [22/Apr/2025 00:52:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 01:02:43,945 - INFO - 127.0.0.1 - - [22/Apr/2025 01:02:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 01:12:43,952 - INFO - 127.0.0.1 - - [22/Apr/2025 01:12:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 01:22:43,957 - INFO - 127.0.0.1 - - [22/Apr/2025 01:22:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 01:32:43,987 - INFO - 127.0.0.1 - - [22/Apr/2025 01:32:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 01:42:43,971 - INFO - 127.0.0.1 - - [22/Apr/2025 01:42:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 01:52:43,939 - INFO - 127.0.0.1 - - [22/Apr/2025 01:52:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 02:02:43,950 - INFO - 127.0.0.1 - - [22/Apr/2025 02:02:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 02:12:43,965 - INFO - 127.0.0.1 - - [22/Apr/2025 02:12:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 02:22:43,987 - INFO - 127.0.0.1 - - [22/Apr/2025 02:22:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 02:32:43,990 - INFO - 127.0.0.1 - - [22/Apr/2025 02:32:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 02:42:44,004 - INFO - 127.0.0.1 - - [22/Apr/2025 02:42:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 02:52:43,936 - INFO - 127.0.0.1 - - [22/Apr/2025 02:52:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 03:02:44,004 - INFO - 127.0.0.1 - - [22/Apr/2025 03:02:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 03:12:43,970 - INFO - 127.0.0.1 - - [22/Apr/2025 03:12:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 03:22:43,964 - INFO - 127.0.0.1 - - [22/Apr/2025 03:22:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 03:32:43,993 - INFO - 127.0.0.1 - - [22/Apr/2025 03:32:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 03:42:44,059 - INFO - 127.0.0.1 - - [22/Apr/2025 03:42:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 03:52:43,946 - INFO - 127.0.0.1 - - [22/Apr/2025 03:52:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 04:02:44,084 - INFO - 127.0.0.1 - - [22/Apr/2025 04:02:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 04:12:44,051 - INFO - 127.0.0.1 - - [22/Apr/2025 04:12:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 04:22:44,072 - INFO - 127.0.0.1 - - [22/Apr/2025 04:22:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 04:32:43,966 - INFO - 127.0.0.1 - - [22/Apr/2025 04:32:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 04:42:43,973 - INFO - 127.0.0.1 - - [22/Apr/2025 04:42:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 04:52:43,989 - INFO - 127.0.0.1 - - [22/Apr/2025 04:52:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 05:02:43,960 - INFO - 127.0.0.1 - - [22/Apr/2025 05:02:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 05:12:43,942 - INFO - 127.0.0.1 - - [22/Apr/2025 05:12:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 05:22:43,973 - INFO - 127.0.0.1 - - [22/Apr/2025 05:22:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 05:32:43,957 - INFO - 127.0.0.1 - - [22/Apr/2025 05:32:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 05:42:44,021 - INFO - 127.0.0.1 - - [22/Apr/2025 05:42:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 05:52:43,967 - INFO - 127.0.0.1 - - [22/Apr/2025 05:52:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 06:02:43,968 - INFO - 127.0.0.1 - - [22/Apr/2025 06:02:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 06:12:43,981 - INFO - 127.0.0.1 - - [22/Apr/2025 06:12:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 06:22:43,967 - INFO - 127.0.0.1 - - [22/Apr/2025 06:22:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 06:32:43,922 - INFO - 127.0.0.1 - - [22/Apr/2025 06:32:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 06:42:43,965 - INFO - 127.0.0.1 - - [22/Apr/2025 06:42:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 06:52:44,011 - INFO - 127.0.0.1 - - [22/Apr/2025 06:52:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 07:02:44,111 - INFO - 127.0.0.1 - - [22/Apr/2025 07:02:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 07:12:43,961 - INFO - 127.0.0.1 - - [22/Apr/2025 07:12:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 07:22:43,978 - INFO - 127.0.0.1 - - [22/Apr/2025 07:22:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 07:32:43,999 - INFO - 127.0.0.1 - - [22/Apr/2025 07:32:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 07:42:43,963 - INFO - 127.0.0.1 - - [22/Apr/2025 07:42:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 07:52:44,000 - INFO - 127.0.0.1 - - [22/Apr/2025 07:52:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 08:02:43,961 - INFO - 127.0.0.1 - - [22/Apr/2025 08:02:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 08:12:43,980 - INFO - 127.0.0.1 - - [22/Apr/2025 08:12:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 08:22:44,625 - INFO - 127.0.0.1 - - [22/Apr/2025 08:22:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 08:32:43,981 - INFO - 127.0.0.1 - - [22/Apr/2025 08:32:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 08:42:43,981 - INFO - 127.0.0.1 - - [22/Apr/2025 08:42:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 08:52:43,973 - INFO - 127.0.0.1 - - [22/Apr/2025 08:52:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 08:56:08,035 - INFO - 127.0.0.1 - - [22/Apr/2025 08:56:08] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-22 08:56:08,381 - INFO - 127.0.0.1 - - [22/Apr/2025 08:56:08] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-04-22 08:56:08,567 - INFO - 127.0.0.1 - - [22/Apr/2025 08:56:08] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 09:06:08,918 - INFO - 127.0.0.1 - - [22/Apr/2025 09:06:08] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 09:16:08,969 - INFO - 127.0.0.1 - - [22/Apr/2025 09:16:08] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 09:26:08,939 - INFO - 127.0.0.1 - - [22/Apr/2025 09:26:08] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 09:36:08,931 - INFO - 127.0.0.1 - - [22/Apr/2025 09:36:08] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 09:46:43,878 - INFO - 127.0.0.1 - - [22/Apr/2025 09:46:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 09:56:43,892 - INFO - 127.0.0.1 - - [22/Apr/2025 09:56:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 10:06:09,963 - INFO - 127.0.0.1 - - [22/Apr/2025 10:06:09] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 10:16:43,816 - INFO - 127.0.0.1 - - [22/Apr/2025 10:16:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 10:26:43,891 - INFO - 127.0.0.1 - - [22/Apr/2025 10:26:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 10:36:43,814 - INFO - 127.0.0.1 - - [22/Apr/2025 10:36:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 10:46:43,808 - INFO - 127.0.0.1 - - [22/Apr/2025 10:46:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 10:51:25,880 - INFO -  * Detected change in 'D:\\Programas_Pelsa\\CRM-Pipedrive\\CRMPipeDrive\\main.py', reloading
+2025-04-22 10:51:26,037 - INFO -  * Restarting with stat
+2025-04-22 10:51:27,774 - WARNING -  * Debugger is active!
+2025-04-22 10:51:27,779 - INFO -  * Debugger PIN: 769-954-314
+2025-04-22 10:51:37,520 - INFO -  * Detected change in 'D:\\Programas_Pelsa\\CRM-Pipedrive\\CRMPipeDrive\\main.py', reloading
+2025-04-22 10:51:37,638 - INFO -  * Restarting with stat
+2025-04-22 10:51:39,107 - WARNING -  * Debugger is active!
+2025-04-22 10:51:39,110 - INFO -  * Debugger PIN: 769-954-314
+2025-04-22 10:52:46,163 - INFO -  * Detected change in 'D:\\Programas_Pelsa\\CRM-Pipedrive\\CRMPipeDrive\\main.py', reloading
+2025-04-22 10:52:46,274 - INFO -  * Restarting with stat
+2025-04-22 10:52:47,771 - WARNING -  * Debugger is active!
+2025-04-22 10:52:47,774 - INFO -  * Debugger PIN: 769-954-314
+2025-04-22 10:53:09,001 - INFO -  * Detected change in 'D:\\Programas_Pelsa\\CRM-Pipedrive\\CRMPipeDrive\\main.py', reloading
+2025-04-22 10:53:09,104 - INFO -  * Restarting with stat
+2025-04-22 10:53:10,492 - WARNING -  * Debugger is active!
+2025-04-22 10:53:10,494 - INFO -  * Debugger PIN: 769-954-314
+2025-04-22 10:56:44,196 - INFO - 127.0.0.1 - - [22/Apr/2025 10:56:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 11:06:43,877 - INFO - 127.0.0.1 - - [22/Apr/2025 11:06:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 11:07:57,216 - INFO -  * Detected change in 'D:\\Programas_Pelsa\\CRM-Pipedrive\\CRMPipeDrive\\main.py', reloading
+2025-04-22 11:07:57,317 - INFO -  * Restarting with stat
+2025-04-22 11:07:58,683 - WARNING -  * Debugger is active!
+2025-04-22 11:07:58,687 - INFO -  * Debugger PIN: 769-954-314
+2025-04-22 11:16:43,948 - INFO - 127.0.0.1 - - [22/Apr/2025 11:16:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 11:26:43,822 - INFO - 127.0.0.1 - - [22/Apr/2025 11:26:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 11:36:43,881 - INFO - 127.0.0.1 - - [22/Apr/2025 11:36:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 11:46:43,858 - INFO - 127.0.0.1 - - [22/Apr/2025 11:46:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 11:56:43,859 - INFO - 127.0.0.1 - - [22/Apr/2025 11:56:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 12:06:43,863 - INFO - 127.0.0.1 - - [22/Apr/2025 12:06:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 12:16:43,920 - INFO - 127.0.0.1 - - [22/Apr/2025 12:16:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 12:26:43,971 - INFO - 127.0.0.1 - - [22/Apr/2025 12:26:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 12:36:43,929 - INFO - 127.0.0.1 - - [22/Apr/2025 12:36:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 12:46:43,859 - INFO - 127.0.0.1 - - [22/Apr/2025 12:46:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 12:56:43,861 - INFO - 127.0.0.1 - - [22/Apr/2025 12:56:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 13:06:43,819 - INFO - 127.0.0.1 - - [22/Apr/2025 13:06:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 13:16:43,841 - INFO - 127.0.0.1 - - [22/Apr/2025 13:16:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 13:26:43,836 - INFO - 127.0.0.1 - - [22/Apr/2025 13:26:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 13:36:43,867 - INFO - 127.0.0.1 - - [22/Apr/2025 13:36:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 13:46:43,889 - INFO - 127.0.0.1 - - [22/Apr/2025 13:46:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 13:56:43,839 - INFO - 127.0.0.1 - - [22/Apr/2025 13:56:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 14:06:43,833 - INFO - 127.0.0.1 - - [22/Apr/2025 14:06:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 14:16:43,820 - INFO - 127.0.0.1 - - [22/Apr/2025 14:16:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 14:26:43,838 - INFO - 127.0.0.1 - - [22/Apr/2025 14:26:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 14:31:33,716 - INFO - 127.0.0.1 - - [22/Apr/2025 14:31:33] "GET /usuarios-page HTTP/1.1" 200 -
+2025-04-22 14:31:34,087 - INFO - 127.0.0.1 - - [22/Apr/2025 14:31:34] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-04-22 14:31:34,358 - INFO - 127.0.0.1 - - [22/Apr/2025 14:31:34] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 14:41:35,027 - INFO - 127.0.0.1 - - [22/Apr/2025 14:41:35] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 14:44:00,146 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:00] "GET / HTTP/1.1" 200 -
+2025-04-22 14:44:00,364 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:00] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:00,525 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:00] "[36mGET /static/img/logo.png HTTP/1.1[0m" 304 -
+2025-04-22 14:44:01,305 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:01] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:02,627 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:02] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:03,308 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:03] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:04,613 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:04] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:05,299 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:05] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:06,618 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:06] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:07,300 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:07] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:08,623 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:08] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:09,307 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:09] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:10,612 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:10] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:11,309 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:11] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:12,753 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:12] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:13,302 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:13] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:14,626 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:14] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:15,308 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:15] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:16,611 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:16] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:17,298 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:17] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:18,618 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:18] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:19,307 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:19] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:20,611 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:20] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:21,308 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:21] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:22,611 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:22] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:23,304 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:23] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:24,610 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:24] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:25,298 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:25] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:26,619 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:26] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:27,305 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:27] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:28,625 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:28] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:29,309 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:29] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:30,613 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:30] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:31,299 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:31] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:32,623 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:32] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:33,306 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:33] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:34,613 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:34] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:35,299 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:35] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:36,617 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:36] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:37,312 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:37] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:38,617 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:38] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:39,305 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:39] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:40,610 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:40] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:41,314 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:41] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:42,618 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:42] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:43,304 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:43] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:44,623 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:44] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:45,305 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:45] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:46,613 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:46] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:47,301 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:47] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:48,625 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:48] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:49,311 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:49] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:50,619 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:50] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:51,305 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:51] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:52,610 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:52] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:53,311 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:53] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:54,617 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:54] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:55,303 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:55] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:56,625 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:56] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:57,310 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:57] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:58,617 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:58] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:44:59,303 - INFO - 127.0.0.1 - - [22/Apr/2025 14:44:59] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:45:00,625 - INFO - 127.0.0.1 - - [22/Apr/2025 14:45:00] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:45:01,310 - INFO - 127.0.0.1 - - [22/Apr/2025 14:45:01] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:45:02,606 - INFO - 127.0.0.1 - - [22/Apr/2025 14:45:02] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:45:03,299 - INFO - 127.0.0.1 - - [22/Apr/2025 14:45:03] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:45:04,626 - INFO - 127.0.0.1 - - [22/Apr/2025 14:45:04] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:45:05,306 - INFO - 127.0.0.1 - - [22/Apr/2025 14:45:05] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:45:06,612 - INFO - 127.0.0.1 - - [22/Apr/2025 14:45:06] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:45:07,298 - INFO - 127.0.0.1 - - [22/Apr/2025 14:45:07] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:45:08,621 - INFO - 127.0.0.1 - - [22/Apr/2025 14:45:08] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:45:09,304 - INFO - 127.0.0.1 - - [22/Apr/2025 14:45:09] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:45:10,611 - INFO - 127.0.0.1 - - [22/Apr/2025 14:45:10] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:45:11,314 - INFO - 127.0.0.1 - - [22/Apr/2025 14:45:11] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:45:12,620 - INFO - 127.0.0.1 - - [22/Apr/2025 14:45:12] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:45:13,362 - INFO - 127.0.0.1 - - [22/Apr/2025 14:45:13] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:45:14,614 - INFO - 127.0.0.1 - - [22/Apr/2025 14:45:14] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:45:15,315 - INFO - 127.0.0.1 - - [22/Apr/2025 14:45:15] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:45:16,610 - INFO - 127.0.0.1 - - [22/Apr/2025 14:45:16] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:45:17,311 - INFO - 127.0.0.1 - - [22/Apr/2025 14:45:17] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:45:18,612 - INFO - 127.0.0.1 - - [22/Apr/2025 14:45:18] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:45:19,106 - INFO - 127.0.0.1 - - [22/Apr/2025 14:45:19] "GET /hora-servidor HTTP/1.1" 200 -
+2025-04-22 14:45:34,517 - INFO - 127.0.0.1 - - [22/Apr/2025 14:45:34] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 14:51:35,065 - INFO - 127.0.0.1 - - [22/Apr/2025 14:51:35] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 15:01:34,877 - INFO - 127.0.0.1 - - [22/Apr/2025 15:01:34] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 15:11:34,946 - INFO - 127.0.0.1 - - [22/Apr/2025 15:11:34] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 15:21:44,032 - INFO - 127.0.0.1 - - [22/Apr/2025 15:21:44] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 15:31:43,960 - INFO - 127.0.0.1 - - [22/Apr/2025 15:31:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 15:41:43,888 - INFO - 127.0.0.1 - - [22/Apr/2025 15:41:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 15:51:43,993 - INFO - 127.0.0.1 - - [22/Apr/2025 15:51:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 15:59:30,035 - INFO -  * Detected change in 'D:\\Programas_Pelsa\\CRM-Pipedrive\\CRMPipeDrive\\app.py', reloading
+2025-04-22 15:59:30,233 - INFO -  * Restarting with stat
+2025-04-22 16:00:45,610 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.212:5000
+2025-04-22 16:00:45,610 - INFO - [33mPress CTRL+C to quit[0m
+2025-04-22 16:00:45,612 - INFO -  * Restarting with stat
+2025-04-22 16:00:47,170 - WARNING -  * Debugger is active!
+2025-04-22 16:00:47,174 - INFO -  * Debugger PIN: 769-954-314
+2025-04-22 16:00:59,898 - INFO - 127.0.0.1 - - [22/Apr/2025 16:00:59] "GET /test HTTP/1.1" 200 -
+2025-04-22 16:01:43,929 - INFO - 127.0.0.1 - - [22/Apr/2025 16:01:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 16:11:43,976 - INFO - 127.0.0.1 - - [22/Apr/2025 16:11:43] "GET /usuarios HTTP/1.1" 200 -
+2025-04-22 16:17:23,691 - INFO -  * Detected change in 'D:\\Programas_Pelsa\\CRM-Pipedrive\\CRMPipeDrive\\app.py', reloading
+2025-04-22 16:17:23,797 - INFO -  * Restarting with stat
+2025-04-22 16:17:25,426 - WARNING -  * Debugger is active!
+2025-04-22 16:17:25,430 - INFO -  * Debugger PIN: 769-954-314

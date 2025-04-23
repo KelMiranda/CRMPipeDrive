@@ -82,6 +82,10 @@ scheduler.start()
 def index():
     return render_template('index.html')
 
+@app.route('/test')
+def perfil ():
+    return render_template('perfil.html')
+
 @app.route('/hora-servidor')
 def hora_servidor():
     return jsonify({'hora_servidor': datetime.now().strftime('%H:%M:%S')})
