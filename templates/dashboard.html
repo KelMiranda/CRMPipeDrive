@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
+    <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-3xl">
+        <h1 class="text-2xl font-bold text-gray-800 mb-4">Bienvenido al Panel de Procesos</h1>
+        <div class="space-y-4">
+            <a href="/usuarios" class="block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded text-center">
+                Procesar Usuarios
+            </a>
+            <a href="/procesar-cotizaciones" class="block bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded text-center">
+                Procesar Cotizaciones por País
+            </a>
+        </div>
+        <p class="text-sm text-gray-500 mt-6 text-center">Última actualización: <span id="hora-servidor">Cargando...</span></p>
+    </div>
+
+    <script>
+        fetch('/hora-servidor')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('hora-servidor').innerText = data.hora_servidor;
+            });
+    </script>
+</body>
+</html>

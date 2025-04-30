@@ -3,64 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cards Usuarios</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <title>Cards Usuarios</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 p-6">
-  <h1 class="text-3xl font-bold mb-6 text-center">Tarjetas Usuarios</h1>
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <h1 class="text-3xl font-bold mb-6 text-center">Tarjetas Usuarios</h1>
+    <div id="usuarios-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <!-- Las tarjetas se llenan dinámicamente aquí -->
+    </div>
 
-    <!-- Ejemplo de una tarjeta -->
-      <div class="bg-white p-4 rounded-2xl shadow-md">
-      <h2 class="text-xl font-semibold text-gray-800">Grupo Pelsa</h2>
-      <p class="text-sm text-gray-500">pipedrive.crm@grupopelsa.com</p>
-      <p class="text-sm text-gray-500 mt-1">+50370906990</p>
-      <p class="text-sm mt-2"><strong>Moneda:</strong> USD</p>
-      <p class="text-sm"><strong>Último login:</strong> 2025-04-22 14:35</p>
-      <p class="text-sm mt-1">
-        <span class="inline-block px-2 py-1 rounded-full text-white text-xs font-semibold bg-green-500">
-          Admin
-        </span>
-      </p>
-    </div>
-      <div class="bg-white p-4 rounded-2xl shadow-md">
-      <h2 class="text-xl font-semibold text-gray-800">Grupo Pelsa</h2>
-      <p class="text-sm text-gray-500">pipedrive.crm@grupopelsa.com</p>
-      <p class="text-sm text-gray-500 mt-1">+50370906990</p>
-      <p class="text-sm mt-2"><strong>Moneda:</strong> USD</p>
-      <p class="text-sm"><strong>Último login:</strong> 2025-04-22 14:35</p>
-      <p class="text-sm mt-1">
-        <span class="inline-block px-2 py-1 rounded-full text-white text-xs font-semibold bg-green-500">
-          Admin
-        </span>
-      </p>
-    </div>
-      <div class="bg-white p-4 rounded-2xl shadow-md">
-      <h2 class="text-xl font-semibold text-gray-800">Grupo Pelsa</h2>
-      <p class="text-sm text-gray-500">pipedrive.crm@grupopelsa.com</p>
-      <p class="text-sm text-gray-500 mt-1">+50370906990</p>
-      <p class="text-sm mt-2"><strong>Moneda:</strong> USD</p>
-      <p class="text-sm"><strong>Último login:</strong> 2025-04-22 14:35</p>
-      <p class="text-sm mt-1">
-        <span class="inline-block px-2 py-1 rounded-full text-white text-xs font-semibold bg-green-500">
-          Admin
-        </span>
-      </p>
-    </div>
-      <div class="bg-white p-4 rounded-2xl shadow-md">
-      <h2 class="text-xl font-semibold text-gray-800">Grupo Pelsa</h2>
-      <p class="text-sm text-gray-500">pipedrive.crm@grupopelsa.com</p>
-      <p class="text-sm text-gray-500 mt-1">+50370906990</p>
-      <p class="text-sm mt-2"><strong>Moneda:</strong> USD</p>
-      <p class="text-sm"><strong>Último login:</strong> 2025-04-22 14:35</p>
-      <p class="text-sm mt-1">
-        <span class="inline-block px-2 py-1 rounded-full text-white text-xs font-semibold bg-green-500">
-          Admin
-        </span>
-      </p>
-    </div>
-    <!-- Repite esto dinámicamente para cada usuario -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('/usuarios')
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('usuarios-container');
+                container.innerHTML = ''; // Limpia tarjetas anteriores si las hubiera
 
-  </div>
+                data.forEach(usuario => {
+                    const tarjeta = document.createElement('div');
+                    tarjeta.className = 'bg-slate-400 p-4 rounded-2xl shadow-md';
+
+                    tarjeta.innerHTML = `
+                        <h2 class="text-xl font-semibold text-stone-50">${usuario.name}</h2>
+                        <p class="text-sm text-gray-50">${usuario.email}</p>
+                        <p class="text-sm text-gray-50 mt-1">${usuario.phone || 'Sin teléfono'}</p>
+                        <p class="text-sm mt-2"><strong>Moneda:</strong> USD</p>
+                        <p class="text-sm"><strong>Último login:</strong> ${usuario.last_login || 'Nunca'}</p>
+                        <p class="text-sm mt-1">
+                            <span class="inline-block px-2 py-1 rounded-full text-white text-xs font-semibold ${usuario.active_flag ? 'bg-green-500' : 'bg-red-500'}">
+                                ${usuario.active_flag ? 'Activo' : 'Inactivo'}
+                            </span>
+                        </p>
+                    `;
+                    container.appendChild(tarjeta);
+                });
+            })
+            .catch(error => {
+                console.error('Error al cargar usuarios:', error);
+            });
+    });
+    </script>
 </body>
 </html>

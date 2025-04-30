@@ -1,0 +1,4 @@
+DocNum	DocEntry	id_proyecto	Validador	id_deal
+95	118	13242	U	13816
+95	118	13243	U	13817
+215872	270485	20731	U	21846

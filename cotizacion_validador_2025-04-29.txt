@@ -1,0 +1,2 @@
+DocNum	DocEntry	id_proyecto	Validador	id_deal
+57281	79113	20757	U	21873

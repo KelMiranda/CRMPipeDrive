@@ -6,6 +6,8 @@ from pipedrive.pipedrive_api_conecction import PipedriveAPI
 from pytz import timezone
 from database.sql_server_connection import SQLServerDatabase
 from apscheduler.schedulers.background import BackgroundScheduler
+from processes.ingresoDeCotizaciones import IngresoDeCotizaciones
+from telegram.apitelegram import TelegramBot
 import atexit
 
 app = Flask(__name__)
@@ -69,9 +71,53 @@ def procesando_usuario_base():
         for usuario in datos[1]:
             print(usuario)
             ejecutar_procedimiento(usuario['id_usuarios'], usuario['fecha'])  # Clave corregida
-        print("#############Finalizando Procesando usuarios...##############")
+        variable = "#############Finalizando Procesando usuarios...##############"
+        print(variable)
+        db.log_error('procesando_usuario_base', variable, "proceso con exito")
     except Exception as e:
         logging.error(f"Error al procesar usuarios: {e}")
+
+
+def procesar_cotizaciones_por_pais():
+    paises = ['SV', 'GT', 'HN']
+    resultados = []
+
+    for row in paises:
+        try:
+            print(f"#############################Inicio de los procesos para {row}###################################")
+            ct = IngresoDeCotizaciones(f'{row}')
+            clientes_dias = ct.proceso_clientes_dias(1)
+            print(clientes_dias)
+            print(f"#####################Finalizando proceso clientes dias para {row}###############################")
+
+            cotizaciones_actualizadas = ct.cotizaciones_actualizadas()
+            print(cotizaciones_actualizadas)
+            print(f"#####################Finalizando cotizaciones actualizadas para {row}###########################")
+
+            cotizaciones_dia = ct.proceso_cotizaciones_dia(1)
+            print(cotizaciones_dia)
+            print(f"#####################Finalizando proceso cotizaciones dias para {row}###########################")
+
+            cotizaciones_pipedrive = ct.proceso_cotizaciones_pipedrive()
+            print(cotizaciones_pipedrive)
+            print(f"#####################Finalizando proceso cotizaciones pipedrive para {row}######################")
+            print(f"##############################Finalizando proceso para {row}####################################")
+
+            resultados.append({
+                'pais': row,
+                'clientes_dias': clientes_dias,
+                'cotizaciones_actualizadas': cotizaciones_actualizadas,
+                'cotizaciones_dia': cotizaciones_dia,
+                'cotizaciones_pipedrive': cotizaciones_pipedrive,
+            })
+        except Exception as e:
+            print(f'Ocurrió un error con el país {row}: {e}')
+            resultados.append({'pais': row, 'error': str(e)})
+
+    bot = TelegramBot(None)
+    bot.send_message(1947314689)
+
+    return resultados
 
 
 scheduler = BackgroundScheduler()
@@ -85,6 +131,15 @@ def index():
 @app.route('/test')
 def perfil ():
     return render_template('perfil.html')
+
+@app.route('/procesar-cotizaciones', methods=['GET'])
+def procesar_cotizaciones():
+    try:
+        resultado = procesar_cotizaciones_por_pais()
+        return jsonify({'status': 'success', 'resultado': resultado})
+    except Exception as e:
+        logging.error(f"Error al procesar cotizaciones: {e}")
+        return jsonify({'status': 'error', 'message': str(e)}), 500
 
 @app.route('/hora-servidor')
 def hora_servidor():

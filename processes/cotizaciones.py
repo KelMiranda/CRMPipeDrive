@@ -97,7 +97,6 @@ def manejar_no_existencia_campo(field_id, value, metodo):
 def notificar_errores(errores):
     # Aquí puedes implementar la lógica para enviar notificaciones con la lista de errores
     print("Enviando notificación de errores:", errores)
-
 def log_error_campos(mensaje):
     with open("errores_de_selection.log", "a") as file:
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
