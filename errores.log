@@ -158,3 +158,23 @@
 2025-04-29 08:58:29 - Error al insertar o actualizar el cliente 'C9237': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
 2025-04-29 11:24:49 - Error al insertar o actualizar el cliente 'C2683': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
 2025-04-29 11:25:22 - Error al insertar o actualizar el cliente 'C9237': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-30 10:48:56 - Error al insertar o actualizar el cliente 'C1437890': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-30 10:48:58 - Error al insertar o actualizar el cliente 'C1437890': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-30 10:49:00 - Error al insertar o actualizar el cliente 'C1437890': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-30 10:49:02 - Error al insertar o actualizar el cliente 'C1437890': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-30 10:49:05 - Error al insertar o actualizar el cliente 'C3422330': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-04-30 10:54:44 - Error al insertar o actualizar el cliente 'C2683': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-03 08:31:58 - Error al insertar o actualizar el cliente 'C2961372': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-03 08:43:16 - Error al insertar o actualizar el cliente 'C9206': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-03 08:43:27 - Error al insertar o actualizar el cliente 'C9234': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-03 08:43:29 - Error al insertar o actualizar el cliente 'C9251': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-03 09:21:59 - Error al insertar o actualizar el cliente 'C2961372': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-03 09:27:06 - ConnectionError in put_request: HTTPSConnectionPool(host='api.pipedrive.com', port=443): Max retries exceeded with url: /v1/deals/21882?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000025CEF716630>: Failed to resolve 'api.pipedrive.com' ([Errno 11002] Lookup timed out)"))
+2025-05-03 09:27:06 - No se pudo actualizar el deal con ID 21882 en Pipedrive.
+2025-05-03 09:28:56 - Error al insertar o actualizar el cliente 'C9206': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-03 09:29:57 - Error al insertar o actualizar el cliente 'C9234': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-03 09:30:50 - Error al insertar o actualizar el cliente 'C9251': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-03 09:41:01 - Error al enviar mensaje: HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot7307503768:AAFYtOkeQsq_MJ773fIT0MWCxOOK1-0gCi4/sendMessage (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x0000025CEE0D4B90>: Failed to resolve 'api.telegram.org' ([Errno 11002] Lookup timed out)"))
+2025-05-04 18:09:30 - Error al insertar o actualizar el cliente 'C1437890': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-04 18:14:12 - Error al insertar o actualizar el cliente 'C9267': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-04 18:14:19 - Error al insertar o actualizar el cliente 'C9251': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given

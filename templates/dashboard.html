@@ -2,30 +2,48 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Control</title>
+    <title>Dashboard de Procesos</title>
+    <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
-    <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-3xl">
-        <h1 class="text-2xl font-bold text-gray-800 mb-4">Bienvenido al Panel de Procesos</h1>
-        <div class="space-y-4">
-            <a href="/usuarios" class="block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded text-center">
-                Procesar Usuarios
-            </a>
-            <a href="/procesar-cotizaciones" class="block bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded text-center">
-                Procesar Cotizaciones por País
-            </a>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center py-10">
+    <h2 class="text-3xl font-bold mb-6 text-gray-800">Dashboard de Procesos</h2>
+
+    <div class="w-11/12 max-w-4xl bg-white shadow-lg rounded-lg p-6">
+        <div id="logs" class="font-mono text-sm text-gray-700 whitespace-pre-wrap h-96 overflow-y-auto border border-gray-300 p-4 rounded bg-gray-50"></div>
+        <div class="mt-4 flex justify-end">
+            <button onclick="iniciarProceso()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                Iniciar Proceso
+            </button>
         </div>
-        <p class="text-sm text-gray-500 mt-6 text-center">Última actualización: <span id="hora-servidor">Cargando...</span></p>
     </div>
 
     <script>
-        fetch('/hora-servidor')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('hora-servidor').innerText = data.hora_servidor;
-            });
+        const socket = io({
+            transports: ['websocket'] // Forzamos WebSocket puro para evitar fallback a polling
+        });
+
+        const logsDiv = document.getElementById("logs");
+
+        socket.on('connect', () => {
+            console.log("✅ Conectado a WebSocket");
+            agregarLog("✅ WebSocket conectado");
+        });
+
+        socket.on('log_event', function(data) {
+            agregarLog(data.mensaje);
+        });
+
+        function agregarLog(mensaje) {
+            logsDiv.innerHTML += mensaje + "\n";
+            logsDiv.scrollTop = logsDiv.scrollHeight;
+        }
+
+        function iniciarProceso() {
+            fetch('/procesar-cotizaciones')
+                .then(() => agregarLog("🟢 Proceso iniciado desde el navegador"))
+                .catch(() => agregarLog("❌ Error al iniciar el proceso"));
+        }
     </script>
 </body>
 </html>
