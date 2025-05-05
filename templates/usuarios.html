@@ -4,98 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usuarios de Pipedrive</title>
-    <!-- Tailwind CSS desde CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
 
-    <!-- Contenedor principal -->
-    <div class="text-center max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg">
-        <!-- Título -->
+    <!-- Contenedor sin límite de ancho -->
+    <div class="text-center w-full p-6 bg-white shadow-lg rounded-lg">
         <img src="../static/img/logo.png" class="mx-auto mb-4 h-20">
         <h1 class="text-2xl font-bold text-gray-800 mb-4">Usuarios de Pipedrive</h1>
 
-        <!-- Tabla de usuarios -->
-        <div id="usuarios-list" class="overflow-x-auto">
-            <table class="table-auto w-full text-left border-collapse border border-gray-300">
+        <!-- Tabla de usuarios (sin scroll horizontal) -->
+        <div id="usuarios-list">
+            <table class="table-auto w-full border-collapse border border-gray-300 text-sm">
                 <thead>
                     <tr>
-                        <th class="px-4 py-2 border text-center text-sm">ID</th>
-                        <th class="px-4 py-2 border text-center text-sm">Nombre</th>
-                        <th class="px-4 py-2 border text-center text-sm min-w-[160px]">Ultima Hora</th>
-                        <th class="px-4 py-2 border text-center text-sm">Pais</th>
-                        <th class="px-4 py-2 border text-center text-sm" title="Días desde la última conexión">Últ. conexión</th>
+                        <th class="px-4 py-2 border text-center">ID</th>
+                        <th class="px-4 py-2 border text-center">Nombre</th>
+                        <th class="px-4 py-2 border text-center">Última Hora</th>
+                        <th class="px-4 py-2 border text-center">País</th>
+                        <th class="px-4 py-2 border text-center" title="Días desde la última conexión">Días desde la última conexión</th>
+                        <th class="px-4 py-2 border text-center" title="Últimos 30 Días">Últimos 30 Días</th>
                     </tr>
                 </thead>
                 <tbody id="usuarios-body">
-                    <!-- Aquí se insertarán dinámicamente los usuarios -->
+                    <!-- Contenido dinámico desde JS -->
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- Script para actualizar la lista de usuarios -->
+    <!-- Script JS -->
     <script>
         async function fetchUsuarios() {
             try {
                 const response = await fetch('/usuarios');
                 const data = await response.json();
-
                 const usuariosBody = document.getElementById('usuarios-body');
-                usuariosBody.innerHTML = ''; // Limpia la tabla antes de actualizarla
+                usuariosBody.innerHTML = '';
 
                 if (Array.isArray(data)) {
                     data.forEach(usuario => {
                         const row = document.createElement('tr');
-
-                        // Lógica de color según los días
                         let colorClass = '';
                         const dias = usuario.days_since_last_login;
 
                         if (dias <= 7) {
-                            colorClass = 'text-green-600 font-semibold'; // 🟢
+                            colorClass = 'text-green-600 font-semibold';
                         } else if (dias <= 30) {
-                            colorClass = 'text-yellow-600 font-semibold'; // 🟡
+                            colorClass = 'text-yellow-600 font-semibold';
                         } else {
-                            colorClass = 'text-red-600 font-semibold'; // 🔴
+                            colorClass = 'text-red-600 font-semibold';
                         }
 
                         row.innerHTML = `
-                            <td class="px-4 py-2 border text-xs ${colorClass}">${usuario.id}</td>
-                            <td class="px-4 py-2 border text-sm text-center ${colorClass}">${usuario.name}</td>
-                            <td class="px-4 py-2 border text-xs whitespace-nowrap min-w-[160px] ${colorClass}">${usuario.last_login}</td>
-                            <td class="px-4 py-2 border text-sm ${colorClass}">${usuario.locale}</td>
-                            <td class="px-4 py-2 border text-sm text-center min-w-[160px] ${colorClass}">${usuario.days_since_last_login} Dias</td>
+                            <td class="px-4 py-2 border text-center ${colorClass}">${usuario.id}</td>
+                            <td class="px-4 py-2 border text-center ${colorClass}">${usuario.name}</td>
+                            <td class="px-4 py-2 border text-center ${colorClass}">${usuario.last_login}</td>
+                            <td class="px-4 py-2 border text-center ${colorClass}">${usuario.locale}</td>
+                            <td class="px-4 py-2 border text-center ${colorClass}">${usuario.days_since_last_login} Días</td>
+                            <td class="px-4 py-2 border text-center ${colorClass}">${usuario.ConexionesUltimos30Dias} Días</td>
                         `;
                         usuariosBody.appendChild(row);
                     });
                 } else {
                     usuariosBody.innerHTML = `
-                        <tr>
-                            <td colspan="3" class="px-4 py-2 text-center border text-red-500">
-                                ${data.error || 'Error al obtener los datos.'}
-                            </td>
-                        </tr>
+                        <tr><td colspan="6" class="px-4 py-2 text-center border text-red-500">
+                            ${data.error || 'Error al obtener los datos.'}
+                        </td></tr>
                     `;
                 }
             } catch (error) {
-                console.error('Error al consultar los usuarios:', error);
                 const usuariosBody = document.getElementById('usuarios-body');
                 usuariosBody.innerHTML = `
-                    <tr>
-                        <td colspan="3" class="px-4 py-2 text-center border text-red-500">
-                            Error al consultar los usuarios.
-                        </td>
-                    </tr>
+                    <tr><td colspan="6" class="px-4 py-2 text-center border text-red-500">
+                        Error al consultar los usuarios.
+                    </td></tr>
                 `;
             }
         }
 
-        // Llama a la función inmediatamente al cargar la página
         fetchUsuarios();
-
-        // Actualiza la lista cada 10 minutos (600,000 ms)
-        setInterval(fetchUsuarios, 600000   );
+        setInterval(fetchUsuarios, 600000);
     </script>
 </body>
 </html>

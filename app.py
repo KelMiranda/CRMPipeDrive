@@ -8,6 +8,8 @@ from flask_socketio import SocketIO
 from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime
 from pytz import timezone
+from flask import request
+
 
 from pipedrive.pipedrive_api_conecction import PipedriveAPI
 from database.sql_server_connection import SQLServerDatabase
@@ -64,6 +66,8 @@ def procesar_usuarios():
         for usuario in data:
             last_login = usuario.get('last_login')
             if last_login:
+                query = f"EXEC ObtenerConexionesUltimos30Dias @user_id = {usuario.get('id')}"
+                cantidad = db.execute_query(query, return_results=True)
                 utc_time = utc.localize(datetime.strptime(last_login, '%Y-%m-%d %H:%M:%S'))
                 local_time = utc_time.astimezone(local_tz)
                 last_login_local = local_time.strftime('%Y-%m-%d %H:%M:%S')
@@ -73,6 +77,8 @@ def procesar_usuarios():
                     'fecha': last_login_local,
                 })
                 usuario['days_since_last_login'] = (now_local - local_time).days
+                usuario['ConexionesUltimos30Dias']=cantidad[0][1]
+
             else:
                 usuario['days_since_last_login'] = None
 
@@ -147,12 +153,21 @@ def index():
 def dashboard():
     return render_template('dashboard.html')
 
-@app.route('/procesar-cotizaciones')
+@app.route('/procesar-cotizaciones', methods=['POST'])
 def procesar_cotizaciones():
     try:
-        enviar_log("📡 Iniciando procesamiento en segundo plano...")
+        data = request.get_json()
+        clave_ingresada = data.get("clave", "").strip()
+        CLAVE_CORRECTA = "@!zBsXuFEJ3gLjboHCtK"
+
+        if clave_ingresada != CLAVE_CORRECTA:
+            enviar_log("❌ Intento con clave incorrecta.")
+            return jsonify({'status': 'denegado', 'message': 'Clave incorrecta'}), 403
+
+        enviar_log("📡 Proceso autorizado, iniciando en segundo plano...")
         socketio.start_background_task(procesar_cotizaciones_por_pais_socketio)
         return jsonify({'status': 'iniciado'})
+
     except Exception as e:
         enviar_log(f"❌ Error al iniciar proceso: {e}")
         return jsonify({'status': 'error', 'message': str(e)}), 500

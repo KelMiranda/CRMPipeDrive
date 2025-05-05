@@ -11,22 +11,20 @@
 
     <div class="w-11/12 max-w-4xl bg-white shadow-lg rounded-lg p-6">
         <div id="logs" class="font-mono text-sm text-gray-700 whitespace-pre-wrap h-96 overflow-y-auto border border-gray-300 p-4 rounded bg-gray-50"></div>
-        <div class="mt-4 flex justify-end">
-            <button onclick="iniciarProceso()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+
+        <div class="mt-6 flex flex-col md:flex-row items-center justify-end space-y-2 md:space-y-0 md:space-x-4">
+            <input type="password" id="clave" placeholder="Contraseña" class="px-2 py-1 border rounded w-64" />
+            <button id="botonProceso" onclick="iniciarProceso()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
                 Iniciar Proceso
             </button>
         </div>
     </div>
 
     <script>
-        const socket = io({
-            transports: ['websocket'] // Forzamos WebSocket puro para evitar fallback a polling
-        });
-
+        const socket = io({ transports: ['websocket'] });
         const logsDiv = document.getElementById("logs");
 
         socket.on('connect', () => {
-            console.log("✅ Conectado a WebSocket");
             agregarLog("✅ WebSocket conectado");
         });
 
@@ -40,9 +38,24 @@
         }
 
         function iniciarProceso() {
-            fetch('/procesar-cotizaciones')
-                .then(() => agregarLog("🟢 Proceso iniciado desde el navegador"))
-                .catch(() => agregarLog("❌ Error al iniciar el proceso"));
+            const clave = document.getElementById("clave").value;
+
+            fetch('/procesar-cotizaciones', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ clave })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'iniciado') {
+                    agregarLog("🟢 Proceso iniciado desde el navegador");
+                } else {
+                    agregarLog("🔒 Acceso denegado: clave incorrecta");
+                }
+            })
+            .catch(() => agregarLog("❌ Error al iniciar el proceso"));
         }
     </script>
 </body>
