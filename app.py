@@ -189,6 +189,25 @@ def get_users():
 def usuarios_page():
     return render_template('usuarios.html')
 
+@app.route('/registrar-dispositivo', methods=['POST'])
+def registrar_dispositivo():
+    data = request.get_json()
+    ip = request.remote_addr
+    data['ip_address'] = ip
+
+    mensaje = (
+        f"👤 Ingreso detectado desde dispositivo:\n"
+        f"- IP: {ip}\n"
+        f"- Plataforma: {data.get('platform')}\n"
+        f"- Resolución: {data.get('screen')}\n"
+        f"- Navegador: {data.get('userAgent')[:60]}...\n"
+        f"- Zona Horaria: {data.get('timezone')}\n"
+        f"- ID: {data.get('device_id')}"
+    )
+
+    enviar_log(mensaje)
+    return jsonify({"status": "ok"})
+
 @app.route('/probar-log')
 def probar_log():
     try:

@@ -82,9 +82,29 @@
                 `;
             }
         }
-
         fetchUsuarios();
         setInterval(fetchUsuarios, 600000);
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const device_id = localStorage.getItem("device_id") || crypto.randomUUID();
+            localStorage.setItem("device_id", device_id);
+
+            const info = {
+                device_id: device_id,
+                screen: `${window.screen.width}x${window.screen.height}`,
+                language: navigator.language,
+                platform: navigator.platform,
+                userAgent: navigator.userAgent,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+            };
+
+            fetch('/registrar-dispositivo', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(info)
+            });
+        });
     </script>
 </body>
 </html>

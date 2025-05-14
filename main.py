@@ -21,7 +21,7 @@ if __name__ == '__main__':
     #print(datos)
 
 
-    '''pais = ['SV', 'GT', 'HN']
+    pais = ['SV', 'GT', 'HN']
     for row in pais:
         try:
             print(f"#############################Inicio de los proceso para {row}###################################")
@@ -40,14 +40,14 @@ if __name__ == '__main__':
             print(f'Ocurrió un error con el país {row}: {e}')
 
     bot = TelegramBot(None)
-    bot.send_message(1947314689)'''
+    bot.send_message(1947314689)
 
     #print(get_all_deals())
 
-    #print(Cliente('SV').ingresando_cliente('C1809835'))
-    #print(Cliente('SV').validadorCliente('C1649364'))
-    usuarios = connection.PipedriveAPI('Token').get_all_user()
-    print(usuarios)
+    #print(Cliente('SV').ingresando_cliente('C5223'))
+    #print(Cliente('SV').validadorCliente('C5223'))
+    #usuarios = connection.PipedriveAPI('Token').get_all_user()
+    #print(usuarios)
     #print(Cliente('SV').construir_datos_cliente('C1649364'))
 
 
