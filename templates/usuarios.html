@@ -8,12 +8,12 @@
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
 
-    <!-- Contenedor sin límite de ancho -->
+    <!-- Contenedor -->
     <div class="text-center w-full p-6 bg-white shadow-lg rounded-lg">
-        <img src="../static/img/logo.png" class="mx-auto mb-4 h-20">
+        <img src="../static/img/logo.png" class="mx-auto mb-4 h-20" alt="Logo">
         <h1 class="text-2xl font-bold text-gray-800 mb-4">Usuarios de Pipedrive</h1>
 
-        <!-- Tabla de usuarios (sin scroll horizontal) -->
+        <!-- Tabla de usuarios -->
         <div id="usuarios-list">
             <table class="table-auto w-full border-collapse border border-gray-300 text-sm">
                 <thead>
@@ -33,7 +33,7 @@
         </div>
     </div>
 
-    <!-- Script JS -->
+    <!-- Scripts -->
     <script>
         async function fetchUsuarios() {
             try {
@@ -80,13 +80,19 @@
                         Error al consultar los usuarios.
                     </td></tr>
                 `;
+                console.error("❌ Error en fetchUsuarios:", error);
             }
         }
+
         fetchUsuarios();
-        setInterval(fetchUsuarios, 600000);
+        setInterval(fetchUsuarios, 600000); // cada 10 minutos
     </script>
+
+    <!-- Script para capturar y enviar info del dispositivo -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            console.log("🟢 Script de captura de dispositivo iniciado.");
+
             const device_id = localStorage.getItem("device_id") || crypto.randomUUID();
             localStorage.setItem("device_id", device_id);
 
@@ -99,10 +105,20 @@
                 timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
             };
 
+            console.log("📤 Enviando info del dispositivo a /registrar-dispositivo:", info);
+
             fetch('/registrar-dispositivo', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(info)
+            }).then(res => {
+                if (res.ok) {
+                    console.log("✅ Información registrada correctamente.");
+                } else {
+                    console.error("❌ Error al registrar la información del dispositivo:", res.status);
+                }
+            }).catch(error => {
+                console.error("❌ Error en la solicitud de registro:", error);
             });
         });
     </script>

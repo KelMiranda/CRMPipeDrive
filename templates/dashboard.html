@@ -21,7 +21,7 @@
     </div>
 
     <script>
-        const socket = io({ transports: ['websocket'] });
+        const socket = io("http://192.168.1.85:5000", { transports: ['websocket'] });
         const logsDiv = document.getElementById("logs");
 
         socket.on('connect', () => {
@@ -40,7 +40,7 @@
         function iniciarProceso() {
             const clave = document.getElementById("clave").value;
 
-            fetch('/procesar-cotizaciones', {
+            fetch('http://192.168.1.85:5000/procesar-cotizaciones', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
