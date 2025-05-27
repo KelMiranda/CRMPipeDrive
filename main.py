@@ -14,6 +14,7 @@ import pandas as pd
 from telegram.apitelegram import TelegramBot
 from processes.proceso_cliente import Cliente
 import pipedrive.pipedrive_api_conecction as connection
+#from IPython.display import display
 
 if __name__ == '__main__':
 
@@ -21,16 +22,16 @@ if __name__ == '__main__':
     #print(datos)
 
 
-    '''pais = ['SV', 'GT', 'HN']
+    pais = ['HN', 'SV', 'GT']
     for row in pais:
         try:
             print(f"#############################Inicio de los proceso para {row}###################################")
             ct = IngresoDeCotizaciones(f'{row}')
-            print(ct.proceso_clientes_dias(2))
+            print(ct.proceso_clientes_dias(1))
             print(f"#####################Finalizando proceso clientes dias para {row}###############################")
             print(ct.cotizaciones_actualizadas())
             print(f"#####################Finalizando cotizaciones actualizadas para {row}###########################")
-            print(ct.proceso_cotizaciones_dia(2))
+            print(ct.proceso_cotizaciones_dia(1))
             print(f"#####################Finalizando proceso cotizaciones dias para {row}###########################")
             print(ct.proceso_cotizaciones_pipedrive())
             print(f"#####################Finalizando proceso cotizaciones pipedrive para {row}######################")
@@ -40,10 +41,11 @@ if __name__ == '__main__':
             print(f'Ocurrió un error con el país {row}: {e}')
 
     bot = TelegramBot(None)
-    bot.send_message(1947314689)'''
+    bot.send_message(1947314689)
 
-    all_deals = get_all_deals()
-    #pd.DataFrame(all_deals).to_json()
+    #all_deals = get_all_deals()
+    #df = pd.read_json("./2025/2025-05/2025-05-19/deals-2025-05-19.json")
+    #display(df.head(10))
 
     #print(Cliente('SV').ingresando_cliente('C5223'))
     #print(Cliente('SV').validadorCliente('C5223'))
