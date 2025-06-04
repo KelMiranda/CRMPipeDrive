@@ -1,0 +1,2 @@
+DocNum	DocEntry	id_proyecto	Validador	id_deal
+58516	80909	21926	C	

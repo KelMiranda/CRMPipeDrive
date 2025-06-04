@@ -238,3 +238,40 @@
 2025-05-27 09:18:33 - Error al insertar o actualizar el cliente 'C9260': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
 2025-05-27 09:36:02 - Error al insertar o actualizar el cliente 'C2633': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
 2025-05-27 09:36:04 - Error al insertar o actualizar el cliente 'C2633': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-28 08:24:09 - Error al insertar o actualizar el cliente 'C9218': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-28 08:24:15 - Error al insertar o actualizar el cliente 'C9217': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-28 08:43:12 - Error al insertar o actualizar el cliente 'C2683': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-29 10:53:22 - Error al insertar o actualizar el cliente 'C9193': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-29 11:03:58 - Error al insertar o actualizar el cliente 'C3242105': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-29 11:04:02 - Error al insertar o actualizar el cliente 'C23887371': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-29 11:04:18 - Error al insertar o actualizar el cliente 'C1726040': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-29 11:09:42 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-05-29 11:10:27 - Error al insertar o actualizar el cliente 'C2683': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-29 11:10:29 - Error al insertar o actualizar el cliente 'C2683': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-30 08:12:01 - Error al insertar o actualizar el cliente 'C9145': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-30 08:12:08 - Error al insertar o actualizar el cliente 'C9146': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-30 08:12:15 - Error al insertar o actualizar el cliente 'C9158': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-30 08:30:36 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-05-30 08:31:19 - Error al insertar o actualizar el cliente 'C2683': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-30 08:31:21 - Error al insertar o actualizar el cliente 'C2683': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-31 11:35:46 - Error al insertar o actualizar el cliente 'C9206': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-31 11:35:57 - Error al insertar o actualizar el cliente 'C9296': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-31 11:48:57 - Error al insertar o actualizar el cliente 'C23887371': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-05-31 11:56:18 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-06-02 10:10:20 - Error al insertar o actualizar el cliente 'C9260': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-06-02 10:18:45 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-06-03 10:16:21 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-06-03 14:50:40 - Error al insertar o actualizar el cliente 'C9299': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-06-03 14:50:42 - Error al insertar o actualizar el cliente 'C9299': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-06-03 14:50:45 - Error al insertar o actualizar el cliente 'C9299': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-06-03 14:50:47 - Error al insertar o actualizar el cliente 'C9299': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-06-03 14:59:29 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-06-04 10:05:41 - Error al insertar o actualizar el cliente 'C9146': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-06-04 10:05:43 - Error al insertar o actualizar el cliente 'C9146': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-06-04 10:05:45 - Error al insertar o actualizar el cliente 'C9299': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-06-04 10:05:48 - Error al insertar o actualizar el cliente 'C9299': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-06-04 10:05:50 - Error al insertar o actualizar el cliente 'C9299': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-06-04 10:05:53 - Error al insertar o actualizar el cliente 'C9299': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-06-04 10:05:55 - Error al insertar o actualizar el cliente 'C9299': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-06-04 10:19:59 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-06-04 10:20:26 - Error al insertar o actualizar el cliente 'C2683': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
