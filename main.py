@@ -11,18 +11,20 @@ from database.sql_server_connection import SQLServerDatabase
 from processes.deals import DealTable
 from processes.proceso_cliente import Cliente
 import pandas as pd
+import numpy as np
 from telegram.apitelegram import TelegramBot
 from processes.proceso_cliente import Cliente
 import pipedrive.pipedrive_api_conecction as connection
 #from IPython.display import display
+from app import procesar_usuarios
 
 if __name__ == '__main__':
 
     #datos= Cotizaciones('SV').datos_de_la_cotizacion(546533,716118)
-    #print(datos)
+    #print(datos)Lenovo legion
 
 
-    pais = ['HN', 'SV', 'GT']
+    '''pais = ['HN', 'SV', 'GT']
     for row in pais:
         try:
             print(f"#############################Inicio de los proceso para {row}###################################")
@@ -41,7 +43,14 @@ if __name__ == '__main__':
             print(f'Ocurrió un error con el país {row}: {e}')
 
     bot = TelegramBot(None)
-    bot.send_message(1947314689)
+    bot.send_message(1947314689)'''
+
+
+    data = procesar_usuarios()
+    print(data)
+    #arr = np.array(data)
+    #  print(arr.shape)
+
 
     #all_deals = get_all_deals()
     #df = pd.read_json("./2025/2025-05/2025-05-19/deals-2025-05-19.json")
