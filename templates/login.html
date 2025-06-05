@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <!-- Enlazar el archivo CSS de Tailwind -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind-output.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
 
@@ -14,40 +14,41 @@
         <!-- Sección del logo -->
         <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="mx-auto w-48 h-24 mb-6">
 
-        <!-- Título del Login -->
-        <h2 class="text-3xl font-bold text-center text-gray-800">Iniciar Sesión</h2>
-
         <!-- Notificación de error -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                <div class="bg-red-100 text-red-800 p-4 rounded-lg">
-                    {% for category, message in messages %}
-                        <p>{{ message }}</p>
-                    {% endfor %}
-                </div>
+                {% for category, message in messages %}
+                    <div class="p-4 rounded-lg text-center text-sm mb-2
+                        {% if category == 'success' %} bg-green-100 text-green-800
+                        {% elif category == 'error' %} bg-red-100 text-red-800
+                        {% elif category == 'warning' %} bg-yellow-100 text-yellow-800
+                        {% else %} bg-blue-100 text-blue-800 {% endif %}">
+                    {{ message }}
+                    </div>
+                {% endfor %}
             {% endif %}
         {% endwith %}
 
         <!-- Formulario de Login -->
-        <form class="space-y-4" action="{{ url_for('login') }}" method="POST" onsubmit="mostrarCarga()">
+        <form class="space-y-4" action="{{ url_for('login') }}" method="POST" >
             <!-- Campo de Correo Electrónico -->
-            <div>
-                <label for="email" class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
-                <input type="email" id="email" name="email" required
-                       class="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+            <div class="flex-col justify-items-center">
+                <label for="user" class="block text-sm font-medium text-gray-700">Codigo de vendedor</label>
+                <input type="text" id="user" name="user" required
+                       class="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-center">
             </div>
 
             <!-- Campo de Contraseña -->
-            <div>
-                <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
+            <div class="flex-col justify-items-center">
+                <label for="password" class="block text-sm font-medium text-gray-700 ">Contraseña</label>
                 <input type="password" id="password" name="password" required
-                       class="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                       class="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-center">
             </div>
 
             <!-- Botón de Iniciar Sesión -->
-            <div>
+            <div class="flex-col justify-items-center">
                 <button id="loginButton" type="submit"
-                        class="w-full py-2 px-4 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition duration-300">
+                        class="w-full py-2 px-4 bg-blue-400 text-white rounded-lg font-medium hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 transition duration-300">
                     <span id="buttonText">Iniciar Sesión</span>
                 </button>
             </div>
@@ -55,37 +56,10 @@
 
         <!-- Barra de progreso -->
         <div id="progressBarContainer" class="w-full bg-gray-200 rounded-full h-4 hidden mt-4">
-            <div id="progressBar" class="bg-blue-600 h-4 rounded-full" style="width: 0%;"></div>
+            <div id="progressBar" class="bg-blue-600 h-4 rounded-full" style="width: 0;"></div>
         </div>
 
-        <!-- Enlace para registrar -->
-        <p class="text-center text-sm text-gray-600">
-            ¿No tienes una cuenta? <a href="#" class="text-blue-600 hover:underline">Regístrate aquí</a>
-        </p>
     </div>
-
-    <script>
-        function mostrarCarga() {
-            // Ocultar el texto del botón y mostrar la barra de progreso
-            document.getElementById('buttonText').classList.add('hidden');
-            document.getElementById('progressBarContainer').classList.remove('hidden');
-
-            // Deshabilitar el botón para evitar múltiples envíos
-            document.getElementById('loginButton').disabled = true;
-
-            // Iniciar la animación de la barra de progreso
-            let progressBar = document.getElementById('progressBar');
-            let width = 0;
-            let interval = setInterval(function() {
-                if (width >= 100) {
-                    clearInterval(interval);
-                } else {
-                    width++;
-                    progressBar.style.width = width + '%';
-                }
-            }, 30); // Aumenta la barra cada 30 milisegundos (ajusta este valor si deseas)
-        }
-    </script>
 
 </body>
 </html>

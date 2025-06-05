@@ -3,7 +3,7 @@ import socket
 import logging
 import atexit
 import dns.resolver
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, session, flash, url_for, redirect
 from flask_socketio import SocketIO
 from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime
@@ -19,6 +19,7 @@ from telegram.apitelegram import TelegramBot
 # ----------- CONFIGURACIÓN FLASK + SOCKETIO -------------------
 app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode="eventlet")
+app.secret_key = 'clave_secreta_123'
 
 # ----------- LOGGING ------------------------------------------
 logging.basicConfig(filename='app.log', level=logging.ERROR,
@@ -139,19 +140,41 @@ def procesar_cotizaciones_por_pais_socketio():
     with app.app_context():
         procesar_cotizaciones_por_pais()
 
+usuarios = [
+    {"usuario": "admin", "nombre": "Admin-CRM", "password": "3.FsQnUy2aHy", "rol": "Gerente"}
+]
+
 # ----------- SCHEDULER ----------------------------------------
 scheduler = BackgroundScheduler()
 scheduler.add_job(func=procesando_usuario_base_socketio, trigger="interval", minutes=10)
 scheduler.start()
 
 # ----------- RUTAS FLASK --------------------------------------
-@app.route('/')
-def index():
-    return render_template('index.html')
+@app.route("/", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        usuario  = request.form["user"]
+        password = request.form["password"]
+
+        user = next((u for u in usuarios if u["usuario"] == usuario  and u["password"] == password), None)
+
+        if user:
+            session["usuario"] = user["usuario"]
+            session["nombre"] = user["nombre"]
+            session["rol"] = user["rol"]
+            flash("¡Bienvenido, " + user["nombre"] + "!", "success")
+            return redirect(url_for("usuarios_page"))
+        else:
+            flash("Usuario o contraseña incorrectos", "error")
+            return redirect(url_for("login"))
+
+    return render_template("login.html")
 
 @app.route('/dashboard')
 def dashboard():
-    return render_template('dashboard.html')
+    if "usuario" not in session:
+        return redirect(url_for("login"))
+    return render_template("dashboard.html", nombre=session["nombre"], rol=session["rol"])
 
 @app.route('/procesar-cotizaciones', methods=['POST'])
 def procesar_cotizaciones():
@@ -187,7 +210,9 @@ def get_users():
 
 @app.route('/usuarios-page')
 def usuarios_page():
-    return render_template('usuarios.html')
+    if "usuario" not in session:
+        return redirect(url_for("login"))
+    return render_template('usuarios.html', nombre=session["nombre"], rol=session["rol"])
 
 @app.route('/registrar-dispositivo', methods=['POST'])
 def registrar_dispositivo():
