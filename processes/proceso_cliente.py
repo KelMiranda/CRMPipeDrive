@@ -241,6 +241,7 @@ class Cliente:
 
             if id_pipedrive is None:
                 try:
+                    print(id_registro, id_pipedrive)
                     return self.insertar_en_pipedrive_y_actualizar(codigo_cliente, id_registro)
                 except Exception as e:
                     error_message = f"Error al insertar o actualizar el cliente '{codigo_cliente}': {e}"

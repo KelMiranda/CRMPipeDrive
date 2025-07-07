@@ -1,0 +1,5 @@
+DocNum	DocEntry	id_proyecto	Validador	id_deal
+58967	81617	22308	C	
+58968	81618	22309	C	
+58983	81640	22310	C	
+58958	81635	22311	C	

@@ -1,0 +1,2 @@
+DocNum	DocEntry	id_proyecto	Validador	id_deal
+59769	82927	22859	U	24457

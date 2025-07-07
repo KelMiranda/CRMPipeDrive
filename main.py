@@ -16,15 +16,22 @@ from telegram.apitelegram import TelegramBot
 from processes.proceso_cliente import Cliente
 import pipedrive.pipedrive_api_conecction as connection
 #from IPython.display import display
-from app import procesar_usuarios
+from app import procesar_usuarios 
+from processes.proceso_cliente import Cliente
+
 
 if __name__ == '__main__':
+
+
+    '''ct=Cotizaciones('SV')
+    print(ct.datos_de_la_cotizacion(449210, 577692))
 
     #datos= Cotizaciones('SV').datos_de_la_cotizacion(546533,716118)
     #print(datos)Lenovo legion
 
+    #Cliente('SV').ingresando_cliente('C290503')'''
 
-    '''pais = ['HN', 'SV', 'GT']
+    pais = ['HN', 'SV', 'GT']
     for row in pais:
         try:
             print(f"#############################Inicio de los proceso para {row}###################################")
@@ -43,11 +50,11 @@ if __name__ == '__main__':
             print(f'Ocurrió un error con el país {row}: {e}')
 
     bot = TelegramBot(None)
-    bot.send_message(1947314689)'''
+    bot.send_message(1947314689)
 
 
-    data = procesar_usuarios()
-    print(data)
+    #data = procesar_usuarios()
+    #print(data)
     #arr = np.array(data)
     #  print(arr.shape)
 

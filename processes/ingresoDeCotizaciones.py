@@ -416,7 +416,7 @@ class IngresoDeCotizaciones:
 
                 for index, row in dt_filtered_u.iterrows():
                     try:
-                        time.sleep(0.5)
+                        time.sleep(1)
                         datos = self.ct.datos_de_la_cotizacion(row['DocNum'], row['DocEntry'])
                         if 'owner_id' in datos:
                             datos['user_id'] = datos.pop('owner_id')

@@ -9,8 +9,6 @@ import configparser
 import os as cd
 import datetime
 
-
-
 familias_padres = {
     'CAJAS TERMICAS, BRK': 'c97bd1f994dce3b891f1189965c06ef775b53757',
     'CANALIZ Y ACC MONTAJ': 'd8b5d8cdff3533b40d7374a4f9cfbfd0584f2037',
@@ -274,8 +272,9 @@ class Cotizaciones:
         errores = []
         data = {}
         try:
-            id_fields_deals = [12527, 12546, 12521, 12523, 12522, 12524, 12531, 12529, 12534]
+            id_fields_deals = [12527, 12546, 12521, 12523, 12522, 12524, 12531, 12529, 12534, 12475]
             values = get_all_option_for_fields_in_deals(id_fields_deals)
+            print(values.get('12475'))
             # Intenta conectarse a la base de datos y ejecutar la consulta
             self.db.connect()
             query = f"EXEC [dbo].[SP_COTIZACIONES_{self.pais}_PYTHON]  {DocNum}, {DocEntry}"
@@ -289,7 +288,7 @@ class Cotizaciones:
                 if valores[8] in casos_especiales:
                     data1 = {
                         "status": "lost",
-                        "lost_reason": values.get('12531').get(valores[8]),
+                        "lost_reason": f"{valores[8]}",
                         "stage_id": 21
                     }
                 elif valores[8] == "Venta":
@@ -320,7 +319,7 @@ class Cotizaciones:
                     # Configuración general para los casos de pérdida
                     data1 = {
                         "status": "lost",
-                        "lost_reason": values.get('12531').get(valores[8])
+                        "lost_reason": f"{valores[8]}"
                     }
                 return data1
 
