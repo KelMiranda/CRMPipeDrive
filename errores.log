@@ -522,3 +522,315 @@
 2025-07-07 08:43:28 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
 2025-07-07 08:43:34 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
 2025-07-07 08:43:39 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-08 08:11:47 - Error al insertar o actualizar el cliente 'C9293': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-08 08:19:11 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13705?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-08 08:19:11 - No se pudo actualizar el deal con ID 13705.0 en Pipedrive.
+2025-07-08 08:19:17 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13765?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-08 08:19:17 - No se pudo actualizar el deal con ID 13765.0 en Pipedrive.
+2025-07-08 08:19:32 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14406?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-08 08:19:32 - No se pudo actualizar el deal con ID 14406.0 en Pipedrive.
+2025-07-08 08:19:36 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14407?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-08 08:19:36 - No se pudo actualizar el deal con ID 14407.0 en Pipedrive.
+2025-07-08 08:19:42 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14450?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-08 08:19:42 - No se pudo actualizar el deal con ID 14450.0 en Pipedrive.
+2025-07-08 08:20:06 - Error al insertar o actualizar el cliente 'C3570387': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-08 08:23:39 - Error al intentar actualizar el deal y las tablas para ID None: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+2025-07-08 08:23:43 - Error al intentar actualizar el deal y las tablas para ID None: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+2025-07-08 08:23:48 - Error al intentar actualizar el deal y las tablas para ID None: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+2025-07-08 08:23:53 - Error al intentar actualizar el deal y las tablas para ID None: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+2025-07-08 08:24:02 - Error al insertar o actualizar el cliente 'C2692': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-08 09:40:33 - Error al insertar o actualizar el cliente 'C9293': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-08 09:47:32 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13705?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-08 09:47:32 - No se pudo actualizar el deal con ID 13705 en Pipedrive.
+2025-07-08 09:47:38 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13765?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-08 09:47:38 - No se pudo actualizar el deal con ID 13765 en Pipedrive.
+2025-07-08 09:47:53 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14406?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-08 09:47:53 - No se pudo actualizar el deal con ID 14406 en Pipedrive.
+2025-07-08 09:47:59 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14407?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-08 09:47:59 - No se pudo actualizar el deal con ID 14407 en Pipedrive.
+2025-07-08 09:48:05 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14450?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-08 09:48:06 - No se pudo actualizar el deal con ID 14450 en Pipedrive.
+2025-07-08 09:48:19 - Error al insertar o actualizar el cliente 'C3570387': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-08 09:48:59 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-08 09:49:04 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-08 09:49:10 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-08 09:49:14 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-08 09:49:42 - Error al insertar o actualizar el cliente 'C2692': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-08 10:09:57 - Error al insertar o actualizar el cliente 'C9293': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-08 10:16:04 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13705?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-08 10:16:04 - No se pudo actualizar el deal con ID 13705 en Pipedrive.
+2025-07-08 10:16:10 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13765?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-08 10:16:10 - No se pudo actualizar el deal con ID 13765 en Pipedrive.
+2025-07-08 10:16:26 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14406?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-08 10:16:26 - No se pudo actualizar el deal con ID 14406 en Pipedrive.
+2025-07-08 10:16:31 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14407?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-08 10:16:31 - No se pudo actualizar el deal con ID 14407 en Pipedrive.
+2025-07-08 10:16:36 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14450?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-08 10:16:36 - No se pudo actualizar el deal con ID 14450 en Pipedrive.
+2025-07-08 10:16:48 - Error al insertar o actualizar el cliente 'C3570387': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-08 10:17:17 - Error al intentar actualizar el deal y las tablas para ID None: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+2025-07-08 10:17:22 - Error al intentar actualizar el deal y las tablas para ID None: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+2025-07-08 10:17:27 - Error al intentar actualizar el deal y las tablas para ID None: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+2025-07-08 10:17:31 - Error al intentar actualizar el deal y las tablas para ID None: int() argument must be a string, a bytes-like object or a real number, not 'NoneType'
+2025-07-08 10:17:36 - Error al insertar o actualizar el cliente 'C2692': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-09 16:30:38 - Error al insertar o actualizar el cliente 'C9251': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-09 16:38:10 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13705?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-09 16:38:10 - No se pudo actualizar el deal con ID 13705.0 en Pipedrive.
+2025-07-09 16:38:15 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13765?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-09 16:38:15 - No se pudo actualizar el deal con ID 13765.0 en Pipedrive.
+2025-07-09 16:38:31 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14406?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-09 16:38:31 - No se pudo actualizar el deal con ID 14406.0 en Pipedrive.
+2025-07-09 16:38:36 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14407?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-09 16:38:36 - No se pudo actualizar el deal con ID 14407.0 en Pipedrive.
+2025-07-09 16:38:41 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14450?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-09 16:38:41 - No se pudo actualizar el deal con ID 14450.0 en Pipedrive.
+2025-07-09 16:39:03 - Error al insertar o actualizar el cliente 'C23887371': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-09 16:42:54 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-09 16:42:59 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-09 16:43:04 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-09 16:43:09 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-10 11:31:57 - Error al insertar o actualizar el cliente 'C9308': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-10 11:32:00 - Error al insertar o actualizar el cliente 'C9328': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-10 11:42:07 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13705?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-10 11:42:07 - No se pudo actualizar el deal con ID 13705.0 en Pipedrive.
+2025-07-10 11:42:12 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13765?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-10 11:42:12 - No se pudo actualizar el deal con ID 13765.0 en Pipedrive.
+2025-07-10 11:42:26 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14406?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-10 11:42:26 - No se pudo actualizar el deal con ID 14406.0 en Pipedrive.
+2025-07-10 11:42:31 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14407?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-10 11:42:31 - No se pudo actualizar el deal con ID 14407.0 en Pipedrive.
+2025-07-10 11:42:36 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14450?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-10 11:42:36 - No se pudo actualizar el deal con ID 14450.0 en Pipedrive.
+2025-07-10 11:42:45 - Error al insertar o actualizar el cliente 'C2229350': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-10 11:47:06 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-10 11:47:11 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-10 11:47:15 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-10 11:47:20 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-11 11:01:46 - Error al insertar o actualizar el cliente 'C1188': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-11 11:10:24 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13705?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-11 11:10:24 - No se pudo actualizar el deal con ID 13705.0 en Pipedrive.
+2025-07-11 11:10:29 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13765?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-11 11:10:29 - No se pudo actualizar el deal con ID 13765.0 en Pipedrive.
+2025-07-11 11:10:44 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14406?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-11 11:10:44 - No se pudo actualizar el deal con ID 14406.0 en Pipedrive.
+2025-07-11 11:10:49 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14407?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-11 11:10:49 - No se pudo actualizar el deal con ID 14407.0 en Pipedrive.
+2025-07-11 11:10:54 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14450?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-11 11:10:54 - No se pudo actualizar el deal con ID 14450.0 en Pipedrive.
+2025-07-11 11:16:17 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-11 11:16:22 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-11 11:16:27 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-11 11:16:31 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-11 14:27:13 - Error al insertar o actualizar el cliente 'C1188': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-11 14:34:12 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13705?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-11 14:34:12 - No se pudo actualizar el deal con ID 13705 en Pipedrive.
+2025-07-11 14:34:17 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13765?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-11 14:34:17 - No se pudo actualizar el deal con ID 13765 en Pipedrive.
+2025-07-11 14:34:31 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14406?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-11 14:34:31 - No se pudo actualizar el deal con ID 14406 en Pipedrive.
+2025-07-11 14:34:36 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14407?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-11 14:34:36 - No se pudo actualizar el deal con ID 14407 en Pipedrive.
+2025-07-11 14:34:41 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14450?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-11 14:34:41 - No se pudo actualizar el deal con ID 14450 en Pipedrive.
+2025-07-11 14:35:20 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-11 14:35:25 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-11 14:35:29 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-11 14:35:34 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-14 10:06:08 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13705?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-14 10:06:08 - No se pudo actualizar el deal con ID 13705 en Pipedrive.
+2025-07-14 10:06:13 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13765?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-14 10:06:13 - No se pudo actualizar el deal con ID 13765 en Pipedrive.
+2025-07-14 10:06:30 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14406?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-14 10:06:30 - No se pudo actualizar el deal con ID 14406 en Pipedrive.
+2025-07-14 10:06:35 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14407?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-14 10:06:35 - No se pudo actualizar el deal con ID 14407 en Pipedrive.
+2025-07-14 10:06:40 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14450?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-14 10:06:40 - No se pudo actualizar el deal con ID 14450 en Pipedrive.
+2025-07-14 10:09:01 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-14 10:09:05 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-14 10:09:10 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-14 10:09:14 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-15 16:01:03 - Error al insertar o actualizar el cliente 'C9207': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-15 16:01:07 - Error al insertar o actualizar el cliente 'C9315': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-15 16:08:28 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13705?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-15 16:08:28 - No se pudo actualizar el deal con ID 13705.0 en Pipedrive.
+2025-07-15 16:08:33 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13765?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-15 16:08:33 - No se pudo actualizar el deal con ID 13765.0 en Pipedrive.
+2025-07-15 16:08:50 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14406?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-15 16:08:50 - No se pudo actualizar el deal con ID 14406.0 en Pipedrive.
+2025-07-15 16:08:55 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14407?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-15 16:08:55 - No se pudo actualizar el deal con ID 14407.0 en Pipedrive.
+2025-07-15 16:09:00 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14450?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-15 16:09:00 - No se pudo actualizar el deal con ID 14450.0 en Pipedrive.
+2025-07-15 16:09:26 - Error al insertar o actualizar el cliente 'C3452945': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-15 16:13:27 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-15 16:13:32 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-15 16:13:37 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-15 16:13:41 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-16 09:26:12 - Error al insertar o actualizar el cliente 'C9336': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-16 09:34:04 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13705?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-16 09:34:05 - No se pudo actualizar el deal con ID 13705.0 en Pipedrive.
+2025-07-16 09:34:10 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13765?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-16 09:34:10 - No se pudo actualizar el deal con ID 13765.0 en Pipedrive.
+2025-07-16 09:34:26 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14406?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-16 09:34:26 - No se pudo actualizar el deal con ID 14406.0 en Pipedrive.
+2025-07-16 09:34:31 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14407?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-16 09:34:31 - No se pudo actualizar el deal con ID 14407.0 en Pipedrive.
+2025-07-16 09:34:36 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14450?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-16 09:34:36 - No se pudo actualizar el deal con ID 14450.0 en Pipedrive.
+2025-07-16 09:34:44 - Error al insertar o actualizar el cliente 'C2673806': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-16 09:34:48 - Error al insertar o actualizar el cliente 'C3516266': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-16 09:39:09 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-16 09:39:14 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-16 09:39:18 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-16 09:39:23 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-16 09:39:47 - Error al insertar o actualizar el cliente 'C2692': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-17 10:09:38 - Error al insertar o actualizar el cliente 'C9179': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-17 10:09:44 - Error al insertar o actualizar el cliente 'C9179': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-17 10:17:45 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13705?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-17 10:17:45 - No se pudo actualizar el deal con ID 13705.0 en Pipedrive.
+2025-07-17 10:17:50 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13765?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-17 10:17:50 - No se pudo actualizar el deal con ID 13765.0 en Pipedrive.
+2025-07-17 10:18:05 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14406?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-17 10:18:05 - No se pudo actualizar el deal con ID 14406.0 en Pipedrive.
+2025-07-17 10:18:12 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14407?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-17 10:18:12 - No se pudo actualizar el deal con ID 14407.0 en Pipedrive.
+2025-07-17 10:18:17 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14450?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-17 10:18:17 - No se pudo actualizar el deal con ID 14450.0 en Pipedrive.
+2025-07-17 10:18:47 - Error al insertar o actualizar el cliente 'C021083568': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-17 10:21:44 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-17 10:21:49 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-17 10:21:53 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-17 10:21:58 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-17 10:22:34 - Error al insertar o actualizar el cliente 'C2692': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-18 10:20:26 - Error al insertar o actualizar el cliente 'C9237': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-18 10:28:22 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13705?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-18 10:28:22 - No se pudo actualizar el deal con ID 13705.0 en Pipedrive.
+2025-07-18 10:28:27 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13765?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-18 10:28:27 - No se pudo actualizar el deal con ID 13765.0 en Pipedrive.
+2025-07-18 10:28:42 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14406?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-18 10:28:42 - No se pudo actualizar el deal con ID 14406.0 en Pipedrive.
+2025-07-18 10:28:47 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14407?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-18 10:28:47 - No se pudo actualizar el deal con ID 14407.0 en Pipedrive.
+2025-07-18 10:28:53 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14450?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-18 10:28:53 - No se pudo actualizar el deal con ID 14450.0 en Pipedrive.
+2025-07-18 10:29:05 - Error al insertar o actualizar el cliente 'C23887371': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-18 10:29:06 - Error al insertar o actualizar el cliente 'C23887371': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-18 10:31:03 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-18 10:31:08 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-18 10:31:13 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-18 10:31:17 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-18 10:31:36 - Error al insertar o actualizar el cliente 'C2692': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-19 10:15:54 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13705?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-19 10:15:54 - No se pudo actualizar el deal con ID 13705.0 en Pipedrive.
+2025-07-19 10:15:59 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13765?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-19 10:15:59 - No se pudo actualizar el deal con ID 13765.0 en Pipedrive.
+2025-07-19 10:16:17 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14406?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-19 10:16:17 - No se pudo actualizar el deal con ID 14406.0 en Pipedrive.
+2025-07-19 10:16:21 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14407?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-19 10:16:21 - No se pudo actualizar el deal con ID 14407.0 en Pipedrive.
+2025-07-19 10:16:26 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14450?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-19 10:16:26 - No se pudo actualizar el deal con ID 14450.0 en Pipedrive.
+2025-07-19 10:16:43 - Error al insertar o actualizar el cliente 'C92312': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-19 10:16:48 - Error al insertar o actualizar el cliente 'C3516266': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-19 10:16:50 - Error al insertar o actualizar el cliente 'C021083568': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-19 10:16:52 - Error al insertar o actualizar el cliente 'C021083568': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-19 10:16:53 - Error al insertar o actualizar el cliente 'C021083568': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-19 10:16:55 - Error al insertar o actualizar el cliente 'C021083568': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-19 10:16:57 - Error al insertar o actualizar el cliente 'C021083568': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-19 10:20:55 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-19 10:21:00 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-19 10:21:05 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-19 10:21:09 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-21 07:57:07 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13705?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-21 07:57:07 - No se pudo actualizar el deal con ID 13705 en Pipedrive.
+2025-07-21 07:57:12 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13765?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-21 07:57:12 - No se pudo actualizar el deal con ID 13765 en Pipedrive.
+2025-07-21 07:57:27 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14406?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-21 07:57:27 - No se pudo actualizar el deal con ID 14406 en Pipedrive.
+2025-07-21 07:57:32 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14407?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-21 07:57:32 - No se pudo actualizar el deal con ID 14407 en Pipedrive.
+2025-07-21 07:57:37 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14450?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-21 07:57:37 - No se pudo actualizar el deal con ID 14450 en Pipedrive.
+2025-07-21 07:57:49 - Error al insertar o actualizar el cliente 'C92312': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-21 07:57:53 - Error al insertar o actualizar el cliente 'C3516266': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-21 07:57:54 - Error al insertar o actualizar el cliente 'C021083568': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-21 07:57:56 - Error al insertar o actualizar el cliente 'C021083568': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-21 07:57:58 - Error al insertar o actualizar el cliente 'C021083568': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-21 07:57:59 - Error al insertar o actualizar el cliente 'C021083568': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-21 07:58:01 - Error al insertar o actualizar el cliente 'C021083568': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-21 07:58:24 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-21 07:58:28 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-21 07:58:33 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-21 07:58:37 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-21 08:34:10 - Error al insertar o actualizar el cliente 'C9342': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-21 08:41:20 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13705?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-21 08:41:20 - No se pudo actualizar el deal con ID 13705.0 en Pipedrive.
+2025-07-21 08:41:25 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13765?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-21 08:41:25 - No se pudo actualizar el deal con ID 13765.0 en Pipedrive.
+2025-07-21 08:41:40 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14406?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-21 08:41:40 - No se pudo actualizar el deal con ID 14406.0 en Pipedrive.
+2025-07-21 08:41:45 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14407?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-21 08:41:45 - No se pudo actualizar el deal con ID 14407.0 en Pipedrive.
+2025-07-21 08:41:51 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14450?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-21 08:41:51 - No se pudo actualizar el deal con ID 14450.0 en Pipedrive.
+2025-07-21 08:43:23 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-21 08:43:28 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-21 08:43:33 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-21 08:43:37 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-21 16:45:09 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13705?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-21 16:45:09 - No se pudo actualizar el deal con ID 13705 en Pipedrive.
+2025-07-21 16:45:14 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13765?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-21 16:45:14 - No se pudo actualizar el deal con ID 13765 en Pipedrive.
+2025-07-21 16:45:29 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14406?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-21 16:45:29 - No se pudo actualizar el deal con ID 14406 en Pipedrive.
+2025-07-21 16:45:34 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14407?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-21 16:45:34 - No se pudo actualizar el deal con ID 14407 en Pipedrive.
+2025-07-21 16:45:39 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14450?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-21 16:45:39 - No se pudo actualizar el deal con ID 14450 en Pipedrive.
+2025-07-21 16:46:15 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-21 16:46:20 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-21 16:46:24 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-21 16:46:29 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-22 08:24:13 - Error al insertar o actualizar el cliente 'C9150': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-22 08:24:15 - Error al insertar o actualizar el cliente 'C9298': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-22 08:24:17 - Error al insertar o actualizar el cliente 'C1183': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-22 08:24:22 - Error al insertar o actualizar el cliente 'C9237': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-22 08:32:27 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13705?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-22 08:32:27 - No se pudo actualizar el deal con ID 13705.0 en Pipedrive.
+2025-07-22 08:32:32 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13765?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-22 08:32:32 - No se pudo actualizar el deal con ID 13765.0 en Pipedrive.
+2025-07-22 08:32:48 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14406?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-22 08:32:48 - No se pudo actualizar el deal con ID 14406.0 en Pipedrive.
+2025-07-22 08:32:53 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14407?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-22 08:32:53 - No se pudo actualizar el deal con ID 14407.0 en Pipedrive.
+2025-07-22 08:32:58 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14450?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-22 08:32:58 - No se pudo actualizar el deal con ID 14450.0 en Pipedrive.
+2025-07-22 08:33:37 - Error al insertar o actualizar el cliente 'C021083568': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-22 08:39:15 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-22 08:39:20 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-22 08:39:25 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-22 08:39:30 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-22 08:39:48 - Error al insertar o actualizar el cliente 'C2692': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-22 08:39:51 - Error al insertar o actualizar el cliente 'C2692': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-22 08:44:14 - Error al insertar o actualizar el cliente 'C9150': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-22 08:44:16 - Error al insertar o actualizar el cliente 'C9298': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-22 08:44:18 - Error al insertar o actualizar el cliente 'C1183': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-22 08:44:20 - Error al insertar o actualizar el cliente 'C9237': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-22 08:51:48 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13705?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-22 08:51:48 - No se pudo actualizar el deal con ID 13705 en Pipedrive.
+2025-07-22 08:51:54 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/13765?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-22 08:51:54 - No se pudo actualizar el deal con ID 13765 en Pipedrive.
+2025-07-22 08:52:10 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14406?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-22 08:52:10 - No se pudo actualizar el deal con ID 14406 en Pipedrive.
+2025-07-22 08:52:15 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14407?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-22 08:52:15 - No se pudo actualizar el deal con ID 14407 en Pipedrive.
+2025-07-22 08:52:23 - HTTPError in put_request: 404 Client Error: Not Found for url: https://api.pipedrive.com/v1/deals/14450?api_token=bead2d5c759ded1c92f16cd8cee80ff8e1b8e82d
+2025-07-22 08:52:23 - No se pudo actualizar el deal con ID 14450 en Pipedrive.
+2025-07-22 08:52:37 - Error al insertar o actualizar el cliente 'C021083568': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-22 08:53:09 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-22 08:53:14 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-22 08:53:19 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-22 08:53:24 - Error al intentar actualizar el deal y las tablas para ID nan: cannot convert float NaN to integer
+2025-07-22 08:54:20 - Error al insertar o actualizar el cliente 'C2692': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
+2025-07-22 08:54:23 - Error al insertar o actualizar el cliente 'C2692': manejar_no_existencia_campo() takes 3 positional arguments but 4 were given
